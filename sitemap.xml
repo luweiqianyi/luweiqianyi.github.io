@@ -1,61 +1,46 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
+    <loc>https://luweiqianyi.github.io/categories/blogs/</loc>
+    <lastmod>2022-10-19T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://luweiqianyi.github.io/categories/</loc>
-    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2022-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/tags/hugo/</loc>
+    <lastmod>2022-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/post/hugo%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2022-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/post/</loc>
+    <lastmod>2022-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/tags/</loc>
+    <lastmod>2022-10-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/</loc>
+    <lastmod>2022-10-19T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://luweiqianyi.github.io/post/helloworld/</loc>
     <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://luweiqianyi.github.io/post/</loc>
-    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://luweiqianyi.github.io/tags/</loc>
-    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://luweiqianyi.github.io/categories/test/</loc>
-    <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://luweiqianyi.github.io/tags/test/</loc>
     <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://luweiqianyi.github.io/</loc>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/categories/test/</loc>
     <lastmod>2020-10-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://luweiqianyi.github.io/about/</loc>
     <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://luweiqianyi.github.io/notes/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://luweiqianyi.github.io/search/placeholder/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://luweiqianyi.github.io/archive/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://luweiqianyi.github.io/search/</loc>
   </url>
-  
 </urlset>

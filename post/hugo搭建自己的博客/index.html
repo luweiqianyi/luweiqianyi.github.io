@@ -15,9 +15,9 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="Hugo搭建自己的博客教程" />
+    <meta property="og:title" content="Hugo搭建自己的博客教程" />
+    <meta property="twitter:title" content="Hugo搭建自己的博客教程" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao Blog, 博客, 个人网站">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>殷超的博客 | YinChao Blog</title>
+    <title>Hugo搭建自己的博客教程 | 殷超的博客 | YinChao Blog</title>
 
-    <link rel="canonical" href="/search/placeholder/">
+    <link rel="canonical" href="/post/hugo%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/">
 
     
     
@@ -172,17 +172,21 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/hugo" title="Hugo">
+                            Hugo
+                        </a>
+                        
                     </div>
-                    <h1></h1>
+                    <h1>Hugo搭建自己的博客教程</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         
                             Posted by 
                             
-                                    YinChao Blog
+                                     &#34;YinChao&#34;
                              
                             on 
-                            Monday, January 1, 0001
+                            Wednesday, October 19, 2022
                             
                             
                             
@@ -208,7 +212,50 @@
                 post-container">
 
                 
-                
+                <h1 id="hugo-搭建自己的博客">Hugo 搭建自己的博客</h1>
+<h2 id="模板选择">模板选择</h2>
+<p><a href="https://themes.gohugo.io/themes/hugo-theme-cleanwhite/">https://themes.gohugo.io/themes/hugo-theme-cleanwhite/</a></p>
+<h2 id="搭建博客">搭建博客</h2>
+<p>以下命令均在Ununtu20.04上进行操作</p>
+<ol>
+<li>创建项目： <code>hugo new site website</code></li>
+<li>从github中拷贝主题
+<pre tabindex="0"><code>cd themes
+git clone https://github.com/zhaohuabing/hugo-theme-cleanwhite.git
+</code></pre></li>
+<li>拷贝完成后，拷贝主题到website目录
+<pre tabindex="0"><code>cp -r hugo-theme-cleanwhite/exampleSite/** ../
+</code></pre></li>
+<li>注意，当前处于themes目录，可以用<code>cd ..</code>返回上级目录</li>
+<li>本地运行：<code>hugo serve</code></li>
+<li>打开浏览器输入:<code>localhost:1313</code>查看效果</li>
+</ol>
+<h2 id="将博客内容挂到github上">将博客内容挂到github上</h2>
+<ul>
+<li>进入你的github账号，如果你的用户名叫做zhangsan,则新建一个名字叫做zhangsan.github.io的仓库</li>
+<li>在章节[搭建博客]中，进入website目录，输入<code>hugo</code>命令，会自动在该目录下新建<code>public</code>目录。</li>
+<li>将该目录中的内容全部上传到新创建的zhangsan.github.io仓库</li>
+<li>在浏览器中输入<code>https://zhangsan.github.io</code>即可以访问你自己的站点了</li>
+<li>至此，远程访问你的整个博客站点就完成了。</li>
+</ul>
+<h2 id="如何将public目录的内容上传到zhangsangithubio仓库">如何将public目录的内容上传到zhangsan.github.io仓库</h2>
+<p>进入到website/public目录下，依次输入以下命令</p>
+<pre tabindex="0"><code>git init
+git add .
+git commit -m &#34;Hugo build my blogs&#34;
+git remote add origin git@github.com:zhangsan/zhangsan.github.io.git
+git push -u origin master
+</code></pre><p>命令全部执行成功，即可通过网址<code>https://zhangsan.github.io</code>访问了。</p>
+<h2 id="自定义博客">自定义博客</h2>
+<p>由于执行了上面的命令<code>cp -r hugo-theme-cleanwhite/exampleSite/** ../</code>，所以显示的是默认的博客模板。自己需要对博客内容进行修改。
+主要修改可能有下面几点:</p>
+<ul>
+<li>修改config.toml文件</li>
+<li>删除 <code>website/content</code>目录下的子目录中的一些 &ldquo;*.md&quot;文档</li>
+<li>修改或者删除 <code>website/static/img</code>目录下的一些图片。</li>
+<li>具体要怎么修改，可以先将demo网站运行起来，根据自己的需要来进行修改。</li>
+</ul>
+
 
                 
                 
@@ -252,6 +299,17 @@
 
                 
 
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/helloworld/" data-toggle="tooltip" data-placement="top" title="First Demo Article">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
                 
 
                 

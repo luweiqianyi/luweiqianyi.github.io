@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on YinChao Blog</title>
-    <link>https://luweiqianyi.github.io/post/</link>
-    <description>Recent content in Posts on YinChao Blog</description>
+    <title>Blogs on YinChao Blog</title>
+    <link>https://luweiqianyi.github.io/categories/blogs/</link>
+    <description>Recent content in Blogs on YinChao Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/categories/blogs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hugo搭建自己的博客教程</title>
       <link>https://luweiqianyi.github.io/post/hugo%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/</link>
@@ -14,15 +14,6 @@
       
       <guid>https://luweiqianyi.github.io/post/hugo%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/</guid>
       <description>Hugo 搭建自己的博客 模板选择 https://themes.gohugo.io/themes/hugo-theme-cleanwhite/ 搭建博客 以下命令均在Ununtu20.04上进行操作 创建项目： hugo new site website 从github中拷贝主题 cd themes git clone https://github.com/zhaohuabing/hugo-theme-cleanwhite.git 拷贝完成后</description>
-    </item>
-    
-    <item>
-      <title>First Demo Article</title>
-      <link>https://luweiqianyi.github.io/post/helloworld/</link>
-      <pubDate>Mon, 19 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://luweiqianyi.github.io/post/helloworld/</guid>
-      <description>Hello world!</description>
     </item>
     
   </channel>
