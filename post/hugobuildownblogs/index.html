@@ -15,9 +15,9 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="Hugo搭建自己的博客教程" />
+    <meta property="og:title" content="Hugo搭建自己的博客教程" />
+    <meta property="twitter:title" content="Hugo搭建自己的博客教程" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blog, 博客, 个人网站">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>404 Page not found | 殷超的博客 | YinChao&#39;s Blog</title>
+    <title>Hugo搭建自己的博客教程 | 殷超的博客 | YinChao&#39;s Blog</title>
 
-    <link rel="canonical" href="/404.html">
+    <link rel="canonical" href="/post/hugobuildownblogs/">
 
     
     
@@ -153,14 +153,41 @@
 
 
 
-<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>YinChao&#39;s Blog </h1>
-                    
-		    <span class="subheading">积跬步以至千里</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/hugo" title="Hugo">
+                            Hugo
+                        </a>
+                        
+                    </div>
+                    <h1>Hugo搭建自己的博客教程</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;YinChao&#34;
+                             
+                            on 
+                            Wednesday, October 19, 2022
+                            
+                            
+                            
+                            
+                    </span>
                 </div>
             </div>
         </div>
@@ -170,22 +197,187 @@
 
 
 
-<header class="intro-header" style="background-image: url('/img/404-bg.jpg')">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				<div class="site-heading" id="tag-heading">
-					<h1>404</h1>
-					<span class="subheading">页面丢失了哟 ┭┮﹏┭┮</span>
-				</div>
-			</div>
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="hugo-搭建自己的博客">Hugo 搭建自己的博客</h1>
+<h2 id="模板选择">模板选择</h2>
+<p><a href="https://themes.gohugo.io/themes/hugo-theme-cleanwhite/">https://themes.gohugo.io/themes/hugo-theme-cleanwhite/</a></p>
+<h2 id="搭建博客">搭建博客</h2>
+<p>以下命令均在Ununtu20.04上进行操作</p>
+<ol>
+<li>创建项目： <code>hugo new site website</code></li>
+<li>从github中拷贝主题
+<pre tabindex="0"><code>cd themes
+git clone https://github.com/zhaohuabing/hugo-theme-cleanwhite.git
+</code></pre></li>
+<li>拷贝完成后，拷贝主题到website目录
+<pre tabindex="0"><code>cp -r hugo-theme-cleanwhite/exampleSite/** ../
+</code></pre></li>
+<li>注意，当前处于themes目录，可以用<code>cd ..</code>返回上级目录</li>
+<li>本地运行：<code>hugo serve</code></li>
+<li>打开浏览器输入:<code>localhost:1313</code>查看效果</li>
+</ol>
+<h2 id="将博客内容挂到github上">将博客内容挂到github上</h2>
+<ul>
+<li>进入你的github账号，如果你的用户名叫做zhangsan,则新建一个名字叫做zhangsan.github.io的仓库</li>
+<li>在章节[搭建博客]中，进入website目录，输入<code>hugo</code>命令，会自动在该目录下新建<code>public</code>目录。</li>
+<li>将该目录中的内容全部上传到新创建的zhangsan.github.io仓库</li>
+<li>在浏览器中输入<code>https://zhangsan.github.io</code>即可以访问你自己的站点了</li>
+<li>至此，远程访问你的整个博客站点就完成了。</li>
+</ul>
+<h2 id="如何将public目录的内容上传到zhangsangithubio仓库">如何将public目录的内容上传到zhangsan.github.io仓库</h2>
+<p>进入到website/public目录下，依次输入以下命令</p>
+<pre tabindex="0"><code>git init
+git add .
+git commit -m &#34;Hugo build my blogs&#34;
+git remote add origin git@github.com:zhangsan/zhangsan.github.io.git
+git push -u origin master
+</code></pre><p>命令全部执行成功，即可通过网址<code>https://zhangsan.github.io</code>访问了。</p>
+<h2 id="自定义博客">自定义博客</h2>
+<p>由于执行了上面的命令<code>cp -r hugo-theme-cleanwhite/exampleSite/** ../</code>，所以显示的是默认的博客模板。自己需要对博客内容进行修改。
+主要修改可能有下面几点:</p>
+<ul>
+<li>修改config.toml文件</li>
+<li>删除 <code>website/content</code>目录下的子目录中的一些 &ldquo;*.md&quot;文档</li>
+<li>修改或者删除 <code>website/static/img</code>目录下的一些图片。</li>
+<li>具体要怎么修改，可以先将demo网站运行起来，根据自己的需要来进行修改。</li>
+</ul>
+
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p>「真诚赞赏，手留余香」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author"><a href="https://luweiqianyi.github.io"><img src="/img/favicon.png" />YinChao&#39;s Blog</a></span>
+        
+	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">2元</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat-2.png"  id="pay-image"/>
 		</div>
 	</div>
-</header>
+	<div class="zs-modal-footer">
+		<label><input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked"><span ><span class="zs-wechat"><img src="/img/reward/wechat-btn.png"/></span></label>
+		<label><input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay"><img src="/img/reward/alipay-btn.png"/></span></label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
 
-<script>
-	document.body.classList.add('page-fullscreen');
+                
+
+                
+
+                
+
+
+<div id="disqus-comment"></div>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://luweiqianyi.github.io/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
 </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        
+                    </ul>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
 
 
 
