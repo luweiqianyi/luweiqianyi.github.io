@@ -38,7 +38,8 @@
   </url>
   
   <url>
-    <loc>https://luweiqianyi.github.io/about/aboutme/</loc>
+    <loc>https://luweiqianyi.github.io/about/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -47,10 +48,6 @@
   
   <url>
     <loc>https://luweiqianyi.github.io/search/placeholder/</loc>
-  </url>
-  
-  <url>
-    <loc>https://luweiqianyi.github.io/about/</loc>
   </url>
   
   <url>
