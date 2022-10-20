@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="YinChao&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://luweiqianyi.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://luweiqianyi.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="阿里云ubuntu服务器安装nginx" />
+    <meta property="og:title" content="阿里云ubuntu服务器安装nginx" />
+    <meta property="twitter:title" content="阿里云ubuntu服务器安装nginx" />
+    
+
+    
+    <meta name="description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blog, 博客, 个人网站">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>阿里云ubuntu服务器安装nginx | 殷超的博客 | YinChao&#39;s Blog</title>
+
+    <link rel="canonical" href="/post/ubuntuinstallnginx/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">YinChao&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/blogs">blogs</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/server" title="Server">
+                            Server
+                        </a>
+                        
+                        <a class="tag" href="/tags/ubuntu" title="Ubuntu">
+                            Ubuntu
+                        </a>
+                        
+                    </div>
+                    <h1>阿里云ubuntu服务器安装nginx</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;Yinchao&#34;
+                             
+                            on 
+                            Thursday, October 20, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="阿里云ubuntu服务器安装nginx">阿里云ubuntu服务器安装nginx</h1>
+<h2 id="安装步骤">安装步骤</h2>
+<h3 id="sudo-apt-get-update">sudo apt-get update</h3>
+<p>访问源列表里的每个网址，读取软件列表的最新源，保存在本地电脑(这里的本地电脑就是指我在阿里云上申请的服务器)。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Mencius:~# <span style="color:#8be9fd;font-style:italic">cd</span> projects
+</span></span><span style="display:flex;"><span>root@Mencius:~/projects# ls
+</span></span><span style="display:flex;"><span>root@Mencius:~/projects# <span style="color:#8be9fd;font-style:italic">cd</span> ..
+</span></span><span style="display:flex;"><span>root@Mencius:~# sudo apt update 
+</span></span><span style="display:flex;"><span>Get:1 http://mirrors.cloud.aliyuncs.com/ubuntu focal InRelease <span style="color:#ff79c6">[</span><span style="color:#bd93f9">265</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:2 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates InRelease <span style="color:#ff79c6">[</span><span style="color:#bd93f9">114</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:3 http://mirrors.cloud.aliyuncs.com/ubuntu focal-backports InRelease <span style="color:#ff79c6">[</span><span style="color:#bd93f9">108</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:4 http://mirrors.cloud.aliyuncs.com/ubuntu focal-security InRelease <span style="color:#ff79c6">[</span><span style="color:#bd93f9">114</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:5 http://mirrors.cloud.aliyuncs.com/ubuntu focal/universe Sources <span style="color:#ff79c6">[</span>9,707 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:6 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main Sources <span style="color:#ff79c6">[</span><span style="color:#bd93f9">847</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:7 http://mirrors.cloud.aliyuncs.com/ubuntu focal/multiverse Sources <span style="color:#ff79c6">[</span><span style="color:#bd93f9">174</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:8 http://mirrors.cloud.aliyuncs.com/ubuntu focal/restricted Sources <span style="color:#ff79c6">[</span>6,472 B<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:9 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main amd64 Packages <span style="color:#ff79c6">[</span><span style="color:#bd93f9">970</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:10 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main i386 Packages <span style="color:#ff79c6">[</span><span style="color:#bd93f9">718</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:11 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main Translation-en <span style="color:#ff79c6">[</span><span style="color:#bd93f9">506</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:12 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main amd64 c-n-f Metadata <span style="color:#ff79c6">[</span>29.5 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:13 http://mirrors.cloud.aliyuncs.com/ubuntu focal/restricted amd64 Packages <span style="color:#ff79c6">[</span>22.0 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:14 http://mirrors.cloud.aliyuncs.com/ubuntu focal/restricted i386 Packages <span style="color:#ff79c6">[</span>8,112 B<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:15 http://mirrors.cloud.aliyuncs.com/ubuntu focal/restricted Translation-en <span style="color:#ff79c6">[</span>6,212 B<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:16 http://mirrors.cloud.aliyuncs.com/ubuntu focal/restricted amd64 c-n-f Metadata <span style="color:#ff79c6">[</span><span style="color:#bd93f9">392</span> B<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:17 http://mirrors.cloud.aliyuncs.com/ubuntu focal/universe i386 Packages <span style="color:#ff79c6">[</span>4,642 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:18 http://mirrors.cloud.aliyuncs.com/ubuntu focal/universe amd64 Packages <span style="color:#ff79c6">[</span>8,628 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:19 http://mirrors.cloud.aliyuncs.com/ubuntu focal/universe Translation-en <span style="color:#ff79c6">[</span>5,124 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:20 http://mirrors.cloud.aliyuncs.com/ubuntu focal/universe amd64 c-n-f Metadata <span style="color:#ff79c6">[</span><span style="color:#bd93f9">265</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:21 http://mirrors.cloud.aliyuncs.com/ubuntu focal/multiverse amd64 Packages <span style="color:#ff79c6">[</span><span style="color:#bd93f9">144</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:22 http://mirrors.cloud.aliyuncs.com/ubuntu focal/multiverse i386 Packages <span style="color:#ff79c6">[</span>74.7 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:23 http://mirrors.cloud.aliyuncs.com/ubuntu focal/multiverse Translation-en <span style="color:#ff79c6">[</span><span style="color:#bd93f9">104</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:24 http://mirrors.cloud.aliyuncs.com/ubuntu focal/multiverse amd64 c-n-f Metadata <span style="color:#ff79c6">[</span>9,136 B<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:25 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/universe Sources <span style="color:#ff79c6">[</span><span style="color:#bd93f9">257</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:26 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main Sources <span style="color:#ff79c6">[</span><span style="color:#bd93f9">524</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:27 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/multiverse Sources <span style="color:#ff79c6">[</span>20.4 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:28 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/restricted Sources <span style="color:#ff79c6">[</span>44.8 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:29 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 Packages <span style="color:#ff79c6">[</span>2,113 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:30 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main i386 Packages <span style="color:#ff79c6">[</span><span style="color:#bd93f9">727</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:31 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main Translation-en <span style="color:#ff79c6">[</span><span style="color:#bd93f9">375</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:32 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 c-n-f Metadata <span style="color:#ff79c6">[</span>16.0 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:33 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/restricted i386 Packages <span style="color:#ff79c6">[</span>26.6 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:34 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/restricted amd64 Packages <span style="color:#ff79c6">[</span>1,288 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:35 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/restricted Translation-en <span style="color:#ff79c6">[</span><span style="color:#bd93f9">182</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:36 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/restricted amd64 c-n-f Metadata <span style="color:#ff79c6">[</span><span style="color:#bd93f9">584</span> B<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:37 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/universe amd64 Packages <span style="color:#ff79c6">[</span><span style="color:#bd93f9">955</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:38 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/universe i386 Packages <span style="color:#ff79c6">[</span><span style="color:#bd93f9">693</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:39 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/universe Translation-en <span style="color:#ff79c6">[</span><span style="color:#bd93f9">219</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:40 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/universe amd64 c-n-f Metadata <span style="color:#ff79c6">[</span>21.6 kB<span style="color:#ff79c6">]</span>
+</span></span></code></pre></div><h3 id="sudo-apt-install-nginx">sudo apt install nginx</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Mencius:~# sudo apt install nginx
+</span></span><span style="display:flex;"><span>Reading package lists... Done
+</span></span><span style="display:flex;"><span>Building dependency tree       
+</span></span><span style="display:flex;"><span>Reading state information... Done
+</span></span><span style="display:flex;"><span>The following additional packages will be installed:
+</span></span><span style="display:flex;"><span>  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0 libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
+</span></span><span style="display:flex;"><span>  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5 libwebp6 libxpm4 libxslt1.1 nginx-common nginx-core
+</span></span><span style="display:flex;"><span>Suggested packages:
+</span></span><span style="display:flex;"><span>  libgd-tools fcgiwrap nginx-doc ssl-cert
+</span></span><span style="display:flex;"><span>The following NEW packages will be installed:
+</span></span><span style="display:flex;"><span>  fontconfig-config fonts-dejavu-core libfontconfig1 libgd3 libjbig0 libjpeg-turbo8 libjpeg8 libnginx-mod-http-image-filter
+</span></span><span style="display:flex;"><span>  libnginx-mod-http-xslt-filter libnginx-mod-mail libnginx-mod-stream libtiff5 libwebp6 libxpm4 libxslt1.1 nginx nginx-common nginx-core
+</span></span><span style="display:flex;"><span><span style="color:#bd93f9">0</span> upgraded, <span style="color:#bd93f9">18</span> newly installed, <span style="color:#bd93f9">0</span> to remove and <span style="color:#bd93f9">99</span> not upgraded.
+</span></span><span style="display:flex;"><span>Need to get 2,585 kB of archives.
+</span></span><span style="display:flex;"><span>After this operation, 8,400 kB of additional disk space will be used.
+</span></span><span style="display:flex;"><span>Do you want to <span style="color:#ff79c6">continue</span>? <span style="color:#ff79c6">[</span>Y/n<span style="color:#ff79c6">]</span> Y
+</span></span><span style="display:flex;"><span>Get:1 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main amd64 fonts-dejavu-core all 2.37-1 <span style="color:#ff79c6">[</span>1,041 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:2 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main amd64 fontconfig-config all 2.13.1-2ubuntu3 <span style="color:#ff79c6">[</span>28.8 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:3 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main amd64 libfontconfig1 amd64 2.13.1-2ubuntu3 <span style="color:#ff79c6">[</span><span style="color:#bd93f9">114</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:4 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 libjpeg-turbo8 amd64 2.0.3-0ubuntu1.20.04.3 <span style="color:#ff79c6">[</span><span style="color:#bd93f9">118</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:5 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main amd64 libjpeg8 amd64 8c-2ubuntu8 <span style="color:#ff79c6">[</span>2,194 B<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:6 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main amd64 libjbig0 amd64 2.1-3.1build1 <span style="color:#ff79c6">[</span>26.7 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:7 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 libwebp6 amd64 0.6.1-2ubuntu0.20.04.1 <span style="color:#ff79c6">[</span><span style="color:#bd93f9">185</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:8 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 libtiff5 amd64 4.1.0+git191117-2ubuntu0.20.04.5 <span style="color:#ff79c6">[</span><span style="color:#bd93f9">162</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:9 http://mirrors.cloud.aliyuncs.com/ubuntu focal/main amd64 libxpm4 amd64 1:3.5.12-1 <span style="color:#ff79c6">[</span>34.0 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:10 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 libgd3 amd64 2.2.5-5.2ubuntu2.1 <span style="color:#ff79c6">[</span><span style="color:#bd93f9">118</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:11 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 nginx-common all 1.18.0-0ubuntu1.3 <span style="color:#ff79c6">[</span>37.7 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:12 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 libnginx-mod-http-image-filter amd64 1.18.0-0ubuntu1.3 <span style="color:#ff79c6">[</span>14.8 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:13 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 libxslt1.1 amd64 1.1.34-4ubuntu0.20.04.1 <span style="color:#ff79c6">[</span><span style="color:#bd93f9">151</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:14 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 libnginx-mod-http-xslt-filter amd64 1.18.0-0ubuntu1.3 <span style="color:#ff79c6">[</span>13.0 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:15 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 libnginx-mod-mail amd64 1.18.0-0ubuntu1.3 <span style="color:#ff79c6">[</span>42.8 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:16 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 libnginx-mod-stream amd64 1.18.0-0ubuntu1.3 <span style="color:#ff79c6">[</span>67.3 kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:17 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 nginx-core amd64 1.18.0-0ubuntu1.3 <span style="color:#ff79c6">[</span><span style="color:#bd93f9">425</span> kB<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Get:18 http://mirrors.cloud.aliyuncs.com/ubuntu focal-updates/main amd64 nginx all 1.18.0-0ubuntu1.3 <span style="color:#ff79c6">[</span>3,620 B<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>Fetched 2,585 kB in 0s <span style="color:#ff79c6">(</span>15.0 MB/s<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>Preconfiguring packages ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package fonts-dejavu-core.
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">(</span>Reading database ... <span style="color:#bd93f9">113930</span> files and directories currently installed.<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>Preparing to unpack .../00-fonts-dejavu-core_2.37-1_all.deb ...
+</span></span><span style="display:flex;"><span>Unpacking fonts-dejavu-core <span style="color:#ff79c6">(</span>2.37-1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package fontconfig-config.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../01-fontconfig-config_2.13.1-2ubuntu3_all.deb ...
+</span></span><span style="display:flex;"><span>Unpacking fontconfig-config <span style="color:#ff79c6">(</span>2.13.1-2ubuntu3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libfontconfig1:amd64.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../02-libfontconfig1_2.13.1-2ubuntu3_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libfontconfig1:amd64 <span style="color:#ff79c6">(</span>2.13.1-2ubuntu3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libjpeg-turbo8:amd64.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../03-libjpeg-turbo8_2.0.3-0ubuntu1.20.04.3_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libjpeg-turbo8:amd64 <span style="color:#ff79c6">(</span>2.0.3-0ubuntu1.20.04.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libjpeg8:amd64.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../04-libjpeg8_8c-2ubuntu8_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libjpeg8:amd64 <span style="color:#ff79c6">(</span>8c-2ubuntu8<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libjbig0:amd64.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../05-libjbig0_2.1-3.1build1_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libjbig0:amd64 <span style="color:#ff79c6">(</span>2.1-3.1build1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libwebp6:amd64.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../06-libwebp6_0.6.1-2ubuntu0.20.04.1_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libwebp6:amd64 <span style="color:#ff79c6">(</span>0.6.1-2ubuntu0.20.04.1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libtiff5:amd64.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../07-libtiff5_4.1.0+git191117-2ubuntu0.20.04.5_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libtiff5:amd64 <span style="color:#ff79c6">(</span>4.1.0+git191117-2ubuntu0.20.04.5<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libxpm4:amd64.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../08-libxpm4_1%3a3.5.12-1_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libxpm4:amd64 <span style="color:#ff79c6">(</span>1:3.5.12-1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libgd3:amd64.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../09-libgd3_2.2.5-5.2ubuntu2.1_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libgd3:amd64 <span style="color:#ff79c6">(</span>2.2.5-5.2ubuntu2.1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package nginx-common.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../10-nginx-common_1.18.0-0ubuntu1.3_all.deb ...
+</span></span><span style="display:flex;"><span>Unpacking nginx-common <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libnginx-mod-http-image-filter.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../11-libnginx-mod-http-image-filter_1.18.0-0ubuntu1.3_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libnginx-mod-http-image-filter <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libxslt1.1:amd64.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../12-libxslt1.1_1.1.34-4ubuntu0.20.04.1_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libxslt1.1:amd64 <span style="color:#ff79c6">(</span>1.1.34-4ubuntu0.20.04.1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libnginx-mod-http-xslt-filter.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../13-libnginx-mod-http-xslt-filter_1.18.0-0ubuntu1.3_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libnginx-mod-http-xslt-filter <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libnginx-mod-mail.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../14-libnginx-mod-mail_1.18.0-0ubuntu1.3_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libnginx-mod-mail <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package libnginx-mod-stream.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../15-libnginx-mod-stream_1.18.0-0ubuntu1.3_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking libnginx-mod-stream <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package nginx-core.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../16-nginx-core_1.18.0-0ubuntu1.3_amd64.deb ...
+</span></span><span style="display:flex;"><span>Unpacking nginx-core <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Selecting previously unselected package nginx.
+</span></span><span style="display:flex;"><span>Preparing to unpack .../17-nginx_1.18.0-0ubuntu1.3_all.deb ...
+</span></span><span style="display:flex;"><span>Unpacking nginx <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libxpm4:amd64 <span style="color:#ff79c6">(</span>1:3.5.12-1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up nginx-common <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /lib/systemd/system/nginx.service.
+</span></span><span style="display:flex;"><span>Setting up libjbig0:amd64 <span style="color:#ff79c6">(</span>2.1-3.1build1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libwebp6:amd64 <span style="color:#ff79c6">(</span>0.6.1-2ubuntu0.20.04.1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up fonts-dejavu-core <span style="color:#ff79c6">(</span>2.37-1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libjpeg-turbo8:amd64 <span style="color:#ff79c6">(</span>2.0.3-0ubuntu1.20.04.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libxslt1.1:amd64 <span style="color:#ff79c6">(</span>1.1.34-4ubuntu0.20.04.1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libjpeg8:amd64 <span style="color:#ff79c6">(</span>8c-2ubuntu8<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libnginx-mod-mail <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up fontconfig-config <span style="color:#ff79c6">(</span>2.13.1-2ubuntu3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libnginx-mod-stream <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libnginx-mod-http-xslt-filter <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libtiff5:amd64 <span style="color:#ff79c6">(</span>4.1.0+git191117-2ubuntu0.20.04.5<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libfontconfig1:amd64 <span style="color:#ff79c6">(</span>2.13.1-2ubuntu3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libgd3:amd64 <span style="color:#ff79c6">(</span>2.2.5-5.2ubuntu2.1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up libnginx-mod-http-image-filter <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up nginx-core <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Setting up nginx <span style="color:#ff79c6">(</span>1.18.0-0ubuntu1.3<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Processing triggers <span style="color:#ff79c6">for</span> ufw <span style="color:#ff79c6">(</span>0.36-6ubuntu1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Processing triggers <span style="color:#ff79c6">for</span> systemd <span style="color:#ff79c6">(</span>245.4-4ubuntu3.17<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Processing triggers <span style="color:#ff79c6">for</span> man-db <span style="color:#ff79c6">(</span>2.9.1-1<span style="color:#ff79c6">)</span> ...
+</span></span><span style="display:flex;"><span>Processing triggers <span style="color:#ff79c6">for</span> libc-bin <span style="color:#ff79c6">(</span>2.31-0ubuntu9.9<span style="color:#ff79c6">)</span> ...
+</span></span></code></pre></div><h3 id="查看nginx状态">查看nginx状态</h3>
+<pre tabindex="0"><code>root@Mencius:~# sudo systemctl status nginx
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Fri 2022-09-23 11:45:47 CST; 1min 12s ago
+       Docs: man:nginx(8)
+   Main PID: 3212 (nginx)
+      Tasks: 3 (limit: 4477)
+     Memory: 7.1M
+     CGroup: /system.slice/nginx.service
+             ├─3212 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+             ├─3213 nginx: worker process
+             └─3214 nginx: worker process
+
+Sep 23 11:45:47 Mencius systemd[1]: Starting A high performance web server and a reverse proxy server...
+Sep 23 11:45:47 Mencius systemd[1]: Started A high performance web server and a reverse proxy server.
+</code></pre><h3 id="配置ununtu防火墙允许nginx访问端口">配置ununtu防火墙，允许nginx访问端口</h3>
+<h4 id="允许流量通过nginx">允许流量通过nginx</h4>
+<pre tabindex="0"><code>root@Mencius:~# sudo ufw allow &#39;Nginx Full&#39;
+Rules updated
+Rules updated (v6)
+</code></pre><h4 id="验证防火墙状态">验证防火墙状态</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>root@Mencius:~# sudo ufw status
+</span></span><span style="display:flex;"><span>Status: inactive
+</span></span><span style="display:flex;"><span>root@Mencius:~# sudo ufw <span style="color:#8be9fd;font-style:italic">enable</span>
+</span></span><span style="display:flex;"><span>Command may disrupt existing ssh connections. Proceed with operation <span style="color:#ff79c6">(</span>y|n<span style="color:#ff79c6">)</span>? y
+</span></span><span style="display:flex;"><span>Firewall is active and enabled on system startup
+</span></span><span style="display:flex;"><span>root@Mencius:~# sudo ufw status
+</span></span><span style="display:flex;"><span>Status: active
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To                         Action      From
+</span></span><span style="display:flex;"><span>--                         ------      ----
+</span></span><span style="display:flex;"><span>Nginx Full                 ALLOW       Anywhere                  
+</span></span><span style="display:flex;"><span>Nginx Full <span style="color:#ff79c6">(</span>v6<span style="color:#ff79c6">)</span>            ALLOW       Anywhere <span style="color:#ff79c6">(</span>v6<span style="color:#ff79c6">)</span> 
+</span></span></code></pre></div><p>验证过程中发现防火墙是关闭的。输入命令启动，然后就可以看到之前配置的防火墙允许nginx通过的配置了。</p>
+<h3 id="chrome浏览器访问http11662150136">Chrome浏览器访问&quot;http://116.62.150.136“</h3>
+<p>访问后提示</p>
+<pre tabindex="0"><code>无法访问此网站116.62.150.136 的响应时间过长。
+请试试以下办法：
+
+检查网络连接
+检查代理服务器和防火墙
+运行 Windows 网络诊断
+ERR_CONNECTION_TIMED_OUT
+</code></pre><p>原因是没有为该服务器配置80端口入站规则，可以在阿里云找到自己的云服务器，为该服务器配置安全组入方向的规则，允许80端口的访问。</p>
+<p>接下来再次访问，输入“http://116.62.150.136 ”,可以看到浏览器有如下显示，说明我们可以正常访问我们的nginx了。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>Welcome to nginx!
+</span></span><span style="display:flex;"><span>If you see this page, the nginx web server is successfully installed and working. Further configuration is required.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>For online documentation and support please refer to nginx.org.
+</span></span><span style="display:flex;"><span>Commercial support is available at nginx.com.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Thank you for using nginx.
+</span></span></code></pre></div><h2 id="关于https11662150136无法访问的问题建议参考一下下面这篇文章">关于&quot;https://116.62.150.136&quot;无法访问的问题建议参考一下下面这篇文章</h2>
+<p>注： 我还没有对其进行验证，验证通过后，我会过程集成到自己的文章中。
+<a href="https://www.dounaite.com/article/628caae7f8519f4c0cd283e7.html">https://www.dounaite.com/article/628caae7f8519f4c0cd283e7.html</a></p>
+<h2 id="至此我在我的阿里云ubuntu服务器上安装nginx并且访问nginx主页地址就完成了">至此，我在我的阿里云ubuntu服务器上安装nginx,并且访问nginx主页地址就完成了。</h2>
+<h1 id="但是我第二次使用workbench想远程登录的时候却登录不了我的远程服务器具体描述与解决方案看下面">但是！！！！我第二次使用Workbench想远程登录的时候却登录不了我的远程服务器。具体描述与解决方案看下面</h1>
+<p>我第二次登录 <a href="https://ecs.console.aliyun.com/#/server/region/cn-hangzhou">阿里云服务器管理控制台</a>，查看某个云服务器ECS实例，点击“远程登录”，选择Workbench远程连接时，却给了一个提示框，提示框中的内容如下：</p>
+<pre tabindex="0"><code>登录主机: “我的实例名称”失败！
+原因：连接超时!
+访问公网IP地址需要在实例安全组白名单中增加Workbench的服务器白名单：
+47.96.60./24
+118.31.243.0/24
+</code></pre><p>于是我去阿里云服务器管理控制台页面的“云服务器/安全组”下配置了入站规则，将上面两个ip允许通过我的服务器,并设置通过端口为22。
+<strong>但是，还是不能登录！！！！</strong>
+经过一番面向四面八方搜索，我发现之前我在安装nginx时将服务器实例的防火墙打开了(详见上面的“验证防火墙状态”章节)，但是没有设置防火墙允许22端口通过外界来得网络数据，为了安全我总不能关闭防火墙吧，后面经过搜索发现，只要执行</p>
+<pre tabindex="0"><code>sudo ufw allow ssh
+</code></pre><p>就可以让网络流量通过22端口进入到服务器。
+但是如果要在服务器上执行上述命令，必须能够登录服务器，而我们现在通过workbench无法登录到我们的远程服务器啊，怎么办，一开始我也是遇到这个问题，其实<a href="https://ecs.console.aliyun.com/#/server/region/cn-hangzhou">阿里云服务器管理控制台</a>，查看某个云服务器ECS实例，点击“远程登录”，还有一种以vnc方式登录的方式。以这种方式登录远程服务器，然后执行上面的命令即可。
+这里只是通过我们打开阿里的网页，以页面上的workbench的方式远程登录我们服务器，这里限定的ip地址簇为47.96.60./24和118.31.243.0/24。
+我想通过本机电脑，通过ssh客户端的方式远程登录我的服务器却登录不了，所以还需要将本机的公网ip地址配置到我的阿里云服务器管理控制台页面的“云服务器/安全组”中去，这样，就可以在本地电脑通过客户端来登录远程服务器了。</p>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/hugobuildownblogs/" data-toggle="tooltip" data-placement="top" title="Hugo搭建自己的博客教程">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+                
+
+                
+
+
+<div id="disqus-comment"></div>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://luweiqianyi.github.io/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:runningriven@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/luweiqianyi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted" >
+                    Copyright &copy; YinChao&#39;s Blog 2022
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> 
+                    <iframe hidden="hidden"
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
