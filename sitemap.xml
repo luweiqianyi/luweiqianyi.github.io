@@ -23,6 +23,12 @@
     <loc>https://luweiqianyi.github.io/tags/</loc>
     <lastmod>2022-10-20T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://luweiqianyi.github.io/tags/test/</loc>
+    <lastmod>2022-10-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/categories/test/</loc>
+    <lastmod>2022-10-20T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://luweiqianyi.github.io/tags/ubuntu/</loc>
     <lastmod>2022-10-20T00:00:00+00:00</lastmod>
   </url><url>
@@ -38,6 +44,9 @@
     <loc>https://luweiqianyi.github.io/post/myremoteserverinfo/</loc>
     <lastmod>2022-10-20T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://luweiqianyi.github.io/post/%E4%B8%AD%E6%96%87%E5%90%8D%E6%96%87%E6%A1%A3/</loc>
+    <lastmod>2022-10-20T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://luweiqianyi.github.io/post/ubuntuinstallnginx/</loc>
     <lastmod>2022-10-20T00:00:00+00:00</lastmod>
   </url><url>
@@ -46,15 +55,6 @@
   </url><url>
     <loc>https://luweiqianyi.github.io/post/hugobuildownblogs/</loc>
     <lastmod>2022-10-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://luweiqianyi.github.io/tags/test/</loc>
-    <lastmod>2020-10-20T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://luweiqianyi.github.io/categories/test/</loc>
-    <lastmod>2020-10-20T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://luweiqianyi.github.io/post/%E4%B8%AD%E6%96%87%E5%90%8D%E6%96%87%E6%A1%A3/</loc>
-    <lastmod>2020-10-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/about/</loc>
     <priority>0</priority>

@@ -35,6 +35,15 @@
     </item>
     
     <item>
+      <title>测试：中文名作为md文件的名字</title>
+      <link>https://luweiqianyi.github.io/post/%E4%B8%AD%E6%96%87%E5%90%8D%E6%96%87%E6%A1%A3/</link>
+      <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/%E4%B8%AD%E6%96%87%E5%90%8D%E6%96%87%E6%A1%A3/</guid>
+      <description>测试：中文名作为md文件的名字 如果可以看见这个文档，说明运行hugo new post/中文名文档.md之后生成的默认文件,是可以通过baseURL</description>
+    </item>
+    
+    <item>
       <title>阿里云ubuntu服务器安装nginx</title>
       <link>https://luweiqianyi.github.io/post/ubuntuinstallnginx/</link>
       <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
@@ -50,15 +59,6 @@
       
       <guid>https://luweiqianyi.github.io/post/hugobuildownblogs/</guid>
       <description>Hugo 搭建自己的博客 模板选择 https://themes.gohugo.io/themes/hugo-theme-cleanwhite/ 搭建博客 以下命令均在Ununtu20.04上进行操作 创建项目： hugo new site website 从github中拷贝主题 cd themes git clone https://github.com/zhaohuabing/hugo-theme-cleanwhite.git 拷贝完成后</description>
-    </item>
-    
-    <item>
-      <title>测试：中文名作为md文件的名字</title>
-      <link>https://luweiqianyi.github.io/post/%E4%B8%AD%E6%96%87%E5%90%8D%E6%96%87%E6%A1%A3/</link>
-      <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://luweiqianyi.github.io/post/%E4%B8%AD%E6%96%87%E5%90%8D%E6%96%87%E6%A1%A3/</guid>
-      <description>测试：中文名作为md文件的名字</description>
     </item>
     
   </channel>

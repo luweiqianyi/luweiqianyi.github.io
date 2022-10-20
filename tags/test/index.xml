@@ -6,14 +6,14 @@
     <description>Recent content in test on YinChao&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/tags/test/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/tags/test/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>测试：中文名作为md文件的名字</title>
       <link>https://luweiqianyi.github.io/post/%E4%B8%AD%E6%96%87%E5%90%8D%E6%96%87%E6%A1%A3/</link>
-      <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
       
       <guid>https://luweiqianyi.github.io/post/%E4%B8%AD%E6%96%87%E5%90%8D%E6%96%87%E6%A1%A3/</guid>
-      <description>测试：中文名作为md文件的名字</description>
+      <description>测试：中文名作为md文件的名字 如果可以看见这个文档，说明运行hugo new post/中文名文档.md之后生成的默认文件,是可以通过baseURL</description>
     </item>
     
   </channel>
