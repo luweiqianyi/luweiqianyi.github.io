@@ -8,6 +8,15 @@
     <language>en-us</language>
     <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Etcd初探</title>
+      <link>https://luweiqianyi.github.io/post/etcdintroduce/</link>
+      <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/etcdintroduce/</guid>
+      <description>Etcd初探 什么是Etcd etcd是一个拥有强一致性、分布式键值存储特性，能够提供一种可靠方式来存储数据，能够被分布式系统或者某个集群访问的</description>
+    </item>
+    
+    <item>
       <title>Windows客户端上传文件到远程服务器</title>
       <link>https://luweiqianyi.github.io/post/windowsuploadfiletoremoteserver/</link>
       <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
