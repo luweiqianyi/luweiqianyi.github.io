@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="YinChao&#39;s Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://luweiqianyi.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://luweiqianyi.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="我的阿里云Linux服务器相关信息" />
+    <meta property="og:title" content="我的阿里云Linux服务器相关信息" />
+    <meta property="twitter:title" content="我的阿里云Linux服务器相关信息" />
+    
+
+    
+    <meta name="description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blog, 博客, 个人网站">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>我的阿里云Linux服务器相关信息 | 殷超的博客 | YinChao&#39;s Blog</title>
+
+    <link rel="canonical" href="/post/myremoteserverinfo/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">YinChao&#39;s Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/blogs">blogs</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/server" title="Server">
+                            Server
+                        </a>
+                        
+                    </div>
+                    <h1>我的阿里云Linux服务器相关信息</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;YinChao&#34;
+                             
+                            on 
+                            Thursday, October 20, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="阿里云linux服务器相关信息">阿里云Linux服务器相关信息</h1>
+<table>
+<thead>
+<tr>
+<th>key</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>服务器厂商</td>
+<td>阿里云</td>
+</tr>
+<tr>
+<td>实例名称</td>
+<td>Mencius</td>
+</tr>
+<tr>
+<td>HostName</td>
+<td>Mencius</td>
+</tr>
+<tr>
+<td>地域</td>
+<td>华东1(杭州)</td>
+</tr>
+<tr>
+<td>CPU&amp;内存</td>
+<td>2核(vCPU)4GiB</td>
+</tr>
+<tr>
+<td>操作系统</td>
+<td>Ubuntu 20.04.64</td>
+</tr>
+<tr>
+<td>使用带宽</td>
+<td>3Mbps</td>
+</tr>
+<tr>
+<td>公网ip</td>
+<td>116.62.150.136</td>
+</tr>
+<tr>
+<td>主私网ip</td>
+<td>172.16.36.49</td>
+</tr>
+</tbody>
+</table>
+<h1 id="linux根目录下各目录功能介绍">Linux根目录下各目录功能介绍</h1>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">目录名</th>
+<th style="text-align:left">目录说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">/</td>
+<td style="text-align:left">根目录,以下介绍根目录下的目录及其作用</td>
+</tr>
+<tr>
+<td style="text-align:left">bin</td>
+<td style="text-align:left">存放标准的linux工具程序u。当在终端输入ls,系统会去bin目录下查找是否有ls程序</td>
+</tr>
+<tr>
+<td style="text-align:left">boot</td>
+<td style="text-align:left">Linux内核及引导程序所需要的文件目录</td>
+</tr>
+<tr>
+<td style="text-align:left">etc</td>
+<td style="text-align:left">存放系统配置文件方面的文件。当你安装了samba这个套件，当你想要修改samba配置文件的时候，你会发现配置文件就在/etc/samba目录下</td>
+</tr>
+<tr>
+<td style="text-align:left">dev</td>
+<td style="text-align:left">存放与设备有关的文件。比如磁盘驱动、USB驱动</td>
+</tr>
+<tr>
+<td style="text-align:left">home</td>
+<td style="text-align:left">存放个人数据。用户的设置文件、桌面文件夹、用户数据都在这里。每个用户都有自己的用户目录，位置为/home/用户名。root用户除外。</td>
+</tr>
+<tr>
+<td style="text-align:left">tmp</td>
+<td style="text-align:left">临时目录。linux系统会定期清理。</td>
+</tr>
+<tr>
+<td style="text-align:left">usr</td>
+<td style="text-align:left">存放不适合放在bin或者etc目录下的额外工具。比如游戏、音乐软件等。<!-- raw HTML omitted -->/usr/bin:存放程序 <!-- raw HTML omitted -->/usr/share/：存放共享数据 <!-- raw HTML omitted -->/usr/lib：存放函数库文件。<!-- raw HTML omitted -->软件包管理器会自动管理好/usr目录</td>
+</tr>
+<tr>
+<td style="text-align:left">opt</td>
+<td style="text-align:left">存放可选程序。比如安装firefox测试版软件到该目录下，当想删掉的时可直接删除，不会影响系统其他设置。</td>
+</tr>
+<tr>
+<td style="text-align:left">media</td>
+<td style="text-align:left">挂在usb接口的移动硬盘，CD/DVD驱动器等等。</td>
+</tr>
+<tr>
+<td style="text-align:left">lost+found</td>
+<td style="text-align:left">在ext2或ext3文件系统中，当系统意外崩溃或机器意外关机，会产生一些文件碎片放在这里。当系统启动过程中fsck工具会检查这里，并修复已经损坏的文件系统。</td>
+</tr>
+<tr>
+<td style="text-align:left">mnt</td>
+<td style="text-align:left">存放“挂在存储设备的挂在目录”。</td>
+</tr>
+<tr>
+<td style="text-align:left">proc</td>
+<td style="text-align:left">存放操作系统运行时的进程信息和内核信息。</td>
+</tr>
+<tr>
+<td style="text-align:left">sbin</td>
+<td style="text-align:left">存放系统管理命令的存放，是root用户的可执行命令存放地。普通用户无权限执行该目录下的命令。</td>
+</tr>
+<tr>
+<td style="text-align:left">var</td>
+<td style="text-align:left">该目录中的内容经常变动。<!-- raw HTML omitted -->/var/log: 存放系统日志目录 <!-- raw HTML omitted -->/var/www: 定义Apache服务器站点存放目录 <!-- raw HTML omitted -->/var/lib:存放一些库文件，比如MySQL的</td>
+</tr>
+<tr>
+<td style="text-align:left">srv</td>
+<td style="text-align:left">存放一些服务启动之后需要提取的数据</td>
+</tr>
+<tr>
+<td style="text-align:left">sys</td>
+<td style="text-align:left">安装了2.6内核中新出现的文件系统sysfs(集成了针对进程信息的proc文件系统+针对设备的devfs文件系统+针对伪终端的devpts文件系统)</td>
+</tr>
+</tbody>
+</table>
+<h1 id="我的目录">我的目录</h1>
+<p>~目录下新建projects目录，存放自己的开发的程序。</p>
+<h2 id="projects目录下各目录介绍">projects目录下各目录介绍</h2>
+<table>
+<thead>
+<tr>
+<th>目录名</th>
+<th>程序说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/ubuntuinstallnginx/" data-toggle="tooltip" data-placement="top" title="阿里云ubuntu服务器安装nginx">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/windowsuploadfiletoremoteserver/" data-toggle="tooltip" data-placement="top" title="Windows客户端上传文件到远程服务器">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+<div id="disqus-comment"></div>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://luweiqianyi.github.io/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/server" title="server">
+                            server
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:runningriven@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/luweiqianyi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted" >
+                    Copyright &copy; YinChao&#39;s Blog 2022
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> 
+                    <iframe hidden="hidden"
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
