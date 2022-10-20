@@ -8,6 +8,15 @@
     <language>en-us</language>
     <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/categories/blogs/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Windows upload file to remote server</title>
+      <link>https://luweiqianyi.github.io/post/windowsuploadfiletoremoteserver/</link>
+      <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/windowsuploadfiletoremoteserver/</guid>
+      <description>Windows客户端上传文件到远程服务器 确定本地要上传的文件和要上传到服务器的路径 本地要上传的文件的路径：F:\HappyCoding\Ja</description>
+    </item>
+    
+    <item>
       <title>阿里云ubuntu服务器安装nginx</title>
       <link>https://luweiqianyi.github.io/post/ubuntuinstallnginx/</link>
       <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>

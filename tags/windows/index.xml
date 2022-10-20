@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on YinChao&#39;s Blog</title>
+    <link>https://luweiqianyi.github.io/tags/windows/</link>
+    <description>Recent content in Windows on YinChao&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Windows upload file to remote server</title>
+      <link>https://luweiqianyi.github.io/post/windowsuploadfiletoremoteserver/</link>
+      <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/windowsuploadfiletoremoteserver/</guid>
+      <description>Windows客户端上传文件到远程服务器 确定本地要上传的文件和要上传到服务器的路径 本地要上传的文件的路径：F:\HappyCoding\Ja</description>
+    </item>
+    
+  </channel>
+</rss>

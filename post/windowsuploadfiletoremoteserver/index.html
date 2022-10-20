@@ -15,9 +15,9 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="Windows upload file to remote server" />
+    <meta property="og:title" content="Windows upload file to remote server" />
+    <meta property="twitter:title" content="Windows upload file to remote server" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blog, 博客, 个人网站">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Categories | 殷超的博客 | YinChao&#39;s Blog</title>
+    <title>Windows upload file to remote server | 殷超的博客 | YinChao&#39;s Blog</title>
 
-    <link rel="canonical" href="/categories/">
+    <link rel="canonical" href="/post/windowsuploadfiletoremoteserver/">
 
     
     
@@ -153,14 +153,41 @@
 
 
 
-<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>YinChao&#39;s Blog </h1>
-                    
-		    <span class="subheading">积跬步以至千里</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/windows" title="Windows">
+                            Windows
+                        </a>
+                        
+                    </div>
+                    <h1>Windows upload file to remote server</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;YinChao&#34;
+                             
+                            on 
+                            Thursday, October 20, 2022
+                            
+                            
+                            
+                            
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,13 +200,66 @@
 <article>
     <div class="container">
         <div class="row">
+
             
             <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 post-container">
 
-         	
+                
+                <h1 id="windows客户端上传文件到远程服务器">Windows客户端上传文件到远程服务器</h1>
+<h2 id="确定本地要上传的文件和要上传到服务器的路径">确定本地要上传的文件和要上传到服务器的路径</h2>
+<ul>
+<li>本地要上传的文件的路径：F:\HappyCoding\JavaServer\target\JavaServer-0.0.1-SNAPSHOT.jar</li>
+<li>要上传的服务器的路径：root@116.62.150.136:~/projects/JavaServer</li>
+</ul>
+<h2 id="打开cmd客户端执行以下命令">打开cmd客户端，执行以下命令</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Microsoft Windows <span style="color:#ff79c6">[</span>版本 10.0.19043.2006<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">(</span>c<span style="color:#ff79c6">)</span> Microsoft Corporation。保留所有权利。
+</span></span><span style="display:flex;"><span>C:<span style="color:#f1fa8c">\U</span>sers<span style="color:#f1fa8c">\N</span>icklaus&gt;F:
+</span></span><span style="display:flex;"><span>F:<span style="color:#f1fa8c">\&gt;</span><span style="color:#8be9fd;font-style:italic">cd</span> F:<span style="color:#f1fa8c">\H</span>appyCoding<span style="color:#f1fa8c">\J</span>avaServer<span style="color:#f1fa8c">\t</span>arget
+</span></span><span style="display:flex;"><span>F:<span style="color:#f1fa8c">\H</span>appyCoding<span style="color:#f1fa8c">\J</span>avaServer<span style="color:#f1fa8c">\t</span>arget&gt;scp JavaServer-0.0.1-SNAPSHOT.jar root@116.62.150.136:~/projects/JavaServer
+</span></span><span style="display:flex;"><span>root@116.62.150.136&#39;s password:
+</span></span><span style="display:flex;"><span>JavaServer-0.0.1-SNAPSHOT.jar                                                         100%   17MB   8.7MB/s   00:01
+</span></span></code></pre></div><p>100%表示文件上传成功</p>
+<h2 id="启动本地putty客户端连接远程服务器验证javaserver-001-snapshotjar是否真的上传到projectsjavaserver路径中">启动本地Putty客户端，连接远程服务器，验证JavaServer-0.0.1-SNAPSHOT.jar是否真的上传到~/projects/JavaServer路径中</h2>
+<pre tabindex="0"><code>login as: root
+root@MyAliyunServerIP&#39;s password:
+Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.4.0-110-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+New release &#39;22.04.1 LTS&#39; available.
+Run &#39;do-release-upgrade&#39; to upgrade to it.
+
+
+Welcome to Alibaba Cloud Elastic Compute Service !
+
+Last login: Wed Sep 28 22:45:11 2022 from 登录时使用的电脑的公网IP地址
+root@Mencius:~#cd projects/JavaServer
+root@Mencius:~/projects/JavaServer# ls
+JavaServer-0.0.1-SNAPSHOT.jar
+root@Mencius:~/projects/JavaServer#
+</code></pre><p>从Putty客户端可以看到 “JavaServer-0.0.1-SNAPSHOT.jar” 确实出现在了服务器上。</p>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/ubuntuinstallnginx/" data-toggle="tooltip" data-placement="top" title="阿里云ubuntu服务器安装nginx">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+                
+
                 
 
 
@@ -207,8 +287,25 @@
 
 
 
-
             </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
             
             <div class="
                 col-lg-8 col-lg-offset-2
