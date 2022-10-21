@@ -6,7 +6,16 @@
     <description>Recent content on YinChao&#39;s Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 21 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Etcd lease机制</title>
+      <link>https://luweiqianyi.github.io/post/etcd_lease/</link>
+      <pubDate>Fri, 21 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/etcd_lease/</guid>
+      <description>Etcd lease 什么是Etcd的lease机制 lease机制能够确保一个etcd集群中的key拥有一种临时性的特征，被指定某个lease的key只能在集</description>
+    </item>
+    
     <item>
       <title>Etcd初探</title>
       <link>https://luweiqianyi.github.io/post/etcdintroduce/</link>
