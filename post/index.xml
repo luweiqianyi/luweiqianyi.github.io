@@ -6,7 +6,16 @@
     <description>Recent content in Posts on YinChao&#39;s Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go操作etcd</title>
+      <link>https://luweiqianyi.github.io/post/go%E6%93%8D%E4%BD%9Cetcd/</link>
+      <pubDate>Mon, 24 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/go%E6%93%8D%E4%BD%9Cetcd/</guid>
+      <description>go操作etcd 环境部署：Docker部署etcd 详见文章Windows平台部署etcd到Docker 新建项目 etcdInAction 项目名称：etcdInAct</description>
+    </item>
+    
     <item>
       <title>Etcd lease机制</title>
       <link>https://luweiqianyi.github.io/post/etcd_lease/</link>

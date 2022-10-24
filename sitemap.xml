@@ -3,24 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://luweiqianyi.github.io/categories/blogs/</loc>
-    <lastmod>2022-10-21T00:00:00+00:00</lastmod>
+    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/categories/</loc>
-    <lastmod>2022-10-21T00:00:00+00:00</lastmod>
+    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/tags/etcd/</loc>
-    <lastmod>2022-10-21T00:00:00+00:00</lastmod>
+    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://luweiqianyi.github.io/post/etcd_lease/</loc>
-    <lastmod>2022-10-21T00:00:00+00:00</lastmod>
+    <loc>https://luweiqianyi.github.io/post/go%E6%93%8D%E4%BD%9Cetcd/</loc>
+    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/post/</loc>
-    <lastmod>2022-10-21T00:00:00+00:00</lastmod>
+    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/tags/</loc>
-    <lastmod>2022-10-21T00:00:00+00:00</lastmod>
+    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/</loc>
+    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/post/etcd_lease/</loc>
     <lastmod>2022-10-21T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/tags/docker/</loc>

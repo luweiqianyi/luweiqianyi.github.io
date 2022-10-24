@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="YinChao&#39;s Blogs">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://luweiqianyi.github.io/img/home-bg.jpg">
+    <meta property="twitter:image" content="https://luweiqianyi.github.io/img/home-bg.jpg" />
+    
+
+    
+    <meta name="title" content="go操作etcd" />
+    <meta property="og:title" content="go操作etcd" />
+    <meta property="twitter:title" content="go操作etcd" />
+    
+
+    
+    <meta name="description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。">
+    <meta property="og:description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。" />
+    <meta property="twitter:description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blogs, 博客, 个人网站">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>go操作etcd | 殷超的博客 | YinChao&#39;s Blogs</title>
+
+    <link rel="canonical" href="/post/go%E6%93%8D%E4%BD%9Cetcd/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">YinChao&#39;s Blogs</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/blogs">blogs</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/test">test</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/etcd" title="etcd">
+                            etcd
+                        </a>
+                        
+                    </div>
+                    <h1>go操作etcd</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;YinChao&#34;
+                             
+                            on 
+                            Monday, October 24, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="go操作etcd">go操作etcd</h1>
+<h2 id="环境部署docker部署etcd">环境部署：Docker部署etcd</h2>
+<p>详见文章<a href="https://luweiqianyi.github.io/post/windows%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2etcd%E5%88%B0docker/">Windows平台部署etcd到Docker</a></p>
+<h2 id="新建项目-etcdinaction">新建项目 etcdInAction</h2>
+<ul>
+<li>项目名称：etcdInAction</li>
+<li>项目根目录：etcdInAction</li>
+</ul>
+<p>创建项目相关文件，目录如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#50fa7b">etcdInAction</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">└──</span> <span style="color:#f1fa8c">cmd</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">└──</span> <span style="color:#f1fa8c">etcdprac1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#50fa7b">└──</span> <span style="color:#f1fa8c">etcdopt.go</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#50fa7b">└──</span> <span style="color:#f1fa8c">main.go</span>
+</span></span></code></pre></div><h2 id="存储key到docker">存储key到docker</h2>
+<h3 id="项目配置">项目配置</h3>
+<p>goland中该项目的go build配置项如下：</p>
+<ul>
+<li>Run Kind: Directory</li>
+<li>Directory: F:\HappyCoding\goprograms\etcdInAction\cmd\etcdprac1</li>
+<li>Output directory: F:\HappyCoding\goprograms\etcdInAction\cmd\etcdprac1</li>
+<li>Working directory: F:\HappyCoding\goprograms\etcdInAction\cmd\etcdprac1</li>
+<li>Go tool arguments: -o etcdprac1.exe    // 指定生成的exe的名字，生成exe的目录在上面的Output directory中已经指定</li>
+</ul>
+<h3 id="下载项目需要用到的包">下载项目需要用到的包</h3>
+<p>goland Terminal运行以下命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#50fa7b">PS</span> <span style="color:#f1fa8c">F:\HappyCoding\goprograms\etcdInAction&gt; go mod tidy</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">PS</span> <span style="color:#f1fa8c">F:\HappyCoding\goprograms\etcdInAction&gt; go get go.etcd.io/etcd/clientv3</span>
+</span></span></code></pre></div><p>输出结果</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>go: added github.com/coreos/etcd v2.3.8+incompatible
+</span></span><span style="display:flex;"><span>go: added go.etcd.io/etcd v2.3.8+incompatible
+</span></span></code></pre></div><h3 id="编码etcdoptgo">编码：etcdopt.go</h3>
+<p>封装了一些操作etcd的函数。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;context&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;flag&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;go.etcd.io/etcd/clientv3&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> addr = flag.<span style="color:#50fa7b">String</span>(<span style="color:#f1fa8c">&#34;addr&#34;</span>, <span style="color:#f1fa8c">&#34;http://127.0.0.1:2379&#34;</span>, <span style="color:#f1fa8c">&#34;etcd address&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> (
+</span></span><span style="display:flex;"><span>	config clientv3.Config
+</span></span><span style="display:flex;"><span>	client <span style="color:#ff79c6">*</span>clientv3.Client
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">initEtcd</span>() (c <span style="color:#ff79c6">*</span>clientv3.Client, err <span style="color:#8be9fd">error</span>) {
+</span></span><span style="display:flex;"><span>	config = clientv3.Config{
+</span></span><span style="display:flex;"><span>		Endpoints:   []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;127.0.0.1:2379&#34;</span>},
+</span></span><span style="display:flex;"><span>		DialTimeout: <span style="color:#bd93f9">5</span> <span style="color:#ff79c6">*</span> time.Second,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	client, err <span style="color:#ff79c6">:=</span> clientv3.<span style="color:#50fa7b">New</span>(config)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		log.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		c = client
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> c, err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> client, <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">getKV</span>() (clientv3.KV, <span style="color:#8be9fd">error</span>) {
+</span></span><span style="display:flex;"><span>	client, err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">initEtcd</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		log.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>, err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	kv <span style="color:#ff79c6">:=</span> clientv3.<span style="color:#50fa7b">NewKV</span>(client)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> kv, <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">PutToEtcd</span>(key <span style="color:#8be9fd">string</span>, value <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span> {
+</span></span><span style="display:flex;"><span>	kv, err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">getKV</span>()
+</span></span><span style="display:flex;"><span>	resp, err <span style="color:#ff79c6">:=</span> kv.<span style="color:#50fa7b">Put</span>(context.<span style="color:#50fa7b">TODO</span>(), key, value)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		log.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	log.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;resp=%s, revision=%d\n&#34;</span>, resp, resp.Header.Revision)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;resp=%s, revision=%d\n&#34;</span>, resp, resp.Header.Revision)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">GetFromEtcd</span>(key <span style="color:#8be9fd">string</span>) (<span style="color:#8be9fd">string</span>, <span style="color:#8be9fd">error</span>) {
+</span></span><span style="display:flex;"><span>	kv, err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">getKV</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		log.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;&#34;</span>, err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	resp, err <span style="color:#ff79c6">:=</span> kv.<span style="color:#50fa7b">Get</span>(context.<span style="color:#50fa7b">TODO</span>(), key)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		log.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;&#34;</span>, err
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> s <span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> _, kv <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> resp.Kvs {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#8be9fd;font-style:italic">string</span>(kv.Key) <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34; &#34;</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">string</span>(kv.Value))
+</span></span><span style="display:flex;"><span>		s <span style="color:#ff79c6">+=</span> <span style="color:#8be9fd;font-style:italic">string</span>(kv.Value)
+</span></span><span style="display:flex;"><span>		s <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34; &#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> s, <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="编码maingo">编码：main.go</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// 将key,value键值对为name=Leebai存入etcd
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">PutToEtcd</span>(<span style="color:#f1fa8c">&#34;name&#34;</span>, <span style="color:#f1fa8c">&#34;Leebai&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;=====================================&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// 获取值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	recv, err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">GetFromEtcd</span>(<span style="color:#f1fa8c">&#34;name&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// 打印输出存到etcd时key为name时的value值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	fmt.<span style="color:#50fa7b">Printf</span>(recv)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="执行结果">执行结果</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>F:<span style="color:#f1fa8c">\H</span>appyCoding<span style="color:#f1fa8c">\g</span>oprograms<span style="color:#f1fa8c">\e</span>tcdInAction<span style="color:#f1fa8c">\c</span>md<span style="color:#f1fa8c">\e</span>tcdprac1<span style="color:#f1fa8c">\e</span>tcdprac1.exe
+</span></span><span style="display:flex;"><span>2022/10/24 14:48:18 <span style="color:#8be9fd;font-style:italic">resp</span><span style="color:#ff79c6">=</span>&amp;<span style="color:#ff79c6">{</span>cluster_id:14841639068965178418 member_id:10276657743932975437 revision:12 raft_term:3 <span style="color:#ff79c6">}</span>, <span style="color:#8be9fd;font-style:italic">revision</span><span style="color:#ff79c6">=</span><span style="color:#bd93f9">12</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">resp</span><span style="color:#ff79c6">=</span>&amp;<span style="color:#ff79c6">{</span>cluster_id:14841639068965178418 member_id:10276657743932975437 revision:12 raft_term:3 <span style="color:#ff79c6">}</span>, <span style="color:#8be9fd;font-style:italic">revision</span><span style="color:#ff79c6">=</span><span style="color:#8be9fd;font-style:italic">12</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">=====================================</span>
+</span></span><span style="display:flex;"><span>name Leebai
+</span></span><span style="display:flex;"><span>Leebai 
+</span></span><span style="display:flex;"><span>Process finished with the <span style="color:#8be9fd;font-style:italic">exit</span> code <span style="color:#bd93f9">0</span>
+</span></span></code></pre></div><p>revision是指name这个键值对被修改的版本号。</p>
+
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p>「真诚赞赏，手留余香」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author"><a href="https://luweiqianyi.github.io"><img src="/img/favicon.png" />YinChao&#39;s Blogs</a></span>
+        
+	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">2元</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat-2.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label><input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked"><span ><span class="zs-wechat"><img src="/img/reward/wechat-btn.png"/></span></label>
+		<label><input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay"><img src="/img/reward/alipay-btn.png"/></span></label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/etcd_lease/" data-toggle="tooltip" data-placement="top" title="Etcd lease机制">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+                
+
+                
+
+
+<div id="disqus-comment"></div>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://luweiqianyi.github.io/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/etcd" title="etcd">
+                            etcd
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/hugo" title="hugo">
+                            hugo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/server" title="server">
+                            server
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/test" title="test">
+                            test
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/ubuntu" title="ubuntu">
+                            ubuntu
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/windows" title="windows">
+                            windows
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:runningriven@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/luweiqianyi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted" >
+                    Copyright &copy; YinChao&#39;s Blogs 2022
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> 
+                    <iframe hidden="hidden"
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
