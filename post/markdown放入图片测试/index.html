@@ -219,12 +219,12 @@
 <li>本地的项目根目录为: <code>D:\Hugo\website\</code></li>
 <li>如何构建项目可参考文章：<a href="https://luweiqianyi.github.io/post/hugobuildownblogs/">Hugo 搭建自己的博客</a></li>
 <li>在项目根目录的\content\post目录下新建目录<code>blogs_imgs</code>,用来存放博客的图片(目前有一个缺点: 就是所有的博客内的图片都放到该目录下，没有做“博客：博客内引用图片目录=1:1”的区分，后续找到方法后再完善，先这样粗略做一下)</li>
-<li>放入图片<code>test.png</code></li>
-<li>cmd运行hugo构建项目时，会发现<code>D:\Hugo\website\content\post</code>下的文件会被生成到<code>D:\Hugo\website\public\post</code>目录下，所以<code>public</code>目录下就出现了刚才新建的<code>blogs_imgs</code>目录以及该目录下的<code>test.png</code>,而生成当前md文档的html页面(运行hugo自动生成)却在post目录下的<code>markdown放入图片测试</code>目录中。所以，进行图片引用的时候需要保证html页面和test.png的相对路径正确，即<code>../blogs_imgs/test.PNG</code></li>
+<li>放入图片<code>goInAction.PNG</code></li>
+<li>cmd运行hugo构建项目时，会发现<code>D:\Hugo\website\content\post</code>下的文件会被生成到<code>D:\Hugo\website\public\post</code>目录下，所以<code>public</code>目录下就出现了刚才新建的<code>blogs_imgs</code>目录以及该目录下的<code>goInAction.PNG</code>,而生成当前md文档的html页面(运行hugo自动生成)却在post目录下的<code>markdown放入图片测试</code>目录中。所以，进行图片引用的时候需要保证<code>html</code>页面和<code>goInAction.PNG</code>的相对路径正确，即<code>../blogs_imgs/goInAction.PNG</code></li>
 <li>如下所示，如果图片在博客中正常显示(可在本地访问：<code>localhost:1313</code>来看看)，说明上面的描述过程是正确的，否则不正确。</li>
 </ul>
 <p>
-  <img src="../blogs_imgs/test.PNG" alt="image">
+  <img src="../blogs_imgs/goInAction.PNG" alt="image">
 
 </p>
 
