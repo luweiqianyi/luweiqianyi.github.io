@@ -3,10 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://luweiqianyi.github.io/categories/blogs/</loc>
-    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
+    <lastmod>2022-10-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/categories/</loc>
-    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
+    <lastmod>2022-10-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/post/</loc>
+    <lastmod>2022-10-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/tags/pulsar/</loc>
+    <lastmod>2022-10-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/post/pulsar%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88/</loc>
+    <lastmod>2022-10-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/tags/</loc>
+    <lastmod>2022-10-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/tags/translation/</loc>
+    <lastmod>2022-10-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/</loc>
+    <lastmod>2022-10-25T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/tags/etcd/</loc>
     <lastmod>2022-10-24T00:00:00+00:00</lastmod>
@@ -17,19 +35,10 @@
     <loc>https://luweiqianyi.github.io/post/markdown%E6%94%BE%E5%85%A5%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/</loc>
     <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://luweiqianyi.github.io/post/</loc>
-    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://luweiqianyi.github.io/tags/</loc>
-    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://luweiqianyi.github.io/tags/test/</loc>
     <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/categories/test/</loc>
-    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://luweiqianyi.github.io/</loc>
     <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/post/etcd_lease/</loc>
