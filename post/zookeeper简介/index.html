@@ -15,9 +15,9 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="ZooKeeper简介" />
+    <meta property="og:title" content="ZooKeeper简介" />
+    <meta property="twitter:title" content="ZooKeeper简介" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blogs, 博客, 个人网站">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>殷超的博客 | YinChao&#39;s Blogs</title>
+    <title>ZooKeeper简介 | 殷超的博客 | YinChao&#39;s Blogs</title>
 
-    <link rel="canonical" href="/about/">
+    <link rel="canonical" href="/post/zookeeper%E7%AE%80%E4%BB%8B/">
 
     
     
@@ -172,17 +172,25 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/zookeeper" title="zookeeper">
+                            zookeeper
+                        </a>
+                        
+                        <a class="tag" href="/tags/translation" title="translation">
+                            translation
+                        </a>
+                        
                     </div>
-                    <h1></h1>
+                    <h1>ZooKeeper简介</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         
                             Posted by 
                             
-                                    YinChao&#39;s Blogs
+                                     &#34;YinChao&#34;
                              
                             on 
-                            Monday, January 1, 0001
+                            Tuesday, October 25, 2022
                             
                             
                             
@@ -208,7 +216,79 @@
                 post-container">
 
                 
-                <h1 id="yinchao">YinChao</h1>
+                <h1 id="zookeeper简介">ZooKeeper简介</h1>
+<h2 id="什么是zookeeper">什么是ZooKeeper</h2>
+<p>ZooKeeper是一个为分布式应用程序服务的高性能的协调式服务。暴露了以下的服务：</p>
+<ul>
+<li>naming</li>
+<li>configuration management</li>
+<li>synchronization</li>
+<li>group services</li>
+<li>&hellip;</li>
+</ul>
+<h2 id="概览">概览</h2>
+<h3 id="设计目标">设计目标</h3>
+<ul>
+<li>简单
+<ul>
+<li>ZooKeeper允许分布式进程之间能够通过一个共享的继承体系的命名空间(类似于标准的文件系统体系)来相互协调、配合。</li>
+<li>ZooKeeper的数据驻留在内存中，因此ZooKeeper可以实现高吞吐量和低负载。</li>
+</ul>
+</li>
+<li>可复制
+
+  <img src="../zookeeper/ZooKeeper_Service.PNG" alt="image">
+
+
+<ul>
+<li>组成ZooKeeper Service的服务器必须相互知道彼此。在持久化存储中它们维护了关于彼此状态的内存镜像、还有事务日志和snapshots。只要一个ZooKeeper Service中的绝大多数服务器是可用的，那么就认为这个ZooKeeper Service是可用的(即可对外提供服务)。</li>
+<li>客户端连接到ZooKeeper Service内部的一个服务器，发送请求，得到响应，得到监听事件，发送心跳信号。如果客户端到该服务器的TCP连接断掉了，客户端会连接到内部的另一台服务器。</li>
+</ul>
+</li>
+<li>有序
+<ul>
+<li>ZooKeeper会将每一次更新用一个数字来代表，这个数据反映了所有ZooKeeper事务的顺序</li>
+</ul>
+</li>
+<li>快速
+<ul>
+<li>读相比写更快，大概10:1，所以是一个读主导(read-dominant)的服务。</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据模型和继承体系的命名空间">数据模型和继承体系的命名空间</h3>
+<p>
+  <img src="../zookeeper/ZooKeeper_Hierarachical_Namespace.PNG" alt="image">
+
+</p>
+<h3 id="nodes-and-ephemeral-nodes节点和瞬态节点">Nodes and ephemeral nodes(节点和瞬态节点)</h3>
+<p>ZNodes: 维护状态，包含：数据改变的版本号，ACL改变，时间戳，允许缓存验证和协调更新。每一次一个znode节点数据发生变化，版本号就会增加。
+ephemeral nodes: 只要创建znode的会话处于活动状态，这些节点就会存在。当会话结束时，这些节点会被删除。</p>
+<h3 id="提供的api">提供的API</h3>
+<ul>
+<li>create : creates a node at a location in the tree</li>
+<li>delete : deletes a node</li>
+<li>exists : tests if a node exists at a location</li>
+<li>get data : reads the data from a node</li>
+<li>set data : writes data to a node</li>
+<li>get children : retrieves a list of children of a node</li>
+<li>sync : waits for data to be propagated</li>
+</ul>
+<h3 id="实现">实现</h3>
+<p>
+  <img src="../zookeeper/ZooKeeper_Implementation.PNG" alt="image">
+
+</p>
+<ul>
+<li>复制的数据库是一个包含整个数据树的内存数据库。更新被记录到磁盘以实现可恢复性，写操作在应用到内存中的数据库之前被序列化到磁盘。</li>
+<li>每个ZooKeeper服务器都为客户端服务。客户端仅连接到一个服务器来提交请求。读请求由本地服务(本地服务拷贝了远程服务的数据库)来处理。写请求由agreement protocol处理。</li>
+<li>根据agreement protocol的机制，所有客户端的写请求都会都会被发到主节点(也叫leader节点)。余下的servers叫做从节点(follower节点)。从节点接收主节点的消息，并达成消息发送共识。消息层负责主节点的重新选举，并同步主节点信息到从节点。</li>
+</ul>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://zookeeper.apache.org/doc/current/index.html">ZooKeeper-Welcome</a></li>
+<li><a href="https://zookeeper.apache.org/doc/current/zookeeperOver.html">ZooKeeper-Overview</a></li>
+</ul>
 
 
                 
@@ -258,10 +338,15 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/notes/" data-toggle="tooltip" data-placement="top" title="">&larr;
+                        <a href="/post/go%E6%93%8D%E4%BD%9Cetcd/" data-toggle="tooltip" data-placement="top" title="go操作etcd">&larr;
                             Previous Post</a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/post/pulsar%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88/" data-toggle="tooltip" data-placement="top" title="Pulsar架构概览">Next
+                            Post &rarr;</a>
+                    </li>
                     
                 </ul>
                 

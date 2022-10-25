@@ -17,6 +17,15 @@
     </item>
     
     <item>
+      <title>ZooKeeper简介</title>
+      <link>https://luweiqianyi.github.io/post/zookeeper%E7%AE%80%E4%BB%8B/</link>
+      <pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/zookeeper%E7%AE%80%E4%BB%8B/</guid>
+      <description>ZooKeeper简介 什么是ZooKeeper ZooKeeper是一个为分布式应用程序服务的高性能的协调式服务。暴露了以下的服务： naming configuration management synchronization group</description>
+    </item>
+    
+    <item>
       <title>go操作etcd</title>
       <link>https://luweiqianyi.github.io/post/go%E6%93%8D%E4%BD%9Cetcd/</link>
       <pubDate>Mon, 24 Oct 2022 00:00:00 +0000</pubDate>
