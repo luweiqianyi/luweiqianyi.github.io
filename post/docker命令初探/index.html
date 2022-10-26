@@ -332,7 +332,8 @@ eg. <code>docker push klaus/ubuntu</code></p>
 </span></span><span style="display:flex;"><span>etcd-practice-etcd-manage   latest    0a37ce32f53f   <span style="color:#bd93f9">2</span> years ago     38.8MB
 </span></span><span style="display:flex;"><span>mall-etcd-manage            latest    0a37ce32f53f   <span style="color:#bd93f9">2</span> years ago     38.8MB
 </span></span></code></pre></div>其中<code>ubuntu:latest</code>与<code>ubuntu:22.04</code>是经过上面步骤新增的镜像。
-<code>mall-*</code>,与<code>etcd-*</code>开头的镜像是我本地构建本地项目时的拉取并自命名的远程镜像。</li>
+<code>mall-*</code>,与<code>etcd-*</code>开头的镜像是我本地构建本地项目时的拉取并自命名的远程镜像。
+<code>etcd-*</code>开头的镜像与容器的容器可以参见我的另一篇文章：<a href="https://luweiqianyi.github.io/post/windows%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2etcd%E5%88%B0docker/">Windows平台部署etcd到Docker</a></li>
 <li>删除镜像
 命令：<code>docker rmi [OPTIONS] IMAGE [IMAGE...]</code>,如果基于镜像启动的容器存在，无法直接删除，需要先删除容器，但是可以使用<code>-f</code>标记强行删除</li>
 <li>删除容器
