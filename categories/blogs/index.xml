@@ -17,6 +17,15 @@
     </item>
     
     <item>
+      <title>Docker构建远程项目和本地项目</title>
+      <link>https://luweiqianyi.github.io/post/docker%E6%9E%84%E5%BB%BA%E8%BF%9C%E7%A8%8B%E9%A1%B9%E7%9B%AE%E5%92%8C%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE/</link>
+      <pubDate>Wed, 26 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/docker%E6%9E%84%E5%BB%BA%E8%BF%9C%E7%A8%8B%E9%A1%B9%E7%9B%AE%E5%92%8C%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE/</guid>
+      <description>docker构建远程项目和本地项目 docker构建远程项目 拉取docker/getting-started镜像 PS C:\Users\Nicklaus&amp;gt; docker pull docker/getting-started Using default tag: latest latest: Pulling from docker/getting-started df9b9388f04a: Pull</description>
+    </item>
+    
+    <item>
       <title>Pulsar架构概览</title>
       <link>https://luweiqianyi.github.io/post/pulsar%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88/</link>
       <pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate>
