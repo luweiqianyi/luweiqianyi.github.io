@@ -15,15 +15,15 @@
     
 
     
-    <meta name="title" content="测试：中文名作为md文件的名字" />
-    <meta property="og:title" content="测试：中文名作为md文件的名字" />
-    <meta property="twitter:title" content="测试：中文名作为md文件的名字" />
+    <meta name="title" content="go语法：指针" />
+    <meta property="og:title" content="go语法：指针" />
+    <meta property="twitter:title" content="go语法：指针" />
     
 
     
-    <meta name="description" content="殷超，程序员 | 欢迎来到的YinChao的博客世界。">
-    <meta property="og:description" content="殷超，程序员 | 欢迎来到的YinChao的博客世界。" />
-    <meta property="twitter:description" content="殷超，程序员 | 欢迎来到的YinChao的博客世界。" />
+    <meta name="description" content="通过程序简单介绍了go指针的相关用法">
+    <meta property="og:description" content="通过程序简单介绍了go指针的相关用法" />
+    <meta property="twitter:description" content="通过程序简单介绍了go指针的相关用法" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blogs, 博客, 个人网站">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>测试：中文名作为md文件的名字 | 殷超的博客 | YinChao&#39;s Blogs</title>
+    <title>go语法：指针 | 殷超的博客 | YinChao&#39;s Blogs</title>
 
-    <link rel="canonical" href="/post/%E4%B8%AD%E6%96%87%E5%90%8D%E6%96%87%E6%A1%A3/">
+    <link rel="canonical" href="/post/go%E6%8C%87%E9%92%88/">
 
     
     
@@ -172,12 +172,12 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/test" title="test">
-                            test
+                        <a class="tag" href="/tags/go" title="go">
+                            go
                         </a>
                         
                     </div>
-                    <h1>测试：中文名作为md文件的名字</h1>
+                    <h1>go语法：指针</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         
@@ -186,7 +186,7 @@
                                      &#34;YinChao&#34;
                              
                             on 
-                            Thursday, October 20, 2022
+                            Friday, October 28, 2022
                             
                             
                             
@@ -212,10 +212,73 @@
                 post-container">
 
                 
-                <h1 id="测试中文名作为md文件的名字">测试：中文名作为md文件的名字</h1>
-<p>如果可以看见这个文档，说明运行<code>hugo new post/中文名文档.md</code>之后生成的默认文件,是可以通过<code>baseURL/post/中文名文档/</code>来访问的。
-其中baseURL在config.toml文件中定义好了,比如&quot;baseurl = &ldquo;<a href="https://luweiqianyi.github.io">https://luweiqianyi.github.io</a>&rdquo;&quot;</p>
-
+                <h1 id="go语法-指针">go语法: 指针</h1>
+<h2 id="运行环境">运行环境</h2>
+<ul>
+<li>Windows</li>
+<li>goland</li>
+<li>运行配置(Goland-&gt;Run/Debug Configurations)
+<ul>
+<li>Run kind: <code>Directory</code></li>
+<li>Directory: <code>F:\HappyCoding\goprograms\etcdInAction\cmd\etcdprac1</code></li>
+<li>Output directory: <code>F:\HappyCoding\goprograms\etcdInAction\cmd\etcdprac1</code></li>
+<li>Working directory: <code>F:\HappyCoding\goprograms\etcdInAction\cmd\etcdprac1</code></li>
+<li>Go tool arguments: <code>-o etcdprac1.exe</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="指针">指针</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> User <span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>	name   <span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>	age    <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span>	school <span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 返回对象指针
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">initUser</span>() <span style="color:#ff79c6">*</span>User {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">&amp;</span>User{
+</span></span><span style="display:flex;"><span>		name: <span style="color:#f1fa8c">&#34;zhang&#34;</span>,
+</span></span><span style="display:flex;"><span>		age:  <span style="color:#bd93f9">20</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 类似于成员函数的定义
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> (user <span style="color:#ff79c6">*</span>User) <span style="color:#50fa7b">printInfo</span>() {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%s,%d,%s\n&#34;</span>, user.name, user.age, user.school)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 普通函数传参
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">printInfo2</span>(user <span style="color:#ff79c6">*</span>User) {
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%s,%d,%s\n&#34;</span>, user.name, user.age, user.school)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// 测试函数
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 函数初始化，返回指针
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	user <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">initUser</span>()
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%s,%d,%s\n&#34;</span>, user.name, user.age, user.school)
+</span></span><span style="display:flex;"><span>	user.<span style="color:#50fa7b">printInfo</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#50fa7b">printInfo2</span>(user)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// 直接初始化
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	user2 <span style="color:#ff79c6">:=</span> User{
+</span></span><span style="display:flex;"><span>		name: <span style="color:#f1fa8c">&#34;lee&#34;</span>,
+</span></span><span style="display:flex;"><span>		age:  <span style="color:#bd93f9">28</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	user2.<span style="color:#50fa7b">printInfo</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#50fa7b">printInfo2</span>(<span style="color:#ff79c6">&amp;</span>user2)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行结果：</p>
+<pre tabindex="0"><code>F:\HappyCoding\goprograms\etcdInAction\cmd\etcdprac1\etcdprac1.exe
+zhang,20,
+zhang,20,
+zhang,20,
+lee,28, 
+lee,28, 
+</code></pre>
 
                 
                 
@@ -264,15 +327,10 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/ubuntuinstallnginx/" data-toggle="tooltip" data-placement="top" title="阿里云ubuntu服务器安装nginx">&larr;
+                        <a href="/post/docker%E5%91%BD%E4%BB%A4%E5%88%9D%E6%8E%A2/" data-toggle="tooltip" data-placement="top" title="Docker命令初探">&larr;
                             Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/post/myremoteserverinfo/" data-toggle="tooltip" data-placement="top" title="我的阿里云Linux服务器相关信息">Next
-                            Post &rarr;</a>
-                    </li>
                     
                 </ul>
                 
