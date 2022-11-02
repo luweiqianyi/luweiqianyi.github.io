@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="YinChao&#39;s Blogs">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://luweiqianyi.github.io/img/home-bg.jpg">
+    <meta property="twitter:image" content="https://luweiqianyi.github.io/img/home-bg.jpg" />
+    
+
+    
+    <meta name="title" content="go viper解析toml配置文件" />
+    <meta property="og:title" content="go viper解析toml配置文件" />
+    <meta property="twitter:title" content="go viper解析toml配置文件" />
+    
+
+    
+    <meta name="description" content="介绍了如何用开源库viper解析toml配置文件，读取到内存中">
+    <meta property="og:description" content="介绍了如何用开源库viper解析toml配置文件，读取到内存中" />
+    <meta property="twitter:description" content="介绍了如何用开源库viper解析toml配置文件，读取到内存中" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blogs, 博客, 个人网站">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>go viper解析toml配置文件 | 殷超的博客 | YinChao&#39;s Blogs</title>
+
+    <link rel="canonical" href="/post/go_viper%E8%A7%A3%E6%9E%90toml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">YinChao&#39;s Blogs</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/blogs">blogs</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/test">test</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/go" title="go">
+                            go
+                        </a>
+                        
+                    </div>
+                    <h1>go viper解析toml配置文件</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;YinChao&#34;
+                             
+                            on 
+                            Wednesday, November 2, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="开发环境配置">开发环境配置</h1>
+<ul>
+<li>系统：<code>Windows</code></li>
+<li>IDE: <code>Goland</code></li>
+<li>项目配置(<code>Goland-&gt;Run/Debug Configurations</code>)
+<ul>
+<li>Name:<code>vipertest</code>  // 指定Go Build的名字</li>
+<li>Run kind: <code>Directory</code></li>
+<li>Directory: <code>F:\HappyCoding\goprograms\awesomeProject\cmd\vipertest</code></li>
+<li>Output directory: <code>F:\HappyCoding\goprograms\awesomeProject\cmd\vipertest</code> // 指定exe的生成目录</li>
+<li>Working directory:<code>F:\HappyCoding\goprograms\awesomeProject\cmd\vipertest</code> // 指定当前项目的根目录，程序中一切文件地址都以该地址为基准进行查找</li>
+<li>Go tool arguments: <code>-o vipertest.exe</code> // 指定生成的exe的名字</li>
+</ul>
+</li>
+<li>其他配置
+<ul>
+<li>环境变量配置(<code>File-&gt;Settings-&gt;Go Modules</code>)
+<ul>
+<li>Environment: <code>MY_ENV2=WORLD;MY_ENV3=WUWUWU~;MY_ENV1=HELLO</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="配置文件内容">配置文件内容</h1>
+<p>文件名:<code>conf.toml</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[global]
+</span></span><span style="display:flex;"><span>key1 = <span style="color:#f1fa8c">&#34;v1&#34;</span>
+</span></span><span style="display:flex;"><span>key2 = <span style="color:#f1fa8c">&#34;v2&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[data]
+</span></span><span style="display:flex;"><span>key1 = <span style="color:#f1fa8c">&#34;value1&#34;</span>
+</span></span><span style="display:flex;"><span>key2 = <span style="color:#f1fa8c">&#34;value2&#34;</span>
+</span></span></code></pre></div><h1 id="源码">源码</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> main
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;flag&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;github.com/spf13/viper&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> GlobalConf <span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>	Key1 <span style="color:#8be9fd">string</span> <span style="color:#f1fa8c">`MapStruct:&#34;key1&#34;`</span> <span style="color:#6272a4">// key1必须和conf.toml中的global的key1同名
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	Key2 <span style="color:#8be9fd">string</span> <span style="color:#f1fa8c">`MapStruct:&#34;key2&#34;`</span> <span style="color:#6272a4">// key1必须和conf.toml中的global的key2同名
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> DataConf <span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>	Key1 <span style="color:#8be9fd">string</span> <span style="color:#f1fa8c">`MapStruct:&#34;key1&#34;`</span>
+</span></span><span style="display:flex;"><span>	Key2 <span style="color:#8be9fd">string</span> <span style="color:#f1fa8c">`MapStruct:&#34;key2&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> Config <span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>	Global GlobalConf <span style="color:#f1fa8c">`MapStruct:&#34;global&#34;`</span> <span style="color:#6272a4">// global必须和conf.toml中的global同名
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	Data   DataConf   <span style="color:#f1fa8c">`MapStruct:&#34;data&#34;`</span>   <span style="color:#6272a4">// data必须和conf.toml中的data同名
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> conf = Config{}
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> confFile <span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>	flag.<span style="color:#50fa7b">StringVar</span>(<span style="color:#ff79c6">&amp;</span>confFile, <span style="color:#f1fa8c">&#34;zz&#34;</span>, <span style="color:#f1fa8c">&#34;conf.toml&#34;</span>, <span style="color:#f1fa8c">&#34;??&#34;</span>)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(confFile)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	_, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Stat</span>(confFile)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;err&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	viper.<span style="color:#50fa7b">SetConfigFile</span>(confFile)
+</span></span><span style="display:flex;"><span>	viper.<span style="color:#50fa7b">SetConfigType</span>(<span style="color:#f1fa8c">&#34;toml&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	err = viper.<span style="color:#50fa7b">ReadInConfig</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	err = viper.<span style="color:#50fa7b">UnmarshalExact</span>(<span style="color:#ff79c6">&amp;</span>conf)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Println</span>(err)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// 打印在conf.toml文件中配置的值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;%s %s %s %s\n&#34;</span>, conf.Global.Key1, conf.Global.Key2, conf.Data.Key1, conf.Data.Key2)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// 尝试获取环境变量的值
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	<span style="color:#6272a4">// 环境变量在Goland-&gt;File-&gt;Settings-&gt;Go-&gt;Go modules中选择好Enable Go modules integration后配置：MY_ENV1=HELLO;MY_ENV2=WORLD
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	v <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Getenv</span>(<span style="color:#f1fa8c">&#34;MY_ENV1&#34;</span>)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(v)
+</span></span><span style="display:flex;"><span>	v = os.<span style="color:#50fa7b">Getenv</span>(<span style="color:#f1fa8c">&#34;MY_ENV2&#34;</span>)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(v)
+</span></span><span style="display:flex;"><span>	v = os.<span style="color:#50fa7b">Getenv</span>(<span style="color:#f1fa8c">&#34;MY_ENV3&#34;</span>)
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Println</span>(v)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="运行结果">运行结果</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>F:<span style="color:#f1fa8c">\H</span>appyCoding<span style="color:#f1fa8c">\g</span>oprograms<span style="color:#f1fa8c">\a</span>wesomeProject<span style="color:#f1fa8c">\c</span>md<span style="color:#f1fa8c">\v</span>ipertest<span style="color:#f1fa8c">\v</span>ipertest.exe
+</span></span><span style="display:flex;"><span>conf.toml
+</span></span><span style="display:flex;"><span>v1 v2 value1 value2
+</span></span><span style="display:flex;"><span>HELLO              
+</span></span><span style="display:flex;"><span>WORLD              
+</span></span><span style="display:flex;"><span>WUWUWU~ 
+</span></span></code></pre></div>
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p> 「如果这篇文章对你有用,请随意打赏」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author"><a href="https://luweiqianyi.github.io"><img src="/img/favicon.png" />YinChao&#39;s Blogs</a></span>
+        
+	        <p class="tip"><i></i><span>如果这篇文章对你有用,请随意打赏</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">2元</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat-2.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label><input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked"><span ><span class="zs-wechat"><img src="/img/reward/wechat-btn.png"/></span></label>
+		<label><input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay"><img src="/img/reward/alipay-btn.png"/></span></label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/windows%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAetcd%E9%9B%86%E7%BE%A4/" data-toggle="tooltip" data-placement="top" title="Windows下部署etcd集群">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+                
+
+                
+
+
+<div id="disqus-comment"></div>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://luweiqianyi.github.io/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/etcd" title="etcd">
+                            etcd
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/go" title="go">
+                            go
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/hugo" title="hugo">
+                            hugo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/pulsar" title="pulsar">
+                            pulsar
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/server" title="server">
+                            server
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/test" title="test">
+                            test
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/translation" title="translation">
+                            translation
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/ubuntu" title="ubuntu">
+                            ubuntu
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/windows" title="windows">
+                            windows
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/zookeeper" title="zookeeper">
+                            zookeeper
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:runningriven@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/luweiqianyi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted" >
+                    Copyright &copy; YinChao&#39;s Blogs 2022
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> 
+                    <iframe hidden="hidden"
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
