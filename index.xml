@@ -8,6 +8,15 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 02 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>etcd配置项</title>
+      <link>https://luweiqianyi.github.io/post/etcd%E9%85%8D%E7%BD%AE%E9%A1%B9/</link>
+      <pubDate>Wed, 02 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/etcd%E9%85%8D%E7%BD%AE%E9%A1%B9/</guid>
+      <description>etcd配置项 member相关 --name &amp;#39;default&amp;#39; Human-readable name for this member. --data-dir &amp;#39;${name}.etcd&amp;#39; Path to the data directory. --wal-dir &amp;#39;&amp;#39; Path to the dedicated wal directory. --snapshot-count &amp;#39;100000&amp;#39; Number of committed transactions to trigger a snapshot to disk. --heartbeat-interval &amp;#39;100&amp;#39; Time (in milliseconds) of a heartbeat interval. --election-timeout &amp;#39;1000&amp;#39; Time (in milliseconds) for an election to timeout. See tuning</description>
+    </item>
+    
+    <item>
       <title>go viper解析toml配置文件</title>
       <link>https://luweiqianyi.github.io/post/go_viper%E8%A7%A3%E6%9E%90toml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE/</link>
       <pubDate>Wed, 02 Nov 2022 00:00:00 +0000</pubDate>

@@ -8,6 +8,12 @@
     <loc>https://luweiqianyi.github.io/categories/</loc>
     <lastmod>2022-11-02T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://luweiqianyi.github.io/tags/etcd/</loc>
+    <lastmod>2022-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://luweiqianyi.github.io/post/etcd%E9%85%8D%E7%BD%AE%E9%A1%B9/</loc>
+    <lastmod>2022-11-02T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://luweiqianyi.github.io/tags/go/</loc>
     <lastmod>2022-11-02T00:00:00+00:00</lastmod>
   </url><url>
@@ -22,9 +28,6 @@
   </url><url>
     <loc>https://luweiqianyi.github.io/</loc>
     <lastmod>2022-11-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://luweiqianyi.github.io/tags/etcd/</loc>
-    <lastmod>2022-10-31T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://luweiqianyi.github.io/post/windows%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAetcd%E9%9B%86%E7%BE%A4/</loc>
     <lastmod>2022-10-31T00:00:00+00:00</lastmod>

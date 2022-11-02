@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="YinChao&#39;s Blogs">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://luweiqianyi.github.io/img/home-bg.jpg">
+    <meta property="twitter:image" content="https://luweiqianyi.github.io/img/home-bg.jpg" />
+    
+
+    
+    <meta name="title" content="etcd配置项" />
+    <meta property="og:title" content="etcd配置项" />
+    <meta property="twitter:title" content="etcd配置项" />
+    
+
+    
+    <meta name="description" content="记录一些常见的etcd配置项">
+    <meta property="og:description" content="记录一些常见的etcd配置项" />
+    <meta property="twitter:description" content="记录一些常见的etcd配置项" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blogs, 博客, 个人网站">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>etcd配置项 | 殷超的博客 | YinChao&#39;s Blogs</title>
+
+    <link rel="canonical" href="/post/etcd%E9%85%8D%E7%BD%AE%E9%A1%B9/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">YinChao&#39;s Blogs</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/blogs">blogs</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/test">test</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/etcd" title="etcd">
+                            etcd
+                        </a>
+                        
+                    </div>
+                    <h1>etcd配置项</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;YinChao&#34;
+                             
+                            on 
+                            Wednesday, November 2, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="etcd配置项">etcd配置项</h1>
+<h2 id="member相关">member相关</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#50fa7b">--name</span> <span style="color:#f1fa8c">&#39;default&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Human-readable</span> <span style="color:#f1fa8c">name for this member.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--data-dir</span> <span style="color:#f1fa8c">&#39;${name}.etcd&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Path</span> <span style="color:#f1fa8c">to the data directory.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--wal-dir</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Path</span> <span style="color:#f1fa8c">to the dedicated wal directory.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--snapshot-count</span> <span style="color:#f1fa8c">&#39;100000&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Number</span> <span style="color:#f1fa8c">of committed transactions to trigger a snapshot to disk.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--heartbeat-interval</span> <span style="color:#f1fa8c">&#39;100&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Time</span> <span style="color:#f1fa8c">(in milliseconds) of a heartbeat interval.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--election-timeout</span> <span style="color:#f1fa8c">&#39;1000&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Time</span> <span style="color:#f1fa8c">(in milliseconds) for an election to timeout. See tuning documentation for details.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--initial-election-tick-advance</span> <span style="color:#f1fa8c">&#39;true&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Whether</span> <span style="color:#f1fa8c">to fast-forward initial election ticks on boot for faster election.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--listen-peer-urls</span> <span style="color:#f1fa8c">&#39;http://localhost:2380&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">List</span> <span style="color:#f1fa8c">of URLs to listen on for peer traffic.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--listen-client-urls</span> <span style="color:#f1fa8c">&#39;http://localhost:2379&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">List</span> <span style="color:#f1fa8c">of URLs to listen on for client traffic.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--max-snapshots</span> <span style="color:#f1fa8c">&#39;5&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Maximum</span> <span style="color:#f1fa8c">number of snapshot files to retain (0 is unlimited).</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--max-wals</span> <span style="color:#f1fa8c">&#39;5&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Maximum</span> <span style="color:#f1fa8c">number of wal files to retain (0 is unlimited).</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--quota-backend-bytes</span> <span style="color:#f1fa8c">&#39;0&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Raise</span> <span style="color:#f1fa8c">alarms when backend size exceeds the given quota (0 defaults to low space quota).</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--backend-bbolt-freelist-type</span> <span style="color:#f1fa8c">&#39;map&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">BackendFreelistType</span> <span style="color:#f1fa8c">specifies the type of freelist that boltdb backend uses(array and map are supported types).</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--backend-batch-interval</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">BackendBatchInterval</span> <span style="color:#f1fa8c">is the maximum time before commit the backend transaction.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--backend-batch-limit</span> <span style="color:#f1fa8c">&#39;0&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">BackendBatchLimit</span> <span style="color:#f1fa8c">is the maximum operations before commit the backend transaction.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--max-txn-ops</span> <span style="color:#f1fa8c">&#39;128&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Maximum</span> <span style="color:#f1fa8c">number of operations permitted in a transaction.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--max-request-bytes</span> <span style="color:#f1fa8c">&#39;1572864&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Maximum</span> <span style="color:#f1fa8c">client request size in bytes the server will accept.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--grpc-keepalive-min-time</span> <span style="color:#f1fa8c">&#39;5s&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Minimum</span> <span style="color:#f1fa8c">duration interval that a client should wait before pinging server.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--grpc-keepalive-interval</span> <span style="color:#f1fa8c">&#39;2h&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Frequency</span> <span style="color:#f1fa8c">duration of server-to-client ping to check if a connection is alive (0 to disable).</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--grpc-keepalive-timeout</span> <span style="color:#f1fa8c">&#39;20s&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Additional</span> <span style="color:#f1fa8c">duration of wait before closing a non-responsive connection (0 to disable).</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--socket-reuse-port</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">to set socket option SO_REUSEPORT on listeners allowing rebinding of a port already in use.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--socket-reuse-address</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">to set socket option SO_REUSEADDR on listeners allowing binding to an address in TIME_WAIT state.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">Clustering</span> 
+</span></span></code></pre></div><h2 id="集群相关">集群相关</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#50fa7b">--initial-advertise-peer-urls</span> <span style="color:#f1fa8c">&#39;http://localhost:2380&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">List</span> <span style="color:#f1fa8c">of this member&#39;s peer URLs to advertise to the rest of the cluster.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--initial-cluster</span> <span style="color:#f1fa8c">&#39;default=http://localhost:2380&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Initial</span> <span style="color:#f1fa8c">cluster configuration for bootstrapping.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--initial-cluster-state</span> <span style="color:#f1fa8c">&#39;new&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Initial</span> <span style="color:#f1fa8c">cluster state (&#39;new&#39; or &#39;existing&#39;).</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--initial-cluster-token</span> <span style="color:#f1fa8c">&#39;etcd-cluster&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Initial</span> <span style="color:#f1fa8c">cluster token for the etcd cluster during bootstrap.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Specifying</span> <span style="color:#f1fa8c">this can protect you from unintended cross-cluster interaction when running multiple clusters.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--advertise-client-urls</span> <span style="color:#f1fa8c">&#39;http://localhost:2379&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">List</span> <span style="color:#f1fa8c">of this member&#39;s client URLs to advertise to the public.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">The</span> <span style="color:#f1fa8c">client URLs advertised should be accessible to machines that talk to etcd cluster. etcd client libraries parse these URLs to connect to the cluster.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--discovery</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Discovery</span> <span style="color:#f1fa8c">URL used to bootstrap the cluster.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--discovery-fallback</span> <span style="color:#f1fa8c">&#39;proxy&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Expected</span> <span style="color:#f1fa8c">behavior (&#39;exit&#39; or &#39;proxy&#39;) when discovery services fails.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">&#34;proxy&#34;</span> <span style="color:#f1fa8c">supports v2 API only.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--discovery-proxy</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">HTTP</span> <span style="color:#f1fa8c">proxy to use for traffic to discovery service.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--discovery-srv</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">DNS</span> <span style="color:#f1fa8c">srv domain used to bootstrap the cluster.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--discovery-srv-name</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Suffix</span> <span style="color:#f1fa8c">to the dns srv name queried when bootstrapping.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--strict-reconfig-check</span> <span style="color:#f1fa8c">&#39;true&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Reject</span> <span style="color:#f1fa8c">reconfiguration requests that would cause quorum loss.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--pre-vote</span> <span style="color:#f1fa8c">&#39;true&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">to run an additional Raft election phase.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--auto-compaction-retention</span> <span style="color:#f1fa8c">&#39;0&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Auto</span> <span style="color:#f1fa8c">compaction retention length. 0 means disable auto compaction.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--auto-compaction-mode</span> <span style="color:#f1fa8c">&#39;periodic&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Interpret</span> <span style="color:#f1fa8c">&#39;auto-compaction-retention&#39; one of: periodic|revision. &#39;periodic&#39; for duration based retention, defaulting to hours if no time unit is provided (e.g. &#39;5m&#39;). &#39;revision&#39; for revision number based retention.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--enable-v2</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Accept</span> <span style="color:#f1fa8c">etcd V2 client requests. Deprecated and to be decommissioned in v3.6.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--v2-deprecation</span> <span style="color:#f1fa8c">&#39;not-yet&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Phase</span> <span style="color:#f1fa8c">of v2store deprecation. Allows to opt-in for higher compatibility mode.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Supported</span> <span style="color:#f1fa8c">values:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">&#39;not-yet&#39;</span>                <span style="color:#f1fa8c">// Issues a warning if v2store have meaningful content (default in v3.5)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">&#39;write-only&#39;</span>             <span style="color:#f1fa8c">// Custom v2 state is not allowed (planned default in v3.6)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">&#39;write-only-drop-data&#39;</span>   <span style="color:#f1fa8c">// Custom v2 state will get DELETED !</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">&#39;gone&#39;</span>                   <span style="color:#f1fa8c">// v2store is not maintained any longer. (planned default in v3.7)</span>
+</span></span></code></pre></div><h2 id="安全相关">安全相关</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#50fa7b">--cert-file</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Path</span> <span style="color:#f1fa8c">to the client server TLS cert file.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--key-file</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Path</span> <span style="color:#f1fa8c">to the client server TLS key file.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--client-cert-auth</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">client cert authentication.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--client-crl-file</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Path</span> <span style="color:#f1fa8c">to the client certificate revocation list file.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--client-cert-allowed-hostname</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Allowed</span> <span style="color:#f1fa8c">TLS hostname for client cert authentication.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--trusted-ca-file</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Path</span> <span style="color:#f1fa8c">to the client server TLS trusted CA cert file.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--auto-tls</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Client</span> <span style="color:#f1fa8c">TLS using generated certificates.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--peer-cert-file</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Path</span> <span style="color:#f1fa8c">to the peer server TLS cert file.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--peer-key-file</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Path</span> <span style="color:#f1fa8c">to the peer server TLS key file.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--peer-client-cert-auth</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">peer client cert authentication.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--peer-trusted-ca-file</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Path</span> <span style="color:#f1fa8c">to the peer server TLS trusted CA file.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--peer-cert-allowed-cn</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Required</span> <span style="color:#f1fa8c">CN for client certs connecting to the peer endpoint.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--peer-cert-allowed-hostname</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Allowed</span> <span style="color:#f1fa8c">TLS hostname for inter peer authentication.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--peer-auto-tls</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Peer</span> <span style="color:#f1fa8c">TLS using self-generated certificates if --peer-key-file and --peer-cert-file are not provided.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--self-signed-cert-validity</span> <span style="color:#f1fa8c">&#39;1&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">The</span> <span style="color:#f1fa8c">validity period of the client and peer certificates that are automatically generated by etcd when you specify ClientAutoTLS and PeerAutoTLS, the unit is year, and the default is 1.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--peer-crl-file</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Path</span> <span style="color:#f1fa8c">to the peer certificate revocation list file.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--cipher-suites</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Comma-separated</span> <span style="color:#f1fa8c">list of supported TLS cipher suites between client/server and peers (empty will be auto-populated by Go).</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--cors</span> <span style="color:#f1fa8c">&#39;*&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Comma-separated</span> <span style="color:#f1fa8c">whitelist of origins for CORS, or cross-origin resource sharing, (empty or * means allow all).</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--host-whitelist</span> <span style="color:#f1fa8c">&#39;*&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Acceptable</span> <span style="color:#f1fa8c">hostnames from HTTP client requests, if server is not secure (empty or * means allow all).</span>
+</span></span></code></pre></div><h2 id="认证相关">认证相关</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#50fa7b">--auth-token</span> <span style="color:#f1fa8c">&#39;simple&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Specify</span> <span style="color:#f1fa8c">a v3 authentication token type and its options (&#39;simple&#39; or &#39;jwt&#39;).</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--bcrypt-cost</span> <span style="color:#f1fa8c">10</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Specify</span> <span style="color:#f1fa8c">the cost / strength of the bcrypt algorithm for hashing auth passwords. Valid values are between 4 and 31.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--auth-token-ttl</span> <span style="color:#f1fa8c">300</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Time</span> <span style="color:#f1fa8c">(in seconds) of the auth-token-ttl.</span>
+</span></span></code></pre></div><h2 id="配置和监控">配置和监控</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#50fa7b">--enable-pprof</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">runtime profiling data via HTTP server. Address is at client URL + &#34;/debug/pprof/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--metrics</span> <span style="color:#f1fa8c">&#39;basic&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Set</span> <span style="color:#f1fa8c">level of detail for exported metrics, specify &#39;extensive&#39; to include server side grpc histogram metrics.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--listen-metrics-urls</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">List</span> <span style="color:#f1fa8c">of URLs to listen on for the metrics and health endpoints.</span>
+</span></span></code></pre></div><h2 id="日志">日志</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#50fa7b">--logger</span> <span style="color:#f1fa8c">&#39;zap&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Currently</span> <span style="color:#f1fa8c">only supports &#39;zap&#39; for structured logging.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--log-outputs</span> <span style="color:#f1fa8c">&#39;default&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Specify</span> <span style="color:#f1fa8c">&#39;stdout&#39; or &#39;stderr&#39; to skip journald logging even when running under systemd, or list of comma separated output targets.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--log-level</span> <span style="color:#f1fa8c">&#39;info&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Configures</span> <span style="color:#f1fa8c">log level. Only supports debug, info, warn, error, panic, or fatal.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--enable-log-rotation</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">log rotation of a single log-outputs file target.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--log-rotation-config-json</span> <span style="color:#f1fa8c">&#39;{&#34;maxsize&#34;: 100, &#34;maxage&#34;: 0, &#34;maxbackups&#34;: 0, &#34;localtime&#34;: false, &#34;compress&#34;: false}&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Configures</span> <span style="color:#f1fa8c">log rotation if enabled with a JSON logger config. MaxSize(MB), MaxAge(days,0=no limit), MaxBackups(0=no limit), LocalTime(use computers local time), Compress(gzip)&#34;.</span>
+</span></span></code></pre></div><h2 id="试验性质的分布式跟踪">试验性质的分布式跟踪</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-enable-distributed-tracing</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">experimental distributed tracing.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-distributed-tracing-address</span> <span style="color:#f1fa8c">&#39;localhost:4317&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Distributed</span> <span style="color:#f1fa8c">tracing collector address.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-distributed-tracing-service-name</span> <span style="color:#f1fa8c">&#39;etcd&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Distributed</span> <span style="color:#f1fa8c">tracing service name, must be same across all etcd instances.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-distributed-tracing-instance-id</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Distributed</span> <span style="color:#f1fa8c">tracing instance ID, must be unique per each etcd instance.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">v2</span> <span style="color:#f1fa8c">Proxy </span>
+</span></span></code></pre></div><h2 id="试验性的特征">试验性的特征</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-properties" data-lang="properties"><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-initial-corrupt-check</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">to check data corruption before serving any client/peer traffic.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-corrupt-check-time</span> <span style="color:#f1fa8c">&#39;0s&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Duration</span> <span style="color:#f1fa8c">of time between cluster corruption check passes.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-enable-v2v3</span> <span style="color:#f1fa8c">&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Serve</span> <span style="color:#f1fa8c">v2 requests through the v3 backend under a given prefix. Deprecated and to be decommissioned in v3.6.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-enable-lease-checkpoint</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">ExperimentalEnableLeaseCheckpoint</span> <span style="color:#f1fa8c">enables primary lessor to persist lease remainingTTL to prevent indefinite auto-renewal of long lived leases.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-compaction-batch-limit</span> <span style="color:#f1fa8c">1000</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">ExperimentalCompactionBatchLimit</span> <span style="color:#f1fa8c">sets the maximum revisions deleted in each compaction batch.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-peer-skip-client-san-verification</span> <span style="color:#f1fa8c">&#39;false&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Skip</span> <span style="color:#f1fa8c">verification of SAN field in client certificate for peer connections.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-watch-progress-notify-interval</span> <span style="color:#f1fa8c">&#39;10m&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Duration</span> <span style="color:#f1fa8c">of periodical watch progress notification.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-warning-apply-duration</span> <span style="color:#f1fa8c">&#39;100ms&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Warning</span> <span style="color:#f1fa8c">is generated if requests take more than this duration.</span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">--experimental-txn-mode-write-with-shared-buffer</span> <span style="color:#f1fa8c">&#39;true&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">the write transaction to use a shared buffer in its readonly check operations.</span>
+</span></span><span style="display:flex;"><span>--experimental-bootstrap-defrag-threshold-megabytes
+</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">Enable</span> <span style="color:#f1fa8c">the defrag during etcd server bootstrap on condition that it will free at least the provided threshold of disk space. Needs to be set to non-zero value to take effect.</span>
+</span></span></code></pre></div><h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://etcd.io/docs/v3.5/op-guide/configuration/">https://etcd.io/docs/v3.5/op-guide/configuration/</a></li>
+</ul>
+
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p> 「如果这篇文章对你有用,请随意打赏」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author"><a href="https://luweiqianyi.github.io"><img src="/img/favicon.png" />YinChao&#39;s Blogs</a></span>
+        
+	        <p class="tip"><i></i><span>如果这篇文章对你有用,请随意打赏</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">2元</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat-2.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label><input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked"><span ><span class="zs-wechat"><img src="/img/reward/wechat-btn.png"/></span></label>
+		<label><input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay"><img src="/img/reward/alipay-btn.png"/></span></label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/go_viper%E8%A7%A3%E6%9E%90toml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE/" data-toggle="tooltip" data-placement="top" title="go viper解析toml配置文件">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+                
+
+                
+
+
+<div id="disqus-comment"></div>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://luweiqianyi.github.io/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/etcd" title="etcd">
+                            etcd
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/go" title="go">
+                            go
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/hugo" title="hugo">
+                            hugo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/pulsar" title="pulsar">
+                            pulsar
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/server" title="server">
+                            server
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/test" title="test">
+                            test
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/translation" title="translation">
+                            translation
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/ubuntu" title="ubuntu">
+                            ubuntu
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/windows" title="windows">
+                            windows
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/zookeeper" title="zookeeper">
+                            zookeeper
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:runningriven@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/luweiqianyi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted" >
+                    Copyright &copy; YinChao&#39;s Blogs 2022
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> 
+                    <iframe hidden="hidden"
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
