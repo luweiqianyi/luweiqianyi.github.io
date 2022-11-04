@@ -15,15 +15,15 @@
     
 
     
-    <meta name="title" content="Pulsar消息保留与过期策略" />
-    <meta property="og:title" content="Pulsar消息保留与过期策略" />
-    <meta property="twitter:title" content="Pulsar消息保留与过期策略" />
+    <meta name="title" content="Pulsar术语" />
+    <meta property="og:title" content="Pulsar术语" />
+    <meta property="twitter:title" content="Pulsar术语" />
     
 
     
-    <meta name="description" content="简要介绍了一下pulsar的消息保留和过期策略">
-    <meta property="og:description" content="简要介绍了一下pulsar的消息保留和过期策略" />
-    <meta property="twitter:description" content="简要介绍了一下pulsar的消息保留和过期策略" />
+    <meta name="description" content="记录了Pulsar中一些常见术语的表述">
+    <meta property="og:description" content="记录了Pulsar中一些常见术语的表述" />
+    <meta property="twitter:description" content="记录了Pulsar中一些常见术语的表述" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blogs, 博客, 个人网站">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Pulsar消息保留与过期策略 | 殷超的博客 | YinChao&#39;s Blogs</title>
+    <title>Pulsar术语 | 殷超的博客 | YinChao&#39;s Blogs</title>
 
-    <link rel="canonical" href="/post/pulsar%E6%B6%88%E6%81%AF%E4%BF%9D%E7%95%99%E4%B8%8E%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/">
+    <link rel="canonical" href="/post/pulsar%E6%9C%AF%E8%AF%AD/">
 
     
     
@@ -177,7 +177,7 @@
                         </a>
                         
                     </div>
-                    <h1>Pulsar消息保留与过期策略</h1>
+                    <h1>Pulsar术语</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         
@@ -186,7 +186,7 @@
                                      &#34;YinChao&#34;
                              
                             on 
-                            Thursday, November 3, 2022
+                            Friday, November 4, 2022
                             
                             
                             
@@ -212,115 +212,111 @@
                 post-container">
 
                 
-                <h1 id="pulsar消息保留与过期策略">Pulsar消息保留与过期策略</h1>
-<p>Pulsar broker对于消息的生产者和消息的消费者来说，主要执行两个过程。</p>
+                <h1 id="pulsar术语">Pulsar术语</h1>
+<h2 id="pulsar">Pulsar</h2>
+<p><code>Pulsar</code>是一个分布式消息系统，一开始由<code>Yahoo</code>创建，现在由<code>Apache Software Foundation</code>管理。</p>
+<h2 id="message">Message</h2>
+<p><code>Pulsar</code>的基本单元，由生产者发送到<code>topic</code>,由该<code>topic</code>下的消费者消费。</p>
+<h2 id="topic">Topic</h2>
+<p>生产者和消费者传输消息的媒介。</p>
+<h2 id="partitioned-topic">Partitioned Topic</h2>
+<p>一个<code>topic</code>由多个<code>Pulsar broker</code>提供服务，可以提高吞吐量。</p>
+<h2 id="namespace">Namespace</h2>
+<p>一组相关topics拥有相同的namespace。</p>
+<h2 id="namespace-bundle">Namespace Bundle</h2>
+<p>同一个<code>topic</code>下的一组<code>虚拟topics</code>。被定义为一个<code>32bit hash</code>值的范围，比如<code>0x00000000</code>到<code>0xffffffff</code>。</p>
+<h2 id="tenant">Tenant</h2>
+<p>一个分配容量和执行认证、授权方案的管理单元。</p>
+<h2 id="subscription">Subscription</h2>
+<p>由一组消费者建立的关于某一<code>topic</code>的订阅。消费者有四种订阅模式：</p>
 <ul>
-<li>broker接收生产者的消息并存储起来</li>
-<li>broker将存储起来的消息发送给消费者，让消费者消费，消费者完成消息的处理之后，会向broker发送处理完成的响应。broker接收到消费者的处理完成响应才会将消息状态设置为ack的状态。</li>
+<li><code>exclusive</code>：只能有<code>一个consumer</code>对<code>topic</code>进行订阅。
+
+  <img src="../pulsar/pulsar_msg_subscription_exclusive.PNG" alt="image">
+
+</li>
+<li><code>shared</code>：可以有<code>多个consumer</code>对<code>topic</code>进行订阅。
+
+  <img src="../pulsar/pulsar_msg_subscription_shared.PNG" alt="image">
+
+</li>
+<li><code>failover</code>: 可以<code>多个consumer</code>对<code>topic</code>进行订阅。当<code>主consumer</code>断开连接了，可以由<code>其他consumer</code>来处理那些<code>unacked类型的消息</code>。
+
+  <img src="../pulsar/pulsar_msg_subscription_failover.PNG" alt="image">
+
+</li>
+<li><code>key_shared</code>: 可以有<code>多个consumer</code>对<code>topic</code>进行订阅。消息是跨消费者进行传递，有<code>相同key</code>的消息会被发送给同一个消费者。
+
+  <img src="../pulsar/pulsar_msg_subscription_keyshared.PNG" alt="image">
+
+</li>
 </ul>
-<p>那么这上面两个过程就会出现以下的问题：</p>
+<h2 id="pub-sub">Pub-sub</h2>
+<p>生产者发送消息给某个<code>topic</code>,订阅这个<code>topic</code>的消费者取该<code>topic</code>上的消息进行消费的消息模式。<code>publication-subscription</code>的缩写。</p>
+<h2 id="producer">Producer</h2>
+<p>发送消息给<code>topic</code>的进程。</p>
+<h2 id="consumer">Consumer</h2>
+<p>订阅某个<code>topic</code>,然后处理该<code>topic</code>上的消息的进程。</p>
+<h2 id="reader">Reader</h2>
+<p>类似于<code>consumer</code>,但是有以下两个关键区别：</p>
 <ul>
-<li>broker发送给消费者的消息消费者消费者来不及处理，就会造成broker中有大量的unacked状态的消息，这需要一个机制来对这些unacked状态的消息进行处理，这就引出类下面章节的pulsar的<code>消息保留</code>策略。</li>
-<li>当生产者生产的速率太快，往broker中增加的消息太多了，就会造成消息储量超出了broker中消息队列的大小，那么此时就需要对这些溢出的消息进行处理，这就引出了下面章节所说的<code>消息积压-backlog</code>。</li>
+<li>可以指定从<code>topic</code>的哪个位置开始处理消息，而<code>consumer</code>是从最早发来的<code>unacked消息</code>开始处理</li>
+<li><code>reader</code>不需要保留数据，也不需要对消息进行确认，<code>consumer</code>处理完消息后是需要向<code>broker</code>发送确认消息的。</li>
 </ul>
-<h2 id="消息保留">消息保留</h2>
-<p>默认情况下，当一个Pulsar消息到达一个broker,首先消息会被临时性存储在消息队列中，等到消息被所有订阅者处理后，订阅者向broker发送了ack消息后(下面所说的确认就是指这个过程)，消息才会从消息队列中删除。至于怎么删除，pulsar使用了两种策略，一种是消息数的大小，一种是消息的存活时间。以下图例可以解释消息的保留与删除。
-
-  <img src="../pulsar/pulsar_message_rention.PNG" alt="image">
-
-
-如图所示，生产者往队列中发送了15条消息，其中<code>0-8</code>是被确认的消息，<code>9-14</code>是没有被确认的消息。
-pulsar设定了消息的保留limit为N条消息或者一段存活时间(TTL)。当被确认的消息超过了这个limit，消息会从队列中删除,如图中<code>0-2</code>这三条消息，当消息还在这个limit之中，消息会被保留，如图中<code>3-8</code>这六条消息。当生产者不断往消息队列中发消息，消费者(或者说订阅者)来不及处理的时候，队列中就会发生消息的积压，这些积压的数据被归类为backlog中，如图<code>9-14</code>所示。</p>
-<p>设置一个命名空间上面的topics的保留策略时必须同时设置消息大小和超时时间。</p>
-<table>
-<thead>
-<tr>
-<th>Time limit</th>
-<th>Size limit</th>
-<th>Message retention(消息保留)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-1</td>
-<td>-1</td>
-<td>无限保留</td>
-</tr>
-<tr>
-<td>-1</td>
-<td>&gt;0</td>
-<td>基于size limit保留，即size limit设置多少就是多少</td>
-</tr>
-<tr>
-<td>&gt;0</td>
-<td>-1</td>
-<td>基于time limit保留，即time limit设置多少就是多少</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>不保留消息(默认)</td>
-</tr>
-<tr>
-<td>0</td>
-<td>&gt;0</td>
-<td>无效设置</td>
-</tr>
-<tr>
-<td>&gt;0</td>
-<td>0</td>
-<td>无效设置</td>
-</tr>
-<tr>
-<td>&gt;0</td>
-<td>&gt;0</td>
-<td>二者取一</td>
-</tr>
-</tbody>
-</table>
+<h2 id="cursor">Cursor</h2>
+<p><code>consumer的订阅位置</code>。可参见我的文章：<a href="https://luweiqianyi.github.io/post/pulsar%E6%B6%88%E6%81%AF%E4%BF%9D%E7%95%99%E4%B8%8E%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/">Pulsar消息保留与过期策略</a>中的图片。</p>
+<h2 id="acknowledgment-ack">Acknowledgment (ack)</h2>
+<p>由<code>consumer</code>发送给<code>broker</code>的消息，作用是告诉<code>broker</code>:我从你这里拿的消息已经处理完了。</p>
+<h2 id="negative-acknowledgment-nack">Negative Acknowledgment (nack)</h2>
+<p>消费没有被消费者正常处理，会发送给<code>broker</code>一个<code>“negative ack”</code>，告知一段时间后再发送一遍。对于有序订阅类型(<code>Exclusive</code>、<code>Failover</code>、<code>Key_Shared</code>)，会造成消息乱序。</p>
+<h2 id="unacknowledged">Unacknowledged</h2>
+<p>表示这样一种状态： 消息已经被发送给<code>consumer</code>，但是<code>consumer</code>没有发送给<code>broker</code> <code>ack</code>。</p>
+<h2 id="retention-policy">Retention Policy</h2>
+<p>消息保留策略。当消息处于ack状态可以在Pulsar集群中的保留策略，有size和time两种策略。<code>size策略</code>表示超过limit数量的ack类型的消息就不再保留，<code>time策略</code>表示超过limit时间的ack类型的消息就不再保留。在<code>namespace</code>中进行配置。消息是如何保留的可参见文章：<a href="https://luweiqianyi.github.io/post/pulsar%E6%B6%88%E6%81%AF%E4%BF%9D%E7%95%99%E4%B8%8E%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/">Pulsar消息保留与过期策略</a>。</p>
+<h2 id="multi-tenancy">Multi-Tenancy</h2>
+<p>描述基于每一个<code>tenant</code>来隔离<code>namespace</code>、配额、配置认证/鉴权的一种能力。</p>
+<h2 id="failure-domain">Failure Domain</h2>
+<p>一个<code>Pulsar</code>集群下的逻辑域。每一个逻辑域包含一组预先配置的<code>brokers列表</code>。</p>
+<h2 id="anti-affinity-namespaces">Anti-affinity Namespaces</h2>
+<p>一组相互排斥的<code>namespaces</code>。</p>
+<h2 id="standalone">Standalone</h2>
+<p>一个轻量级的<code>Pulsar broker</code>，该broker的所有组件运行在一个单一的Java虚拟机进程里。单机版的集群可以运行在单一物理机器上，便于用于开发阶段。</p>
+<h2 id="cluster">Cluster</h2>
+<p>一组<code>Pulsar brokers</code>和<code>BookKeeper</code>服务程序的集合。集群可以驻留在不同的地理区域，通过<code>geo-replication</code>的方式，集群之间可以互相复制消息。</p>
+<h2 id="instance">Instance</h2>
+<p>一组<code>Pulsar clusters</code>组成的集合，对外称作一个<code>Pulsar实例</code>。</p>
+<h2 id="geo-replication">Geo-Replication</h2>
+<p>跨集群间的消息复制，可以是不同的数据中心或者是不同的地理区域。</p>
+<h2 id="configuration-store">Configuration Store</h2>
+<p>我将其翻译为配置仓库。本质上是一个<code>ZooKeeper</code>,用来做整个集群的配置。一个由多集群组成的<code>Pulsar实例</code>需要一个配置仓库来存储集群们所公用的配置。参见ZookKeeper在Pulsar的作用可参见我的文章：<a href="https://luweiqianyi.github.io/post/pulsar%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88/">Pulsar架构概览</a>。</p>
+<h2 id="topic-lookup">Topic Lookup</h2>
+<p>由<code>Pulsar broker</code>提供的一种服务：能够使得正在连接的客户端决定某个<code>topic</code>上的消息传送由哪个<code>pulsar集群</code>负责。</p>
+<h2 id="service-discovery">Service Discovery</h2>
+<p>一种机制：客户端仅仅只需要一个<code>URL</code>就能和一个集群中的所有的<code>brokers</code>进行通信。</p>
+<h2 id="broker">Broker</h2>
+<p>一个<code>Pulsar集群</code>中的一个无状态组件。主要由两种类型的组件组成：</p>
 <ul>
-<li>defaultRetentionSizeInMB</li>
-<li>defaultRetentionTimeInMinutes</li>
-<li>以上两个参数的配置可以在<code>broker.conf</code>中找到</li>
-</ul>
-<h2 id="消息积压-backlog">消息积压-backlog</h2>
-<p>上面已经介绍过，一个Backlog是针对某个topic的一组未被确认的消息的集合。在消息被consumer处理并在broker接收到ack消息之后，消息会从backlogs中移除。
-
-  <img src="../pulsar/pulsar_message_backlogs.PNG" alt="image">
-
-
-如图所示：
-backlog quota有一个limit大小，从图上看来大小是<code>6</code>(看消息<code>9-14</code>)。这时候producer(消息的生产者)往队列中新增了一条消息，图中的<code>A new message</code>,这时候消息数超过了backlog的limit,这时候就会执行backlog的消息保留策略。
-backlog quato的limit可以是消息数大小也可以是消息存活时间(TTL)。
-backlog的消息保留策略有以下几种：</p>
-<table>
-<thead>
-<tr>
-<th>策略类型</th>
-<th>对应的行为</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>producer_request_hold</td>
-<td>broker会持有消息，但是不允许生产者再生产消息(默认行为)</td>
-</tr>
-<tr>
-<td>producer_exception</td>
-<td>broker会和客户端断开连接，同时抛出异常</td>
-</tr>
-<tr>
-<td>consumer_backlog_eviction</td>
-<td>broker会丢弃生产者的消息</td>
-</tr>
-</tbody>
-</table>
-<h2 id="ttltime-to-live">TTL(Time to live)</h2>
-<p>默认情况下，Pulsar会永久存储未被确认的消息，这样的话当大量消息未被确认会造成磁盘的高负荷使用。如果业务场景需要考虑磁盘压力，可以为消息设置TTL,当消息处于未被确认的时间超过了TTL,Pulsar会自动将这些消息设置为确认状态(哪怕它们没有被消费者消费)，之后便会被删除(删除行为执行ack消息的保留策略，详见<code>消息保留</code>章节所阐述的细节)。</p>
-<h2 id="参考文档">参考文档</h2>
+<li>HTTP 服务：
 <ul>
-<li><a href="https://pulsar.apache.org/docs/cookbooks-retention-expiry">https://pulsar.apache.org/docs/cookbooks-retention-expiry</a></li>
+<li>为管理组件暴露REST接口</li>
+<li><code>topic lookup</code></li>
 </ul>
+</li>
+<li>dispatcher: 负责消息的路由
+<ul>
+<li>从<code>producer</code>接收消息</li>
+<li>发送消息给<code>consumer</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="dispatcher">Dispatcher</h2>
+<p>一个异步的<code>TCP服务</code>，负责消息的路由。</p>
+<h2 id="bookkeeper">BookKeeper</h2>
+<p>一个<code>Apache</code>的开源组件，用作消息的持久化存储。</p>
+<h2 id="bookie">Bookie</h2>
+<p>一个<code>BookKeeper服务实例</code>叫做一个<code>Bookie</code>。</p>
+<h2 id="ledger">Ledger</h2>
+<p><code>BookKeeper</code>中的一种数据结构，该结构只能够添加数据。用来进行发往某<code>topic</code>的消息的存储。</p>
 
 
                 
@@ -370,15 +366,10 @@ backlog的消息保留策略有以下几种：</p>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/etcd%E9%85%8D%E7%BD%AE%E9%A1%B9/" data-toggle="tooltip" data-placement="top" title="etcd配置项">&larr;
+                        <a href="/post/pulsar%E6%B6%88%E6%81%AF%E4%BF%9D%E7%95%99%E4%B8%8E%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/" data-toggle="tooltip" data-placement="top" title="Pulsar消息保留与过期策略">&larr;
                             Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/post/pulsar%E6%9C%AF%E8%AF%AD/" data-toggle="tooltip" data-placement="top" title="Pulsar术语">Next
-                            Post &rarr;</a>
-                    </li>
                     
                 </ul>
                 

@@ -6,7 +6,16 @@
     <description>Recent content in Blogs on YinChao&#39;s Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/categories/blogs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 04 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/categories/blogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pulsar术语</title>
+      <link>https://luweiqianyi.github.io/post/pulsar%E6%9C%AF%E8%AF%AD/</link>
+      <pubDate>Fri, 04 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/pulsar%E6%9C%AF%E8%AF%AD/</guid>
+      <description>Pulsar术语 Pulsar Pulsar是一个分布式消息系统，一开始由Yahoo创建，现在由Apache Software Foundation管理。 Message Pulsar的基</description>
+    </item>
+    
     <item>
       <title>Pulsar消息保留与过期策略</title>
       <link>https://luweiqianyi.github.io/post/pulsar%E6%B6%88%E6%81%AF%E4%BF%9D%E7%95%99%E4%B8%8E%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/</link>
