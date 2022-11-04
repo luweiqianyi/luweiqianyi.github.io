@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="YinChao&#39;s Blogs">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://luweiqianyi.github.io/img/home-bg.jpg">
+    <meta property="twitter:image" content="https://luweiqianyi.github.io/img/home-bg.jpg" />
+    
+
+    
+    <meta name="title" content="Pulsar消息" />
+    <meta property="og:title" content="Pulsar消息" />
+    <meta property="twitter:title" content="Pulsar消息" />
+    
+
+    
+    <meta name="description" content="介绍了pulsar中关于消息的一些内容">
+    <meta property="og:description" content="介绍了pulsar中关于消息的一些内容" />
+    <meta property="twitter:description" content="介绍了pulsar中关于消息的一些内容" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blogs, 博客, 个人网站">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Pulsar消息 | 殷超的博客 | YinChao&#39;s Blogs</title>
+
+    <link rel="canonical" href="/post/pulsar%E6%B6%88%E6%81%AF/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">YinChao&#39;s Blogs</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/blogs">blogs</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/test">test</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/pulsar" title="pulsar">
+                            pulsar
+                        </a>
+                        
+                    </div>
+                    <h1>Pulsar消息</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;YinChao&#34;
+                             
+                            on 
+                            Friday, November 4, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="pulsar消息">Pulsar消息</h1>
+<h2 id="简介">简介</h2>
+<p>Pulsar基于发布订阅模式。在该模式下，生产者往topics中生产消息，消费者订阅这些topics，处理即将到来的消息，处理完成够向broker发送ack。</p>
+<p>当一次订阅创建后，Pulsar会存储所有的消息(使用BookKeeper)。消息的删除仅在消息被消费者处理后，并向broker发送ack，broker收到ack之后才会被删除。</p>
+<h2 id="消息的组成">消息的组成</h2>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Value/data payload</td>
+<td>消息携带的数据部分</td>
+</tr>
+<tr>
+<td>Key</td>
+<td>消息的key</td>
+</tr>
+<tr>
+<td>Properties</td>
+<td>key/value map存储用户定义的属性</td>
+</tr>
+<tr>
+<td>Producer name</td>
+<td>当前消息的生产者，不指定则使用默认名字</td>
+</tr>
+<tr>
+<td>Topic name</td>
+<td>消息要发送到哪个topic下，只有订阅了这个topic的消费者才能收到通知</td>
+</tr>
+<tr>
+<td>Schema version</td>
+<td>消息生产时schema的版本</td>
+</tr>
+<tr>
+<td>Sequence ID</td>
+<td>每一条发送到某个topic的消息都有它自己的顺序。Sequence ID初始状态下是由生产者分配的，表示消息在序列中的顺序，可以被自定义。Sequence ID可以用作消息去重。如果<code>brokerDeduplicationEnabled </code>指定为<code>true</code>，则在一个topic(前提是topic没有经历分区)下，每一条消息的sequence ID都是唯一的。</td>
+</tr>
+<tr>
+<td>Message ID</td>
+<td>当消息被持久化存储时，bookies给消息分配了消息ID。Message ID表示了在一个ledger中的位置，并且在一个Pulsar cluster中是唯一的。</td>
+</tr>
+<tr>
+<td>Publish name</td>
+<td>消息被发送的时间戳，有生产者自动生成</td>
+</tr>
+<tr>
+<td>Event time</td>
+<td>一个可选的时间戳，由应用程序添加到消息上。</td>
+</tr>
+</tbody>
+</table>
+<p>默认的消息大小是5MB。但是可配置
+在<code>broker.conf</code>文件中</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf"># The max size of a message (in bytes).
+maxMessageSize=5242880
+</code></pre><p>在<code>bookkeeper.conf</code>文件中</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf"># The max size of the netty frame (in bytes). Any messages received larger than this value are rejected. The default value is 5 MB.
+nettyMaxFrameSizeBytes=5253120
+</code></pre><h2 id="消息生产者producer">消息生产者(Producer)</h2>
+<p>生产者是一个<code>attach</code>到某一个<code>topic</code>下，能发送消息给<code>Pulsar broker</code>的进程。
+<code>producer</code>支持消息的异步发送和同步发送。</p>
+<ul>
+<li>同步发送：<code>producer</code>在发送每一个消息之后都会等待<code>broker</code>返回<code>ack消息</code>。如果<code>producer</code>没有接收到<code>ack</code>，它就认为自己发送失败了。</li>
+<li>异步发送：<code>producer</code>将消息放到一个阻塞队列中，并且立即返回，不需要等待<code>broker</code>的<code>ack</code>。当队列满了，<code>produce</code>进程会被阻塞，或者返回失败信息。</li>
+</ul>
+<h3 id="生产者对topic的访问模式">生产者对topic的访问模式</h3>
+<ul>
+<li><code>Shared</code>: 多个生产者可以发布消息到同一个<code>topic</code>上</li>
+<li><code>Exclusive</code>: 只能有一个生产者可以发布消息到<code>topic</code>上。如果有一个生产者连接在一个<code>topic</code>上，其他的生产者进行连接时会得到<code>error</code>。如果旧的生产者和<code>broker</code>被划分到不同的网络分区中，那么旧的生产者就会被回收，此时新的生产者会被<code>attcch</code>到该<code>broker</code>的<code>topic</code>上。</li>
+<li><code>WaitForExclusive</code>: 新的生产者对象会挂起等待直到拥有对<code>topic</code>的<code>Exclusive</code>访问权限。</li>
+</ul>
+<h3 id="消息压缩">消息压缩</h3>
+<p>支持四种类型的压缩：</p>
+<ul>
+<li>LZ4</li>
+<li>ZLIB</li>
+<li>ZSTD</li>
+<li>SNAPPY</li>
+</ul>
+<h3 id="batching批处理">Batching(批处理)</h3>
+<ul>
+<li>当批处理被激活，生产者可以在单次请求中发送<code>一批消息(batch)</code>。</li>
+<li>批处理大小由消息的最大数量和最大发布延迟(<code>publish latency</code>)决定,因此,<code>backlog</code>的大小表示是<code>batch</code>的数量，额不是消息的数量。</li>
+<li>在<code>Pulsar</code>中，追踪和存储的单位是<code>batch</code>而不是消息。消费者接收到<code>batch</code>之后会将<code>batch</code>拆成消息，时间调度相关的消息(通过<code>deliverAt</code>和<code>deliverAfter</code>配置的消息会以消息为单位进行发送)除外。</li>
+<li>一个<code>batch</code>中的所有消息被消费者处理并向<code>broker</code>发送<code>ack</code>之后才会认为这个<code>batch</code>才能是<code>ack</code>状态。发生异常情况会导致整个<code>batch</code>被重传。</li>
+<li>为了避免重传整个<code>batch</code>,从<code>Pulsar 2.6.0</code>开始就引入了<code>batch ack 索引</code>。<code>broker</code>追踪一个<code>batch</code>中的所有<code>索引</code>，那些状态为<code>unack</code>状态的消息才会被重传。</li>
+<li><code>batch ack索引</code>可以通过设置<code>acknowledgmentAtBatchIndexLevelEnabled=true</code>来激活。</li>
+</ul>
+<h3 id="chunking">Chunking</h3>
+<p><code>Chunking</code>机制使得<code>Pulsar</code>能够在生产者端将那些超级大的消息拆分成一个一个片段，然后在消费者端再重新将这些拆分后的片段重新组合起来。整个工作流如下：</p>
+<ul>
+<li>生产者将原始消息拆分成一段一段的消息，并将这些段消息(这些段消息会带上一个额外的<code>chunck元数据</code>，表示段与段之间的衔接关系)按顺序发送给<code>broker</code>。</li>
+<li><code>broker</code>将这些<code>段消息</code>存到<code>manager-ledger</code>中，并使用<code>chunkedMessageRate </code>参数来在<code>topic</code>上记录消息速率。</li>
+<li>当消费者接收到所有的<code>chuncked消息</code>，消费者会缓存这些<code>chuncked消息</code>，并将它们合并起来，放到自己的接收者队列中。</li>
+<li>客户端消费者从队列中取出整个拼接的消息进行处理。</li>
+</ul>
+<p>该模式也存在些许不足支持：</p>
+<ul>
+<li><code>Chuncking</code>只能用于<code>持久化topics</code>。</li>
+<li><code>Chuncking</code>只在订阅类型为<code>exclusive</code>和<code>failover</code>时才有效。</li>
+<li><code>Chuncking</code>不能和<code>batching</code>同时使用。</li>
+</ul>
+<h4 id="以下介绍几种处理chucked消息的场景">以下介绍几种处理chucked消息的场景</h4>
+<h5 id="使用一个消费者处理连续的块消息">使用一个消费者处理连续的块消息。</h5>
+<p>
+  <img src="../pulsar/pulsar_handle_consecutive_chuncked_msg.PNG" alt="image">
+
+</p>
+<ul>
+<li>生产者将<code>M1消息</code>分成三个消息块：<code>M1-C1</code>,<code>M1-C2</code>,<code>M1-C3</code>。</li>
+<li><code>broker</code>将三个消息块存到<code>managed-ledger</code>中，并以相同的顺序将它们发给消费者</li>
+<li>消费者在收到所有的消息块中会在内存中缓存这些消息块，然后组装成原始的消息(即<code>M1消息</code>)，然后再由客户端进行处理。</li>
+</ul>
+<h5 id="使用一个消费者处理相互间隔的块消息">使用一个消费者处理相互间隔的块消息</h5>
+<p>
+  <img src="../pulsar/pulsar_handle_interwoven_chuncked_msg.PNG" alt="image">
+
+</p>
+<ul>
+<li>当出现多个生产者往同一个<code>topic</code>发送那些大消息时，如图中<code>M1-C3 M1-C2 M1-C1</code>与<code>M2-C3 M2-C2 M2-C1</code>所示，消费者也会将其拆成一个个的块消息(即<code>生产者1</code>会将消息拆成<code>M1-C1</code>,<code>M1-C2</code>,<code>M1-C3</code>;<code>生产者2</code>会将消息拆成<code>M2-C1</code>,<code>M2-C2</code>,<code>M2-C3</code>)，发送给<code>broker</code>。</li>
+<li>此时<code>broker</code>接收的消息块的顺序就有<code>可能</code>是图中所示的这种情况：<code>M1-C3 M2-C3 M1-C2 M2-C2 M2-C1 M1-C1</code>。</li>
+<li>消费者端会根据这些块消息中携带的<code>chunck metadata</code>对这些块消息进行重组，还原出原来完整的<code>M1消息</code>和<code>M2消息</code>。</li>
+<li>然后将<code>M1消息</code>和<code>M2消息</code>交付给客户端进行处理。</li>
+</ul>
+<h5 id="激活chuncking功能">激活Chuncking功能</h5>
+<ul>
+<li>首先，设置<code>enableBatching </code>为<code>false</code></li>
+<li>然后再设置<code>chunkingEnabled</code>为<code>true</code></li>
+</ul>
+<h2 id="consumers">Consumers</h2>
+<p><code>Consumer(消费者)</code>是订阅某个<code>topic</code>的进程，用来处理接收到的消息。
+一个<code>Consumer</code>向<code>broker</code>发送<code>flow permit request</code>来获取消息。消费者端有一个队列来存储从<code>broker</code>接收到的消息。可以通过<code>receiverQueueSize</code>来配置队列大小。每一次<code>consumer.receive()</code>函数被调用，一个消息就从队列中取出。</p>
+<h3 id="接收模式">接收模式</h3>
+<ul>
+<li>同步接收：当取不到消息时，接收函数会阻塞</li>
+<li>异步接收：接收函数会立即返回，接收过程会异步处理</li>
+</ul>
+<h3 id="listeners">Listeners</h3>
+<p>客户端库会为<code>consumer</code>提供监听实现接口。以<code>Java</code>库为例,会有一个<code>MessageListener</code>接口，当接收到新消息时，该接口会调用<code>receive</code>函数。</p>
+<h3 id="acknowledgement">Acknowledgement</h3>
+<p>消费者在成功处理一条消息之后，会发送<code>acknowledgement request</code>给<code>broker</code>。然后这个消息会持久化存储下来，之后<code>只有</code>在所有的订阅者都发送给<code>broker</code> <code>acknowledgement request</code>之后，这条消息才会被删除。</p>
+<p>消息的确认(这里的确认的意思是指消费者发送<code>ack</code>给<code>broker</code>，<code>broker</code>接收到<code>ack</code>这个过程)有两种方式：</p>
+<ul>
+<li>单条确认：如上所述。调用api:<code>consumer.acknowledge(msg);</code></li>
+<li>累计确认：消费者只需要确认最后一条接收到的消息。调用api:<code>consumer.acknowledgeCumulative(msg);</code>，这种模式下的确认不能用于<code>Shared 订阅类型</code>,该订阅类型的消息只能是单条确认的方式。</li>
+</ul>
+<h3 id="negative-acknowledgement">Negative acknowledgement</h3>
+<p><code>negative acknowledgement</code>使得消费者在发生无法消费(比如超时)<code>broker</code>发来的消息，并且自己想要再次消费时，就会向<code>broker</code>发送一个<code>negative acknowledgement (nack)</code>请求，让<code>broker</code>再发一次。</p>
+<p>同<code>Acknowledgement</code>类似,<code>Negative acknowledgement</code>也有累计确认和单条确认，同样取决于订阅类型，<code>“累计确认：Exclusive、Failover,单条确认：Shared、Key_Shared”</code>。</p>
+<p>需要在acknowledgment超时之前发送Negative acknowledgement。</p>
+<h3 id="acknowledgement-timeout">Acknowledgement timeout</h3>
+<p>设置消费者追踪<code>unacknowledged消息</code>的时间间隔。当<code>Acknowledgement timeout(ackTimeout)</code>时间到了,消费者会发送<code>redeliver unacknowledged messages</code>给<code>broker</code>，这样<code>broker</code>才会向<code>consumer</code>重发消息。</p>
+<h3 id="retry-letter-topic">Retry letter topic</h3>
+<p>
+  <img src="../pulsar/pular_consumer_retry_letter_topic.PNG" alt="image">
+
+
+重试机制允许：当消费端对某个消息消费失败，消费者可以将消息归到<code>Retry Letter Topic</code>中，并不断发起重试，要求<code>broker</code>重新发送消息,到达最大重试次数之后，消息还是未能被consumer正常消费，会将该消息放到<code>Dead Latter Topic</code>中来手动处理。
+重试机制和<a href="https://pulsar.apache.org/docs/concepts-messaging/#delayed-message-delivery">delayed message delivery</a>最根本的不同是，重试机制能够保证消息不丢失，而<code>delayed message delivery</code>只是延迟发送消息而已。
+默认情况下，自动重试是<code>开启</code>的。
+<code>Retry letter topic</code>的格式为：</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">topicname&gt;-&lt;subscriptionname&gt;-RETRY
+</code></pre><p>Java端的调用模式如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Consumer<span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">byte</span><span style="color:#ff79c6">[]&gt;</span> consumer <span style="color:#ff79c6">=</span> pulsarClient<span style="color:#ff79c6">.</span><span style="color:#50fa7b">newConsumer</span><span style="color:#ff79c6">(</span>Schema<span style="color:#ff79c6">.</span><span style="color:#50fa7b">BYTES</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">topic</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;my-topic&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">subscriptionName</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;my-subscription&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">subscriptionType</span><span style="color:#ff79c6">(</span>SubscriptionType<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Shared</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">enableRetry</span><span style="color:#ff79c6">(</span><span style="color:#ff79c6">true</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">deadLetterPolicy</span><span style="color:#ff79c6">(</span>DeadLetterPolicy<span style="color:#ff79c6">.</span><span style="color:#50fa7b">builder</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">maxRedeliverCount</span><span style="color:#ff79c6">(</span>maxRedeliveryCount<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">retryLetterTopic</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;my-retry-letter-topic-name&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">build</span><span style="color:#ff79c6">())</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">.</span><span style="color:#50fa7b">subscribe</span><span style="color:#ff79c6">();</span>
+</span></span></code></pre></div><h3 id="dead-letter-topic">Dead letter topic</h3>
+<p>对于重试失败的消息，会放到这个<code>topic</code>下,可以定义行为进行处理。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>Consumer<span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">byte</span><span style="color:#ff79c6">[]&gt;</span> consumer <span style="color:#ff79c6">=</span> pulsarClient<span style="color:#ff79c6">.</span><span style="color:#50fa7b">newConsumer</span><span style="color:#ff79c6">(</span>Schema<span style="color:#ff79c6">.</span><span style="color:#50fa7b">BYTES</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">topic</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;my-topic&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">subscriptionName</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;my-subscription&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">subscriptionType</span><span style="color:#ff79c6">(</span>SubscriptionType<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Shared</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">deadLetterPolicy</span><span style="color:#ff79c6">(</span>DeadLetterPolicy<span style="color:#ff79c6">.</span><span style="color:#50fa7b">builder</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ff79c6">.</span><span style="color:#50fa7b">maxRedeliverCount</span><span style="color:#ff79c6">(</span>maxRedeliveryCount<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ff79c6">.</span><span style="color:#50fa7b">deadLetterTopic</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;my-dead-letter-topic-name&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ff79c6">.</span><span style="color:#50fa7b">initialSubscriptionName</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;init-sub&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ff79c6">.</span><span style="color:#50fa7b">build</span><span style="color:#ff79c6">())</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">subscribe</span><span style="color:#ff79c6">();</span>
+</span></span></code></pre></div><h2 id="topics">Topics</h2>
+<p>Topic的格式：</p>
+<pre tabindex="0"><code class="language-conf" data-lang="conf">{persistent|non-persistent}://tenant/namespace/topic
+</code></pre><ul>
+<li><code>persistent|non-persistent</code>: 默认是<code>persistent</code>,消息会被存在磁盘上。<code>non-persistent</code>：消息不存在磁盘上。</li>
+<li><code>tenant</code>: 一个Pulsar实例中有多个tenants,可以跨集群传播。一个<code>tenant</code>可以有一个或者多个<code>namespace</code>。</li>
+<li><code>namespace</code>: 命名空间，一组相关的topics放在一个namespace下面。</li>
+<li><code>topic</code>: 生产者和消费发送的消息发到topic中。</li>
+</ul>
+<p>如果一个<code>tenant</code>下有多个app,可以按下面的方式创建命名空间：<code>my-tenant/app1</code>、<code>my-tenant/app2</code>。</p>
+<h2 id="subscriptions">Subscriptions</h2>
+<h3 id="subscription-types">Subscription types</h3>
+<p>一个<code>subscription</code>本质上是一个命名的配置规则，该规则定义了消息是如何发送给消费者。在<code>Pulsar</code>中有四种订阅规则:<code>exclusive</code>，<code>shared</code>，<code>failover</code>，<code>key_shared</code>,我的文章<a href="https://luweiqianyi.github.io/post/pulsar%E6%9C%AF%E8%AF%AD/">Pulsar术语</a>对这四种规则描述过。下面给出一张总的描述图：
+
+  <img src="../pulsar/pulsar_subscriptions.PNG" alt="image">
+
+</p>
+<ul>
+<li><code>exclusive</code>: 对于某个主题，只允许一个消费者进行订阅，当这个消费者不再订阅了，才允许其他消费者进行订阅。这种模式的订阅，所有消息只能由一个消费者接收处理(除非它不再订阅了)。</li>
+<li><code>shared</code>：对于某个主题，可以被多个消费者订阅。这种模式的订阅会导致消息会被发送给不同的消费者。<code>Pulsar</code>会执行<code>round robin</code>算法来决定消息被发送给多个消费者中的哪一个进行处理。这种模式的缺点是：
+<ul>
+<li>无法保证消息顺序。</li>
+<li>不能使用累计确认的方式(因为连续顺序的消息被发送到不同的消费者去了)。</li>
+</ul>
+</li>
+<li><code>failover</code>：区分主消费者和其他消费者。当主消费者失去连接的时候，<code>broker</code>会将那些发送个主消费者但是还没有收到ack的消息发给其他消费者进行处理。
+<ul>
+<li>对于<code>分区topic</code>,<code>broker</code>会根据优先级和消费者的字典序来对消费者进行排序。然后<code>broker</code>会将<code>topic</code>分配给优先级最高的消费者。</li>
+<li>对于<code>未分区topic</code>,<code>broker</code>会按顺序选择一个消费。</li>
+</ul>
+</li>
+<li><code>key_shared</code>: 对于某个主题，可以被多个消费者订阅。具有<code>相同key</code>的消息会被发送给同一个消费者处理。使用这种模式的订阅在使用<code>batch</code>时需要使用<code>key-based batching</code>而不是<code>batching</code>。</li>
+</ul>
+<h3 id="subscription-modes">Subscription modes</h3>
+<p><code>subscription mode</code>描述了<code>cursor</code>的类型：</p>
+<ul>
+<li>当一个订阅被创建后，一个与之相关联的<code>cursor</code>就会被创建，该<code>cursor</code>用来记录最后一次消费的消息的位置，即最后一个被<code>broker</code>确认的消息位置。</li>
+<li>当某个订阅的消费者重启时，它可以从上一次处理中恢复过来(意思是：上一次停机时处理到<code>消息X</code>,<code>消息X</code>已被<code>broker</code>确认,重启后从<code>消息X+1</code>处理,其中X是序号)</li>
+</ul>
+<p>可分为：</p>
+<ul>
+<li><code>Durable</code>:默认行为。<code>cursor</code>不会丢失，重启时可读，消息处理过程可恢复。</li>
+<li><code>NonDurable</code>:<code>cursor</code>会丢失，消息处理过程不可恢复。</li>
+</ul>
+<p>Java API设置模式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Consumer<span style="color:#ff79c6">&lt;</span><span style="color:#8be9fd">byte</span><span style="color:#ff79c6">[]&gt;</span> consumer <span style="color:#ff79c6">=</span> pulsarClient<span style="color:#ff79c6">.</span><span style="color:#50fa7b">newConsumer</span><span style="color:#ff79c6">()</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">topic</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;my-topic&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">subscriptionName</span><span style="color:#ff79c6">(</span><span style="color:#f1fa8c">&#34;my-sub&#34;</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">subscriptionMode</span><span style="color:#ff79c6">(</span>SubscriptionMode<span style="color:#ff79c6">.</span><span style="color:#50fa7b">Durable</span><span style="color:#ff79c6">)</span> <span style="color:#6272a4">//SubscriptionMode.NonDurable
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>                <span style="color:#ff79c6">.</span><span style="color:#50fa7b">subscribe</span><span style="color:#ff79c6">();</span>
+</span></span></code></pre></div><h2 id="multi-topic-subscriptions">Multi-topic subscriptions</h2>
+<p>消费者的默认订阅地址：<code>persistent://public/default/my-topic</code>
+自定义指定订阅多个主题：<code>persistent://public/default/finance-.*</code>,正则表达式指定多个地址。</p>
+<h2 id="partitioned-topics">Partitioned topics</h2>
+<p>分区消息。topics由一个broker提供服务的场景不足以支持高吞吐量的业务场景。所以需要引入<code>Partitioned topics</code>这种模式，让某个<code>topic</code>可以由多个<code>broker</code>提供服务，提高系统的吞吐量。
+
+  <img src="../pulsar/pular_partioned_topics.PNG" alt="image">
+
+
+如图所示，一个完整的<code>Topic1</code>被拆分成5个分区，从<code>P0</code>到<code>P4</code>。其中<code>P0</code>和<code>P3</code>分区被分配给<code>Broker1</code>，<code>P1</code>和<code>P4</code>分区被分配给<code>Broker2</code>，<code>P2</code>分区被分配给<code>Broker3</code>,这样一个完整的<code>Topic1</code>就由三个<code>broker</code>来提供服务。
+<code>rounting mode(路由模式)</code>决定了每一次消息需要发送到哪一个分区，<code>subscription type</code>决定了哪些消息被发送到哪个消费者。</p>
+<h3 id="rounting-modes">Rounting modes</h3>
+<p>有以下几种模式</p>
+<ul>
+<li><code>RoundRobinPartition</code>:
+<ul>
+<li>如果没有为消息指定<code>key</code>，生产者会采用<code>round-robin</code>算法来决定将消息发送给所有分区中的哪一个。</li>
+<li>如果为消息指定了<code>key</code>，生产者会对key进行hash处理，然后将消息分配给特定的分区。<code>这是默认模式</code>.</li>
+</ul>
+</li>
+<li><code>SinglePartion</code>:
+<ul>
+<li>如果没有为消息指定<code>key</code>，生产者会随机选择一个分区，并将消息全部发送给该分区</li>
+<li>如果为消息指定了<code>key</code>，生产者会对key进行hash处理，并将消息全部发送给该特定的分区</li>
+</ul>
+</li>
+<li><code>CustomPartition</code>: 指定特定的消息由特定的分区来处理。</li>
+</ul>
+<h3 id="ordering-guarantee">Ordering guarantee</h3>
+<p>参见<a href="https://pulsar.apache.org/docs/concepts-messaging/#ordering-guarantee">pulsar-message-Ordering guarantee</a></p>
+<h2 id="non-persistent-topics">Non-persistent topics</h2>
+<p>不能持久化的消息无法抵御意外情况(比如宕机、重启)的发生,对于那些需要需要持久化的消息用<code>persistent topics</code>，比如由消费者处理同时需要记录该是否被正常消费的消息,像那些不需要持久化的消息用<code>Non-persistent topics</code>,比如<code>broker</code>与<code>consumer</code>之间关于消息是否正常处理的<code>ack消息</code>。</p>
+<h2 id="system-topic">System Topic</h2>
+<p>参见<a href="https://pulsar.apache.org/docs/concepts-messaging/#system-topic">pulsar-message-system topic</a></p>
+<h2 id="message-redelivery">Message redelivery</h2>
+<p><code>Pulsar</code>使用该机制来确保系统发生意外情况(比如宕机)时消息不会丢失。
+激活以下三种方式来进行消息的重传：</p>
+<ul>
+<li><code>Negative Acknowledge</code></li>
+<li><code>Acknowledgement Timeout</code></li>
+<li><code>Retry letter topic</code></li>
+</ul>
+<h2 id="message-retention-and-expire">Message retention and expire</h2>
+<p>参见我的文章<a href="https://luweiqianyi.github.io/post/pulsar%E6%B6%88%E6%81%AF%E4%BF%9D%E7%95%99%E4%B8%8E%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/">Pulsar消息保留与过期策略</a></p>
+<h2 id="message-deduplication">Message deduplication</h2>
+<p>消息去重。当一条消息被Pulsar持久化不止一次就会产生重复消息。<code>Message deduplication</code>可以保证每一条消息只被处理一次，即使消息被收到不止一次。下图展示了消息去重和不去重的区别：
+
+  <img src="../pulsar/pulsar_msg_deduplication.PNG" alt="image">
+
+</p>
+<h2 id="producer-idempotency">Producer idempotency</h2>
+<p>译为：生产者幂等性。另外一种消息去重的方法就是保证生产者在生产同一条消息的时候只生产一次，这种方法也叫生产者幂等性。该方法的缺点就是将消息去重的工作交给了应用程序。在<code>Pulsar</code>中，去重的工作是由<code>broker</code>完成的，因此无需修改客户端代码。
+详细的关于消息去重的详见<a href="https://pulsar.apache.org/docs/cookbooks-deduplication/">Message deduplication</a></p>
+<h2 id="delayed-message-delivery">Delayed message delivery</h2>
+<p>延迟消息的发送。在消息发送给<code>broker</code>之后，<code>Pulsar</code>设计了一个<code>DelayedDeliveryTracker</code>用来维护时间值,等待该时间值过期，<code>broker</code>才会将消息发送给消费者。消息的延迟发送只能在<code>Shared</code>订阅模式下使用(有效)。
+
+  <img src="../pulsar/pulsar_msg_delay_delivery.PNG" alt="image">
+
+</p>
+<blockquote>
+<p>默认情况下，延迟发送是开启的。</p>
+</blockquote>
+
+
+                
+                
+<div class="entry-shang text-center">
+    
+	    <p> 「如果这篇文章对你有用,请随意打赏」</p>
+	
+	<button class="zs show-zs btn btn-bred">赞赏支持</button>
+</div>
+<div class="zs-modal-bg"></div>
+<div class="zs-modal-box">
+	<div class="zs-modal-head">
+		<button type="button" class="close">×</button>
+		<span class="author"><a href="https://luweiqianyi.github.io"><img src="/img/favicon.png" />YinChao&#39;s Blogs</a></span>
+        
+	        <p class="tip"><i></i><span>如果这篇文章对你有用,请随意打赏</span></p>
+		
+ 
+	</div>
+	<div class="zs-modal-body">
+		<div class="zs-modal-btns">
+			<button class="btn btn-blink" data-num="2">2元</button>
+			<button class="btn btn-blink" data-num="5">5元</button>
+			<button class="btn btn-blink" data-num="10">10元</button>
+			<button class="btn btn-blink" data-num="50">50元</button>
+			<button class="btn btn-blink" data-num="100">100元</button>
+			<button class="btn btn-blink" data-num="1">任意金额</button>
+		</div>
+		<div class="zs-modal-pay">
+			<button class="btn btn-bred" id="pay-text">2元</button>
+			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
+			<img src="/img/reward/wechat-2.png"  id="pay-image"/>
+		</div>
+	</div>
+	<div class="zs-modal-footer">
+		<label><input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked"><span ><span class="zs-wechat"><img src="/img/reward/wechat-btn.png"/></span></label>
+		<label><input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay"><img src="/img/reward/alipay-btn.png"/></span></label>
+	</div>
+</div>
+<script type="text/javascript" src="/js/reward.js"></script>
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/pulsar%E6%B6%88%E6%81%AF%E4%BF%9D%E7%95%99%E4%B8%8E%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/" data-toggle="tooltip" data-placement="top" title="Pulsar消息保留与过期策略">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/pulsar%E6%9C%AF%E8%AF%AD/" data-toggle="tooltip" data-placement="top" title="Pulsar术语">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+<div id="disqus-comment"></div>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://luweiqianyi.github.io/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/etcd" title="etcd">
+                            etcd
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/go" title="go">
+                            go
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/hugo" title="hugo">
+                            hugo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/pulsar" title="pulsar">
+                            pulsar
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/server" title="server">
+                            server
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/test" title="test">
+                            test
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/translation" title="translation">
+                            translation
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/ubuntu" title="ubuntu">
+                            ubuntu
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/windows" title="windows">
+                            windows
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/zookeeper" title="zookeeper">
+                            zookeeper
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:runningriven@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/luweiqianyi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted" >
+                    Copyright &copy; YinChao&#39;s Blogs 2022
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> 
+                    <iframe hidden="hidden"
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
