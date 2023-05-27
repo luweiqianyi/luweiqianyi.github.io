@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Docker on YinChao&#39;s Blogs</title>
+    <title>Docker on Leebai&#39;s Blogs</title>
     <link>https://luweiqianyi.github.io/tags/docker/</link>
-    <description>Recent content in Docker on YinChao&#39;s Blogs</description>
+    <description>Recent content in Docker on Leebai&#39;s Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker命令初探</title>
+      <link>https://luweiqianyi.github.io/post/docker%E5%91%BD%E4%BB%A4%E5%88%9D%E6%8E%A2/</link>
+      <pubDate>Wed, 26 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/docker%E5%91%BD%E4%BB%A4%E5%88%9D%E6%8E%A2/</guid>
+      <description>Docker命令初探 前提：计算机上已经安装了Docker Docker基本命令 创建容器 docker run干了两件事：一是拉取镜像，二是启动该镜像得到容器</description>
+    </item>
+    
+    <item>
+      <title>Docker构建远程项目和本地项目</title>
+      <link>https://luweiqianyi.github.io/post/docker%E6%9E%84%E5%BB%BA%E8%BF%9C%E7%A8%8B%E9%A1%B9%E7%9B%AE%E5%92%8C%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE/</link>
+      <pubDate>Wed, 26 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/docker%E6%9E%84%E5%BB%BA%E8%BF%9C%E7%A8%8B%E9%A1%B9%E7%9B%AE%E5%92%8C%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE/</guid>
+      <description>docker构建远程项目和本地项目 docker构建远程项目 拉取docker/getting-started镜像 PS C:\Users\Nicklaus&amp;gt; docker pull docker/getting-started Using default tag: latest latest: Pulling from docker/getting-started df9b9388f04a: Pull</description>
+    </item>
+    
     <item>
       <title>Windows平台部署etcd到Docker</title>
       <link>https://luweiqianyi.github.io/post/windows%E5%B9%B3%E5%8F%B0%E9%83%A8%E7%BD%B2etcd%E5%88%B0docker/</link>

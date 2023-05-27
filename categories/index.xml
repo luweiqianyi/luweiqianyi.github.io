@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on YinChao&#39;s Blogs</title>
+    <title>Categories on Leebai&#39;s Blogs</title>
     <link>https://luweiqianyi.github.io/categories/</link>
-    <description>Recent content in Categories on YinChao&#39;s Blogs</description>
+    <description>Recent content in Categories on Leebai&#39;s Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 04 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blogs</title>
       <link>https://luweiqianyi.github.io/categories/blogs/</link>
-      <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 04 Nov 2022 00:00:00 +0000</pubDate>
       
       <guid>https://luweiqianyi.github.io/categories/blogs/</guid>
       <description></description>
@@ -19,7 +19,7 @@
     <item>
       <title>Test</title>
       <link>https://luweiqianyi.github.io/categories/test/</link>
-      <pubDate>Thu, 20 Oct 2022 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 24 Oct 2022 00:00:00 +0000</pubDate>
       
       <guid>https://luweiqianyi.github.io/categories/test/</guid>
       <description></description>

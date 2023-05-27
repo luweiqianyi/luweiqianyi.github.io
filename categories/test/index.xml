@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Test on YinChao&#39;s Blogs</title>
+    <title>Test on Leebai&#39;s Blogs</title>
     <link>https://luweiqianyi.github.io/categories/test/</link>
-    <description>Recent content in Test on YinChao&#39;s Blogs</description>
+    <description>Recent content in Test on Leebai&#39;s Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/categories/test/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/categories/test/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>markdown放入图片测试</title>
+      <link>https://luweiqianyi.github.io/post/markdown%E6%94%BE%E5%85%A5%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Mon, 24 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/markdown%E6%94%BE%E5%85%A5%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/</guid>
+      <description>markdown放入图片测试 项目构建步骤如下 构建项目平台: Windows 本地的项目根目录为: D:\Hugo\website\ 如何构建项目可参考文章：Hugo 搭建自己的博客 在项目根目录</description>
+    </item>
+    
     <item>
       <title>测试：中文名作为md文件的名字</title>
       <link>https://luweiqianyi.github.io/post/%E4%B8%AD%E6%96%87%E5%90%8D%E6%96%87%E6%A1%A3/</link>

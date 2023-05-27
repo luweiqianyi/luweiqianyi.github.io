@@ -1,12 +1,138 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>YinChao&#39;s Blogs</title>
+    <title>Leebai&#39;s Blogs</title>
     <link>https://luweiqianyi.github.io/</link>
-    <description>Recent content on YinChao&#39;s Blogs</description>
+    <description>Recent content on Leebai&#39;s Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 04 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pulsar术语</title>
+      <link>https://luweiqianyi.github.io/post/pulsar%E6%9C%AF%E8%AF%AD/</link>
+      <pubDate>Fri, 04 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/pulsar%E6%9C%AF%E8%AF%AD/</guid>
+      <description>Pulsar术语 Pulsar Pulsar是一个分布式消息系统，一开始由Yahoo创建，现在由Apache Software Foundation管理。 Message Pulsar的基</description>
+    </item>
+    
+    <item>
+      <title>Pulsar消息</title>
+      <link>https://luweiqianyi.github.io/post/pulsar%E6%B6%88%E6%81%AF/</link>
+      <pubDate>Fri, 04 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/pulsar%E6%B6%88%E6%81%AF/</guid>
+      <description>Pulsar消息 简介 Pulsar基于发布订阅模式。在该模式下，生产者往topics中生产消息，消费者订阅这些topics，处理即将到来的消息</description>
+    </item>
+    
+    <item>
+      <title>Pulsar消息保留与过期策略</title>
+      <link>https://luweiqianyi.github.io/post/pulsar%E6%B6%88%E6%81%AF%E4%BF%9D%E7%95%99%E4%B8%8E%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/</link>
+      <pubDate>Thu, 03 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/pulsar%E6%B6%88%E6%81%AF%E4%BF%9D%E7%95%99%E4%B8%8E%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/</guid>
+      <description>Pulsar消息保留与过期策略 Pulsar broker对于消息的生产者和消息的消费者来说，主要执行两个过程。 broker接收生产者的消息并存储起来 br</description>
+    </item>
+    
+    <item>
+      <title>etcd配置项</title>
+      <link>https://luweiqianyi.github.io/post/etcd%E9%85%8D%E7%BD%AE%E9%A1%B9/</link>
+      <pubDate>Wed, 02 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/etcd%E9%85%8D%E7%BD%AE%E9%A1%B9/</guid>
+      <description>etcd配置项 member相关 --name &amp;#39;default&amp;#39; Human-readable name for this member. --data-dir &amp;#39;${name}.etcd&amp;#39; Path to the data directory. --wal-dir &amp;#39;&amp;#39; Path to the dedicated wal directory. --snapshot-count &amp;#39;100000&amp;#39; Number of committed transactions to trigger a snapshot to disk. --heartbeat-interval &amp;#39;100&amp;#39; Time (in milliseconds) of a heartbeat interval. --election-timeout &amp;#39;1000&amp;#39; Time (in milliseconds) for an election to timeout. See tuning</description>
+    </item>
+    
+    <item>
+      <title>go viper解析toml配置文件</title>
+      <link>https://luweiqianyi.github.io/post/go_viper%E8%A7%A3%E6%9E%90toml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Wed, 02 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/go_viper%E8%A7%A3%E6%9E%90toml%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%95%B0%E6%8D%AE/</guid>
+      <description>开发环境配置 系统：Windows IDE: Goland 项目配置(Goland-&amp;gt;Run/Debug Configurations) Name:vipertest // 指定Go Build的名字 Run kind: Directory Directory: F:\HappyCoding\goprograms\awesomeProject\cmd\vipertest Output directory: F:\HappyCoding\goprograms\awesomeProject\cmd\vipertest // 指定e</description>
+    </item>
+    
+    <item>
+      <title>Windows下部署etcd集群</title>
+      <link>https://luweiqianyi.github.io/post/windows%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAetcd%E9%9B%86%E7%BE%A4/</link>
+      <pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/windows%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAetcd%E9%9B%86%E7%BE%A4/</guid>
+      <description>Windows下部署etcd集群 前提 Windows下已经安装etcd。 新建项目 项目暂且命名为etcd_cluster,以该名字创建目录。 项目</description>
+    </item>
+    
+    <item>
+      <title>go语法：指针</title>
+      <link>https://luweiqianyi.github.io/post/go%E6%8C%87%E9%92%88/</link>
+      <pubDate>Fri, 28 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/go%E6%8C%87%E9%92%88/</guid>
+      <description>go语法: 指针 运行环境 Windows goland 运行配置(Goland-&amp;gt;Run/Debug Configurations) Run kind: Directory Directory: F:\HappyCoding\goprograms\etcdInAction\cmd\etcdprac1 Output directory: F:\HappyCoding\goprograms\etcdInAction\cmd\etcdprac1 Working directory: F:\HappyCoding\goprograms\etcdInAction\cmd\etcdprac1 Go tool arguments: -o etcdprac1.exe 指针 package main import &amp;#34;fmt&amp;#34; type User struct { name string age int school</description>
+    </item>
+    
+    <item>
+      <title>Docker命令初探</title>
+      <link>https://luweiqianyi.github.io/post/docker%E5%91%BD%E4%BB%A4%E5%88%9D%E6%8E%A2/</link>
+      <pubDate>Wed, 26 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/docker%E5%91%BD%E4%BB%A4%E5%88%9D%E6%8E%A2/</guid>
+      <description>Docker命令初探 前提：计算机上已经安装了Docker Docker基本命令 创建容器 docker run干了两件事：一是拉取镜像，二是启动该镜像得到容器</description>
+    </item>
+    
+    <item>
+      <title>Docker构建远程项目和本地项目</title>
+      <link>https://luweiqianyi.github.io/post/docker%E6%9E%84%E5%BB%BA%E8%BF%9C%E7%A8%8B%E9%A1%B9%E7%9B%AE%E5%92%8C%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE/</link>
+      <pubDate>Wed, 26 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/docker%E6%9E%84%E5%BB%BA%E8%BF%9C%E7%A8%8B%E9%A1%B9%E7%9B%AE%E5%92%8C%E6%9C%AC%E5%9C%B0%E9%A1%B9%E7%9B%AE/</guid>
+      <description>docker构建远程项目和本地项目 docker构建远程项目 拉取docker/getting-started镜像 PS C:\Users\Nicklaus&amp;gt; docker pull docker/getting-started Using default tag: latest latest: Pulling from docker/getting-started df9b9388f04a: Pull</description>
+    </item>
+    
+    <item>
+      <title>Pulsar架构概览</title>
+      <link>https://luweiqianyi.github.io/post/pulsar%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88/</link>
+      <pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/pulsar%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88/</guid>
+      <description>pulsar架构 pulsar实例与pulsar集群的关系 一个Pulsar实例由一个或者多个Pulsar集群组成。 一个Pulsar实例中的不同</description>
+    </item>
+    
+    <item>
+      <title>ZooKeeper简介</title>
+      <link>https://luweiqianyi.github.io/post/zookeeper%E7%AE%80%E4%BB%8B/</link>
+      <pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/zookeeper%E7%AE%80%E4%BB%8B/</guid>
+      <description>ZooKeeper简介 什么是ZooKeeper ZooKeeper是一个为分布式应用程序服务的高性能的协调式服务。暴露了以下的服务： naming configuration management synchronization group</description>
+    </item>
+    
+    <item>
+      <title>go操作etcd</title>
+      <link>https://luweiqianyi.github.io/post/go%E6%93%8D%E4%BD%9Cetcd/</link>
+      <pubDate>Mon, 24 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/go%E6%93%8D%E4%BD%9Cetcd/</guid>
+      <description>go操作etcd 环境部署：Docker部署etcd 详见文章Windows平台部署etcd到Docker 新建项目 etcdInAction 项目名称：etcdInAct</description>
+    </item>
+    
+    <item>
+      <title>markdown放入图片测试</title>
+      <link>https://luweiqianyi.github.io/post/markdown%E6%94%BE%E5%85%A5%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/</link>
+      <pubDate>Mon, 24 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/markdown%E6%94%BE%E5%85%A5%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/</guid>
+      <description>markdown放入图片测试 项目构建步骤如下 构建项目平台: Windows 本地的项目根目录为: D:\Hugo\website\ 如何构建项目可参考文章：Hugo 搭建自己的博客 在项目根目录</description>
+    </item>
+    
+    <item>
+      <title>Etcd lease机制</title>
+      <link>https://luweiqianyi.github.io/post/etcd_lease/</link>
+      <pubDate>Fri, 21 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/etcd_lease/</guid>
+      <description>Etcd lease 什么是Etcd的lease机制 lease机制能够确保一个etcd集群中的key拥有一种临时性的特征，被指定某个lease的key只能在集</description>
+    </item>
+    
     <item>
       <title>Etcd初探</title>
       <link>https://luweiqianyi.github.io/post/etcdintroduce/</link>

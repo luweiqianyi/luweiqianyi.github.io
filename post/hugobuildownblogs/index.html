@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     
-    <meta property="og:site_name" content="YinChao&#39;s Blogs">
+    <meta property="og:site_name" content="Leebai&#39;s Blogs">
     <meta property="og:type" content="article">
 
     
@@ -21,9 +21,9 @@
     
 
     
-    <meta name="description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。">
-    <meta property="og:description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。" />
-    <meta property="twitter:description" content="殷超，程序员 | 这里是 殷超 的博客，与你一起发现更大的世界。" />
+    <meta name="description" content="[劝君惜取少年时]，程序员 | 欢迎来到的Leebai的博客世界。">
+    <meta property="og:description" content="[劝君惜取少年时]，程序员 | 欢迎来到的Leebai的博客世界。" />
+    <meta property="twitter:description" content="[劝君惜取少年时]，程序员 | 欢迎来到的Leebai的博客世界。" />
     
 
     
@@ -31,10 +31,10 @@
     
     
 
-    <meta name="keyword"  content="殷超, YinChao, , 殷超的网络日志, 殷超的博客, YinChao&#39;s Blogs, 博客, 个人网站">
+    <meta name="keyword"  content="[劝君惜取少年时], Leebai, [劝君惜取少年时]的网络日志, [劝君惜取少年时]的博客, Leebai&#39;s Blogs, 博客, 个人网站">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Hugo搭建自己的博客教程 | 殷超的博客 | YinChao&#39;s Blogs</title>
+    <title>Hugo搭建自己的博客教程 | [劝君惜取少年时]的博客 | Leebai&#39;s Blogs</title>
 
     <link rel="canonical" href="/post/hugobuildownblogs/">
 
@@ -86,7 +86,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">YinChao&#39;s Blogs</a>
+            <a class="navbar-brand" href="/">Leebai&#39;s Blogs</a>
         </div>
 
         
@@ -239,13 +239,18 @@ git clone https://github.com/zhaohuabing/hugo-theme-cleanwhite.git
 <li>至此，远程访问你的整个博客站点就完成了。</li>
 </ul>
 <h2 id="如何将public目录的内容上传到zhangsangithubio仓库">如何将public目录的内容上传到zhangsan.github.io仓库</h2>
-<p>进入到website/public目录下，依次输入以下命令</p>
-<pre tabindex="0"><code>git init
+<p>首次上传，本地仓库没有关联到远程仓库，所以需要<code>git remote add origin ...</code></p>
+<pre><code>进入到website/public目录下，依次输入以下命令
+```
+git init
 git add .
-git commit -m &#34;Hugo build my blogs&#34;
+git commit -m &quot;Hugo build my blogs&quot;
 git remote add origin git@github.com:zhangsan/zhangsan.github.io.git
 git push -u origin master
-</code></pre><p>命令全部执行成功，即可通过网址<code>https://zhangsan.github.io</code>访问了。</p>
+```
+命令全部执行成功，即可通过网址`https://zhangsan.github.io`访问了。
+</code></pre>
+<p>后续上传，只需要执行正常的git操作进行提交即可，将public目录中的内容上传到目的仓库即可</p>
 <h2 id="自定义博客">自定义博客</h2>
 <p>由于执行了上面的命令<code>cp -r hugo-theme-cleanwhite/exampleSite/** ../</code>，所以显示的是默认的博客模板。自己需要对博客内容进行修改。
 主要修改可能有下面几点:</p>
@@ -255,47 +260,14 @@ git push -u origin master
 <li>修改或者删除 <code>website/static/img</code>目录下的一些图片。</li>
 <li>具体要怎么修改，可以先将demo网站运行起来，根据自己的需要来进行修改。</li>
 </ul>
+<h2 id="注意点">注意点</h2>
+<ul>
+<li>本博客站点的下载地址：<code>https://github.com/luweiqianyi/website.git</code></li>
+<li>通过<code>git clone</code>同步到本地时，需要新增或者修改文章均在目录<code>website\content\post</code>中修改</li>
+<li>修改结束，在目录<code>website</code>下运行<code>hugo serve</code>，并访问路径<code>localhost:1313</code>看看刚才的修改是否生效</li>
+<li>如果生效，将<code>public</code>整个目录上传到<code>https://github.com/luweiqianyi/luweiqianyi.github.io.git</code>地址，作为在<code>github</code>上搭建博客站点的内容来源。</li>
+</ul>
 
-
-                
-                
-<div class="entry-shang text-center">
-    
-	    <p>「真诚赞赏，手留余香」</p>
-	
-	<button class="zs show-zs btn btn-bred">赞赏支持</button>
-</div>
-<div class="zs-modal-bg"></div>
-<div class="zs-modal-box">
-	<div class="zs-modal-head">
-		<button type="button" class="close">×</button>
-		<span class="author"><a href="https://luweiqianyi.github.io"><img src="/img/favicon.png" />YinChao&#39;s Blogs</a></span>
-        
-	        <p class="tip"><i></i><span>真诚赞赏，手留余香</span></p>
-		
- 
-	</div>
-	<div class="zs-modal-body">
-		<div class="zs-modal-btns">
-			<button class="btn btn-blink" data-num="2">2元</button>
-			<button class="btn btn-blink" data-num="5">5元</button>
-			<button class="btn btn-blink" data-num="10">10元</button>
-			<button class="btn btn-blink" data-num="50">50元</button>
-			<button class="btn btn-blink" data-num="100">100元</button>
-			<button class="btn btn-blink" data-num="1">任意金额</button>
-		</div>
-		<div class="zs-modal-pay">
-			<button class="btn btn-bred" id="pay-text">2元</button>
-			<p>使用<span id="pay-type">微信</span>扫描二维码完成支付</p>
-			<img src="/img/reward/wechat-2.png"  id="pay-image"/>
-		</div>
-	</div>
-	<div class="zs-modal-footer">
-		<label><input type="radio" name="zs-type" value="wechat" class="zs-type" checked="checked"><span ><span class="zs-wechat"><img src="/img/reward/wechat-btn.png"/></span></label>
-		<label><input type="radio" name="zs-type" value="alipay" class="zs-type" class="zs-alipay"><img src="/img/reward/alipay-btn.png"/></span></label>
-	</div>
-</div>
-<script type="text/javascript" src="/js/reward.js"></script>
 
                 
 
@@ -385,8 +357,20 @@ git push -u origin master
                         
                         
                         
+                        <a href="/tags/go" title="go">
+                            go
+                        </a>
+                        
+                        
+                        
                         <a href="/tags/hugo" title="hugo">
                             hugo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/pulsar" title="pulsar">
+                            pulsar
                         </a>
                         
                         
@@ -403,6 +387,12 @@ git push -u origin master
                         
                         
                         
+                        <a href="/tags/translation" title="translation">
+                            translation
+                        </a>
+                        
+                        
+                        
                         <a href="/tags/ubuntu" title="ubuntu">
                             ubuntu
                         </a>
@@ -411,6 +401,12 @@ git push -u origin master
                         
                         <a href="/tags/windows" title="windows">
                             windows
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/zookeeper" title="zookeeper">
+                            zookeeper
                         </a>
                         
                         
@@ -475,7 +471,7 @@ git push -u origin master
            
              </ul>
 		<p class="copyright text-muted" >
-                    Copyright &copy; YinChao&#39;s Blogs 2022
+                    Copyright &copy; Leebai&#39;s Blogs 2023
                     <br>
                     <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> 
                     <iframe hidden="hidden"

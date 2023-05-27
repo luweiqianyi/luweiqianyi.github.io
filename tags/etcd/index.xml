@@ -1,12 +1,48 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>etcd on YinChao&#39;s Blogs</title>
+    <title>etcd on Leebai&#39;s Blogs</title>
     <link>https://luweiqianyi.github.io/tags/etcd/</link>
-    <description>Recent content in etcd on YinChao&#39;s Blogs</description>
+    <description>Recent content in etcd on Leebai&#39;s Blogs</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 20 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/tags/etcd/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://luweiqianyi.github.io/tags/etcd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>etcd配置项</title>
+      <link>https://luweiqianyi.github.io/post/etcd%E9%85%8D%E7%BD%AE%E9%A1%B9/</link>
+      <pubDate>Wed, 02 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/etcd%E9%85%8D%E7%BD%AE%E9%A1%B9/</guid>
+      <description>etcd配置项 member相关 --name &amp;#39;default&amp;#39; Human-readable name for this member. --data-dir &amp;#39;${name}.etcd&amp;#39; Path to the data directory. --wal-dir &amp;#39;&amp;#39; Path to the dedicated wal directory. --snapshot-count &amp;#39;100000&amp;#39; Number of committed transactions to trigger a snapshot to disk. --heartbeat-interval &amp;#39;100&amp;#39; Time (in milliseconds) of a heartbeat interval. --election-timeout &amp;#39;1000&amp;#39; Time (in milliseconds) for an election to timeout. See tuning</description>
+    </item>
+    
+    <item>
+      <title>Windows下部署etcd集群</title>
+      <link>https://luweiqianyi.github.io/post/windows%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAetcd%E9%9B%86%E7%BE%A4/</link>
+      <pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/windows%E4%B8%BB%E6%9C%BA%E6%90%AD%E5%BB%BAetcd%E9%9B%86%E7%BE%A4/</guid>
+      <description>Windows下部署etcd集群 前提 Windows下已经安装etcd。 新建项目 项目暂且命名为etcd_cluster,以该名字创建目录。 项目</description>
+    </item>
+    
+    <item>
+      <title>go操作etcd</title>
+      <link>https://luweiqianyi.github.io/post/go%E6%93%8D%E4%BD%9Cetcd/</link>
+      <pubDate>Mon, 24 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/go%E6%93%8D%E4%BD%9Cetcd/</guid>
+      <description>go操作etcd 环境部署：Docker部署etcd 详见文章Windows平台部署etcd到Docker 新建项目 etcdInAction 项目名称：etcdInAct</description>
+    </item>
+    
+    <item>
+      <title>Etcd lease机制</title>
+      <link>https://luweiqianyi.github.io/post/etcd_lease/</link>
+      <pubDate>Fri, 21 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://luweiqianyi.github.io/post/etcd_lease/</guid>
+      <description>Etcd lease 什么是Etcd的lease机制 lease机制能够确保一个etcd集群中的key拥有一种临时性的特征，被指定某个lease的key只能在集</description>
+    </item>
+    
     <item>
       <title>Etcd初探</title>
       <link>https://luweiqianyi.github.io/post/etcdintroduce/</link>
