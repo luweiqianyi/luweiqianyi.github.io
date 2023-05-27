@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Leebai&#39;s Blogs">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://luweiqianyi.github.io/img/home-bg.jpg">
+    <meta property="twitter:image" content="https://luweiqianyi.github.io/img/home-bg.jpg" />
+    
+
+    
+    <meta name="title" content="Etcd lease机制" />
+    <meta property="og:title" content="Etcd lease机制" />
+    <meta property="twitter:title" content="Etcd lease机制" />
+    
+
+    
+    <meta name="description" content="[劝君惜取少年时]，程序员 | 欢迎来到的Leebai的博客世界。">
+    <meta property="og:description" content="[劝君惜取少年时]，程序员 | 欢迎来到的Leebai的博客世界。" />
+    <meta property="twitter:description" content="[劝君惜取少年时]，程序员 | 欢迎来到的Leebai的博客世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="[劝君惜取少年时], Leebai, [劝君惜取少年时]的网络日志, [劝君惜取少年时]的博客, Leebai&#39;s Blogs, 博客, 个人网站">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Etcd lease机制 | [劝君惜取少年时]的博客 | Leebai&#39;s Blogs</title>
+
+    <link rel="canonical" href="/post/etcd_lease/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Leebai&#39;s Blogs</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/blogs">blogs</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/test">test</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/etcd" title="etcd">
+                            etcd
+                        </a>
+                        
+                    </div>
+                    <h1>Etcd lease机制</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;YinChao&#34;
+                             
+                            on 
+                            Friday, October 21, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="etcd-lease">Etcd lease</h1>
+<h2 id="什么是etcd的lease机制">什么是Etcd的lease机制</h2>
+<p>lease机制能够确保一个etcd集群中的key拥有一种临时性的特征，被指定某个lease的key只能在集群中存活某一段时间，时间到了就会被集群自动删除。etcd官网文档把这段存活时间叫做TTL(timetolive)。</p>
+<h2 id="创建lease">创建lease</h2>
+<p>当应用程序执行<code>etcdctl lease grant 10</code>命令时，会创建一个id为leaseId(比如：32695410dcc0ca06)的lease,它的TTL为10秒。命令行执行结果如下:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ etcdctl lease grant <span style="color:#bd93f9">10</span>
+</span></span><span style="display:flex;"><span>lease 32695410dcc0ca06 granted with TTL<span style="color:#ff79c6">(</span>10s<span style="color:#ff79c6">)</span>
+</span></span></code></pre></div><h2 id="取消撤销lease">取消、撤销lease</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ etcdctl lease revoke 32695410dcc0ca06
+</span></span><span style="display:flex;"><span>lease 32695410dcc0ca06 revoked
+</span></span></code></pre></div><h2 id="为etcd集群中的某个key指定一个lease">为etcd集群中的某个key指定一个lease</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ etcdctl put --lease<span style="color:#ff79c6">=</span>32695410dcc0ca06 foo bar
+</span></span><span style="display:flex;"><span>OK
+</span></span></code></pre></div><h2 id="为某个lease设置续期">为某个lease设置续期</h2>
+<p>一般客户端与服务器的心跳机制可以通过为某个lease设置续期来实现，每一次到了过期时间会继续延续上一次的TTL</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ etcdctl lease keep-alive 32695410dcc0ca06
+</span></span><span style="display:flex;"><span>lease 32695410dcc0ca06 keepalived with TTL<span style="color:#ff79c6">(</span>10<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>lease 32695410dcc0ca06 keepalived with TTL<span style="color:#ff79c6">(</span>10<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>lease 32695410dcc0ca06 keepalived with TTL<span style="color:#ff79c6">(</span>10<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>这样leaseId=32695410dcc0ca06的这个lease对象会永久续期10s,永远不会过期</p>
+<h2 id="查看某个lease还剩余多少时间">查看某个lease还剩余多少时间</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ etcdctl lease timetolive 32695410dcc0ca06
+</span></span><span style="display:flex;"><span>lease 32695410dcc0ca06 granted with TTL<span style="color:#ff79c6">(</span>10s<span style="color:#ff79c6">)</span>, remaining<span style="color:#ff79c6">(</span>4s<span style="color:#ff79c6">)</span>
+</span></span></code></pre></div><h2 id="多个key指定了同一个lease如何查看同一个lease下的key集合">多个key指定了同一个lease，如何查看同一个lease下的key集合</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#6272a4"># grant a lease with 500 second TTL</span>
+</span></span><span style="display:flex;"><span>$ etcdctl lease grant <span style="color:#bd93f9">500</span>
+</span></span><span style="display:flex;"><span>lease 694d5765fc71500b granted with TTL<span style="color:#ff79c6">(</span>500s<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># attach key zoo1 to lease 694d5765fc71500b</span>
+</span></span><span style="display:flex;"><span>$ etcdctl put zoo1 val1 --lease<span style="color:#ff79c6">=</span>694d5765fc71500b
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># attach key zoo2 to lease 694d5765fc71500b</span>
+</span></span><span style="display:flex;"><span>$ etcdctl put zoo2 val2 --lease<span style="color:#ff79c6">=</span>694d5765fc71500b
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ etcdctl lease timetolive --keys 694d5765fc71500b
+</span></span><span style="display:flex;"><span>lease 694d5765fc71500b granted with TTL<span style="color:#ff79c6">(</span>500s<span style="color:#ff79c6">)</span>, remaining<span style="color:#ff79c6">(</span>132s<span style="color:#ff79c6">)</span>, attached keys<span style="color:#ff79c6">([</span>zoo2 zoo1<span style="color:#ff79c6">])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># if the lease has expired or does not exist it will give the below response:</span>
+</span></span><span style="display:flex;"><span>Error:  etcdserver: requested lease not found
+</span></span></code></pre></div><p><strong>Windows平台下执行结果如下：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Microsoft Windows <span style="color:#ff79c6">[</span>版本 10.0.19043.2130<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">(</span>c<span style="color:#ff79c6">)</span> Microsoft Corporation。保留所有权利。
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#f1fa8c">\U</span>sers<span style="color:#f1fa8c">\N</span>icklaus&gt;etcdctl lease grant <span style="color:#bd93f9">1030</span>
+</span></span><span style="display:flex;"><span>lease 694d83f8608eff0a granted with TTL<span style="color:#ff79c6">(</span>1030s<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#f1fa8c">\U</span>sers<span style="color:#f1fa8c">\N</span>icklaus&gt;etcdctl lease grant <span style="color:#bd93f9">30</span>
+</span></span><span style="display:flex;"><span>lease 694d83f8608eff0c granted with TTL<span style="color:#ff79c6">(</span>30s<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#f1fa8c">\U</span>sers<span style="color:#f1fa8c">\N</span>icklaus&gt;etcdctl put zoo1 val1 --lease<span style="color:#ff79c6">=</span>694d83f8608eff0c
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">{</span><span style="color:#f1fa8c">&#34;level&#34;</span>:<span style="color:#f1fa8c">&#34;warn&#34;</span>,<span style="color:#f1fa8c">&#34;ts&#34;</span>:<span style="color:#f1fa8c">&#34;2022-10-21T16:26:15.321+0800&#34;</span>,<span style="color:#f1fa8c">&#34;logger&#34;</span>:<span style="color:#f1fa8c">&#34;etcd-client&#34;</span>,<span style="color:#f1fa8c">&#34;caller&#34;</span>:<span style="color:#f1fa8c">&#34;v3/retry_interceptor.go:62&#34;</span>,<span style="color:#f1fa8c">&#34;msg&#34;</span>:<span style="color:#f1fa8c">&#34;retrying of unary invoker failed&#34;</span>,<span style="color:#f1fa8c">&#34;target&#34;</span>:<span style="color:#f1fa8c">&#34;etcd-endpoints://0xc0003d2a80/127.0.0.1:2379&#34;</span>,<span style="color:#f1fa8c">&#34;attempt&#34;</span>:0,<span style="color:#f1fa8c">&#34;error&#34;</span>:<span style="color:#f1fa8c">&#34;rpc error: code = NotFound desc = etcdserver: requested lease not found&#34;</span><span style="color:#ff79c6">}</span>
+</span></span><span style="display:flex;"><span>Error: etcdserver: requested lease not found
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#f1fa8c">\U</span>sers<span style="color:#f1fa8c">\N</span>icklaus&gt;etcdctl put zoo1 val1 --lease<span style="color:#ff79c6">=</span>694d83f8608eff0a
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#f1fa8c">\U</span>sers<span style="color:#f1fa8c">\N</span>icklaus&gt;etcdctl put zoo2 val2 --lease<span style="color:#ff79c6">=</span>694d83f8608eff0a
+</span></span><span style="display:flex;"><span>OK
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C:<span style="color:#f1fa8c">\U</span>sers<span style="color:#f1fa8c">\N</span>icklaus&gt;etcdctl lease timetolive --keys 694d83f8608eff0a
+</span></span><span style="display:flex;"><span>lease 694d83f8608eff0a granted with TTL<span style="color:#ff79c6">(</span>1030s<span style="color:#ff79c6">)</span>, remaining<span style="color:#ff79c6">(</span>889s<span style="color:#ff79c6">)</span>, attached keys<span style="color:#ff79c6">([</span>zoo1 zoo2<span style="color:#ff79c6">])</span>
+</span></span></code></pre></div>
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/etcdintroduce/" data-toggle="tooltip" data-placement="top" title="Etcd初探">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/markdown%E6%94%BE%E5%85%A5%E5%9B%BE%E7%89%87%E6%B5%8B%E8%AF%95/" data-toggle="tooltip" data-placement="top" title="markdown放入图片测试">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+<div id="disqus-comment"></div>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://luweiqianyi.github.io/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/etcd" title="etcd">
+                            etcd
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/go" title="go">
+                            go
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/hugo" title="hugo">
+                            hugo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/pulsar" title="pulsar">
+                            pulsar
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/server" title="server">
+                            server
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/test" title="test">
+                            test
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/translation" title="translation">
+                            translation
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/ubuntu" title="ubuntu">
+                            ubuntu
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/windows" title="windows">
+                            windows
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/zookeeper" title="zookeeper">
+                            zookeeper
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:runningriven@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/luweiqianyi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted" >
+                    Copyright &copy; Leebai&#39;s Blogs 2023
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> 
+                    <iframe hidden="hidden"
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

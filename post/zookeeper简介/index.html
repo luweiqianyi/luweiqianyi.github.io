@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Leebai&#39;s Blogs">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://luweiqianyi.github.io/img/home-bg.jpg">
+    <meta property="twitter:image" content="https://luweiqianyi.github.io/img/home-bg.jpg" />
+    
+
+    
+    <meta name="title" content="ZooKeeper简介" />
+    <meta property="og:title" content="ZooKeeper简介" />
+    <meta property="twitter:title" content="ZooKeeper简介" />
+    
+
+    
+    <meta name="description" content="[劝君惜取少年时]，程序员 | 欢迎来到的Leebai的博客世界。">
+    <meta property="og:description" content="[劝君惜取少年时]，程序员 | 欢迎来到的Leebai的博客世界。" />
+    <meta property="twitter:description" content="[劝君惜取少年时]，程序员 | 欢迎来到的Leebai的博客世界。" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="[劝君惜取少年时], Leebai, [劝君惜取少年时]的网络日志, [劝君惜取少年时]的博客, Leebai&#39;s Blogs, 博客, 个人网站">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>ZooKeeper简介 | [劝君惜取少年时]的博客 | Leebai&#39;s Blogs</title>
+
+    <link rel="canonical" href="/post/zookeeper%E7%AE%80%E4%BB%8B/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Leebai&#39;s Blogs</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/blogs">blogs</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/test">test</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/zookeeper" title="zookeeper">
+                            zookeeper
+                        </a>
+                        
+                        <a class="tag" href="/tags/translation" title="translation">
+                            translation
+                        </a>
+                        
+                    </div>
+                    <h1>ZooKeeper简介</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;YinChao&#34;
+                             
+                            on 
+                            Tuesday, October 25, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="zookeeper简介">ZooKeeper简介</h1>
+<h2 id="什么是zookeeper">什么是ZooKeeper</h2>
+<p>ZooKeeper是一个为分布式应用程序服务的高性能的协调式服务。暴露了以下的服务：</p>
+<ul>
+<li>naming</li>
+<li>configuration management</li>
+<li>synchronization</li>
+<li>group services</li>
+<li>&hellip;</li>
+</ul>
+<h2 id="概览">概览</h2>
+<h3 id="设计目标">设计目标</h3>
+<ul>
+<li>简单
+<ul>
+<li>ZooKeeper允许分布式进程之间能够通过一个共享的继承体系的命名空间(类似于标准的文件系统体系)来相互协调、配合。</li>
+<li>ZooKeeper的数据驻留在内存中，因此ZooKeeper可以实现高吞吐量和低负载。</li>
+</ul>
+</li>
+<li>可复制
+
+  <img src="../zookeeper/ZooKeeper_Service.PNG" alt="image">
+
+
+<ul>
+<li>组成ZooKeeper Service的服务器必须相互知道彼此。在持久化存储中它们维护了关于彼此状态的内存镜像、还有事务日志和snapshots。只要一个ZooKeeper Service中的绝大多数服务器是可用的，那么就认为这个ZooKeeper Service是可用的(即可对外提供服务)。</li>
+<li>客户端连接到ZooKeeper Service内部的一个服务器，发送请求，得到响应，得到监听事件，发送心跳信号。如果客户端到该服务器的TCP连接断掉了，客户端会连接到内部的另一台服务器。</li>
+</ul>
+</li>
+<li>有序
+<ul>
+<li>ZooKeeper会将每一次更新用一个数字来代表，这个数据反映了所有ZooKeeper事务的顺序</li>
+</ul>
+</li>
+<li>快速
+<ul>
+<li>读相比写更快，大概10:1，所以是一个读主导(read-dominant)的服务。</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据模型和继承体系的命名空间">数据模型和继承体系的命名空间</h3>
+<p>
+  <img src="../zookeeper/ZooKeeper_Hierarachical_Namespace.PNG" alt="image">
+
+</p>
+<h3 id="nodes-and-ephemeral-nodes节点和瞬态节点">Nodes and ephemeral nodes(节点和瞬态节点)</h3>
+<p>ZNodes: 维护状态，包含：数据改变的版本号，ACL改变，时间戳，允许缓存验证和协调更新。每一次一个znode节点数据发生变化，版本号就会增加。
+ephemeral nodes: 只要创建znode的会话处于活动状态，这些节点就会存在。当会话结束时，这些节点会被删除。</p>
+<h3 id="提供的api">提供的API</h3>
+<ul>
+<li>create : creates a node at a location in the tree</li>
+<li>delete : deletes a node</li>
+<li>exists : tests if a node exists at a location</li>
+<li>get data : reads the data from a node</li>
+<li>set data : writes data to a node</li>
+<li>get children : retrieves a list of children of a node</li>
+<li>sync : waits for data to be propagated</li>
+</ul>
+<h3 id="实现">实现</h3>
+<p>
+  <img src="../zookeeper/ZooKeeper_Implementation.PNG" alt="image">
+
+</p>
+<ul>
+<li>复制的数据库是一个包含整个数据树的内存数据库。更新被记录到磁盘以实现可恢复性，写操作在应用到内存中的数据库之前被序列化到磁盘。</li>
+<li>每个ZooKeeper服务器都为客户端服务。客户端仅连接到一个服务器来提交请求。读请求由本地服务(本地服务拷贝了远程服务的数据库)来处理。写请求由agreement protocol处理。</li>
+<li>根据agreement protocol的机制，所有客户端的写请求都会都会被发到主节点(也叫leader节点)。余下的servers叫做从节点(follower节点)。从节点接收主节点的消息，并达成消息发送共识。消息层负责主节点的重新选举，并同步主节点信息到从节点。</li>
+</ul>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://zookeeper.apache.org/doc/current/index.html">ZooKeeper-Welcome</a></li>
+<li><a href="https://zookeeper.apache.org/doc/current/zookeeperOver.html">ZooKeeper-Overview</a></li>
+</ul>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/go%E6%93%8D%E4%BD%9Cetcd/" data-toggle="tooltip" data-placement="top" title="go操作etcd">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/pulsar%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88/" data-toggle="tooltip" data-placement="top" title="Pulsar架构概览">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+<div id="disqus-comment"></div>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://luweiqianyi.github.io/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/etcd" title="etcd">
+                            etcd
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/go" title="go">
+                            go
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/hugo" title="hugo">
+                            hugo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/pulsar" title="pulsar">
+                            pulsar
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/server" title="server">
+                            server
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/test" title="test">
+                            test
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/translation" title="translation">
+                            translation
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/ubuntu" title="ubuntu">
+                            ubuntu
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/windows" title="windows">
+                            windows
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/zookeeper" title="zookeeper">
+                            zookeeper
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:runningriven@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/luweiqianyi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted" >
+                    Copyright &copy; Leebai&#39;s Blogs 2023
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> 
+                    <iframe hidden="hidden"
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>

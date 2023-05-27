@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Leebai&#39;s Blogs">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://luweiqianyi.github.io/img/home-bg.jpg">
+    <meta property="twitter:image" content="https://luweiqianyi.github.io/img/home-bg.jpg" />
+    
+
+    
+    <meta name="title" content="Pulsar消息保留与过期策略" />
+    <meta property="og:title" content="Pulsar消息保留与过期策略" />
+    <meta property="twitter:title" content="Pulsar消息保留与过期策略" />
+    
+
+    
+    <meta name="description" content="简要介绍了一下pulsar的消息保留和过期策略">
+    <meta property="og:description" content="简要介绍了一下pulsar的消息保留和过期策略" />
+    <meta property="twitter:description" content="简要介绍了一下pulsar的消息保留和过期策略" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="[劝君惜取少年时], Leebai, [劝君惜取少年时]的网络日志, [劝君惜取少年时]的博客, Leebai&#39;s Blogs, 博客, 个人网站">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Pulsar消息保留与过期策略 | [劝君惜取少年时]的博客 | Leebai&#39;s Blogs</title>
+
+    <link rel="canonical" href="/post/pulsar%E6%B6%88%E6%81%AF%E4%BF%9D%E7%95%99%E4%B8%8E%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Leebai&#39;s Blogs</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/blogs">blogs</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/test">test</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+		            <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		           </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/pulsar" title="pulsar">
+                            pulsar
+                        </a>
+                        
+                    </div>
+                    <h1>Pulsar消息保留与过期策略</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                     &#34;YinChao&#34;
+                             
+                            on 
+                            Thursday, November 3, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h1 id="pulsar消息保留与过期策略">Pulsar消息保留与过期策略</h1>
+<p>Pulsar broker对于消息的生产者和消息的消费者来说，主要执行两个过程。</p>
+<ul>
+<li>broker接收生产者的消息并存储起来</li>
+<li>broker将存储起来的消息发送给消费者，让消费者消费，消费者完成消息的处理之后，会向broker发送处理完成的响应。broker接收到消费者的处理完成响应才会将消息状态设置为ack的状态。</li>
+</ul>
+<p>那么这上面两个过程就会出现以下的问题：</p>
+<ul>
+<li>broker发送给消费者的消息消费者消费者来不及处理，就会造成broker中有大量的unacked状态的消息，这需要一个机制来对这些unacked状态的消息进行处理，这就引出类下面章节的pulsar的<code>消息保留</code>策略。</li>
+<li>当生产者生产的速率太快，往broker中增加的消息太多了，就会造成消息储量超出了broker中消息队列的大小，那么此时就需要对这些溢出的消息进行处理，这就引出了下面章节所说的<code>消息积压-backlog</code>。</li>
+</ul>
+<h2 id="消息保留">消息保留</h2>
+<p>默认情况下，当一个Pulsar消息到达一个broker,首先消息会被临时性存储在消息队列中，等到消息被所有订阅者处理后，订阅者向broker发送了ack消息后(下面所说的确认就是指这个过程)，消息才会从消息队列中删除。至于怎么删除，pulsar使用了两种策略，一种是消息数的大小，一种是消息的存活时间。以下图例可以解释消息的保留与删除。
+
+  <img src="../pulsar/pulsar_message_rention.PNG" alt="image">
+
+
+如图所示，生产者往队列中发送了15条消息，其中<code>0-8</code>是被确认的消息，<code>9-14</code>是没有被确认的消息。
+pulsar设定了消息的保留limit为N条消息或者一段存活时间(TTL)。当被确认的消息超过了这个limit，消息会从队列中删除,如图中<code>0-2</code>这三条消息，当消息还在这个limit之中，消息会被保留，如图中<code>3-8</code>这六条消息。当生产者不断往消息队列中发消息，消费者(或者说订阅者)来不及处理的时候，队列中就会发生消息的积压，这些积压的数据被归类为backlog中，如图<code>9-14</code>所示。</p>
+<p>设置一个命名空间上面的topics的保留策略时必须同时设置消息大小和超时时间。</p>
+<table>
+<thead>
+<tr>
+<th>Time limit</th>
+<th>Size limit</th>
+<th>Message retention(消息保留)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-1</td>
+<td>-1</td>
+<td>无限保留</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>&gt;0</td>
+<td>基于size limit保留，即size limit设置多少就是多少</td>
+</tr>
+<tr>
+<td>&gt;0</td>
+<td>-1</td>
+<td>基于time limit保留，即time limit设置多少就是多少</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>不保留消息(默认)</td>
+</tr>
+<tr>
+<td>0</td>
+<td>&gt;0</td>
+<td>无效设置</td>
+</tr>
+<tr>
+<td>&gt;0</td>
+<td>0</td>
+<td>无效设置</td>
+</tr>
+<tr>
+<td>&gt;0</td>
+<td>&gt;0</td>
+<td>二者取一</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>defaultRetentionSizeInMB</li>
+<li>defaultRetentionTimeInMinutes</li>
+<li>以上两个参数的配置可以在<code>broker.conf</code>中找到</li>
+</ul>
+<h2 id="消息积压-backlog">消息积压-backlog</h2>
+<p>上面已经介绍过，一个Backlog是针对某个topic的一组未被确认的消息的集合。在消息被consumer处理并在broker接收到ack消息之后，消息会从backlogs中移除。
+
+  <img src="../pulsar/pulsar_message_backlogs.PNG" alt="image">
+
+
+如图所示：
+backlog quota有一个limit大小，从图上看来大小是<code>6</code>(看消息<code>9-14</code>)。这时候producer(消息的生产者)往队列中新增了一条消息，图中的<code>A new message</code>,这时候消息数超过了backlog的limit,这时候就会执行backlog的消息保留策略。
+backlog quato的limit可以是消息数大小也可以是消息存活时间(TTL)。
+backlog的消息保留策略有以下几种：</p>
+<table>
+<thead>
+<tr>
+<th>策略类型</th>
+<th>对应的行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>producer_request_hold</td>
+<td>broker会持有消息，但是不允许生产者再生产消息(默认行为)</td>
+</tr>
+<tr>
+<td>producer_exception</td>
+<td>broker会和客户端断开连接，同时抛出异常</td>
+</tr>
+<tr>
+<td>consumer_backlog_eviction</td>
+<td>broker会丢弃生产者的消息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ttltime-to-live">TTL(Time to live)</h2>
+<p>默认情况下，Pulsar会永久存储未被确认的消息，这样的话当大量消息未被确认会造成磁盘的高负荷使用。如果业务场景需要考虑磁盘压力，可以为消息设置TTL,当消息处于未被确认的时间超过了TTL,Pulsar会自动将这些消息设置为确认状态(哪怕它们没有被消费者消费)，之后便会被删除(删除行为执行ack消息的保留策略，详见<code>消息保留</code>章节所阐述的细节)。</p>
+<h2 id="参考文档">参考文档</h2>
+<ul>
+<li><a href="https://pulsar.apache.org/docs/cookbooks-retention-expiry">https://pulsar.apache.org/docs/cookbooks-retention-expiry</a></li>
+</ul>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/etcd%E9%85%8D%E7%BD%AE%E9%A1%B9/" data-toggle="tooltip" data-placement="top" title="etcd配置项">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/pulsar%E6%B6%88%E6%81%AF/" data-toggle="tooltip" data-placement="top" title="Pulsar消息">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+<div id="disqus-comment"></div>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https://luweiqianyi.github.io/" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/docker" title="docker">
+                            docker
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/etcd" title="etcd">
+                            etcd
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/go" title="go">
+                            go
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/hugo" title="hugo">
+                            hugo
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/pulsar" title="pulsar">
+                            pulsar
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/server" title="server">
+                            server
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/test" title="test">
+                            test
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/translation" title="translation">
+                            translation
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/ubuntu" title="ubuntu">
+                            ubuntu
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/windows" title="windows">
+                            windows
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/zookeeper" title="zookeeper">
+                            zookeeper
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:runningriven@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+		            
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/luweiqianyi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+             </ul>
+		<p class="copyright text-muted" >
+                    Copyright &copy; Leebai&#39;s Blogs 2023
+                    <br>
+                    <a href="https://themes.gohugo.io/hugo-theme-cleanwhite">CleanWhite Hugo Theme</a> 
+                    <iframe hidden="hidden"
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=zhaohuabing&repo=hugo-theme-cleanwhite&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+</body>
+</html>
